@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ХА-ХА ШОУ · Аналитический дашборд</title>
-<meta name="description" content="Аналитика бизнеса ХА-ХА ШОУ: выручка, реклама, клиенты, воронка и план роста">
+<title>ХА-ХА ШОУ · Аналитика и предложение</title>
+<meta name="description" content="Диагностика бизнеса ХА-ХА ШОУ и предложение: операционное ядро с AI вместо ручного учёта и слепой рекламы">
 <link rel="icon" href="logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,22 +24,19 @@ body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(
   -webkit-font-smoothing:antialiased;line-height:1.5;overflow-x:clip;max-width:100vw}
 h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 
-/* ---------- top bar ---------- */
-.topbar{position:sticky;top:0;z-index:50;background:rgba(255,253,244,.9);backdrop-filter:blur(12px);
-  border-bottom:2px solid var(--line)}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,253,244,.92);backdrop-filter:blur(12px);border-bottom:2px solid var(--line)}
 .topbar-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px}
 .brand{display:flex;align-items:center;gap:12px;flex:0 0 auto}
 .brand img{height:38px;width:auto;display:block}
 .brand .tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);
   border-left:2px solid var(--line);padding-left:12px;line-height:1.2}
-.nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.nav{margin-left:auto;display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
-.nav button{font-family:'Manrope';font-weight:700;font-size:14px;color:var(--ink2);background:transparent;
-  border:none;padding:9px 15px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:.15s}
+.nav button{font-family:'Manrope';font-weight:700;font-size:13.5px;color:var(--ink2);background:transparent;
+  border:none;padding:9px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:.15s}
 .nav button:hover{background:var(--soft);color:var(--ink)}
 .nav button.on{background:var(--ink);color:#fff}
 
-/* ---------- layout ---------- */
 .wrap{max-width:1240px;margin:0 auto;padding:22px 18px 90px}
 .view{display:none;animation:fade .35s ease}
 .view.on{display:block}
@@ -47,20 +44,17 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 .phead{margin:6px 0 20px}
 .phead h1{font-size:clamp(26px,5vw,42px);font-weight:900;line-height:1.02;letter-spacing:-.01em}
 .phead .layer{color:var(--ink);text-shadow:3px 3px 0 var(--orange),6px 6px 0 var(--purple)}
-.phead p{margin-top:12px;color:var(--ink2);font-size:15px;max-width:760px}
+.phead p{margin-top:12px;color:var(--ink2);font-size:15px;max-width:780px}
 
-/* ---------- grid & cards ---------- */
 .grid{display:grid;gap:16px}
 .g2{grid-template-columns:repeat(2,1fr)}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
 .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
-.card.pad0{padding:16px}
 .card h3{font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--ink2);
   font-family:'Manrope';margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .card h3 .dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
 
-/* KPI */
 .kpi{position:relative;overflow:hidden}
 .kpi .big{font-family:'Unbounded';font-weight:800;font-size:clamp(24px,3.4vw,34px);line-height:1;letter-spacing:-.02em}
 .kpi .lab{font-size:12.5px;font-weight:700;color:var(--ink2);margin-top:8px;text-transform:uppercase;letter-spacing:.03em}
@@ -74,10 +68,8 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 
 .chartbox{position:relative;height:300px;overflow:hidden}
 .chartbox.sm{height:240px}
-.chartbox.lg{height:340px}
 .chartbox canvas{max-width:100%!important}
 
-/* callout */
 .callout{border-radius:var(--radius);padding:20px 22px;color:#fff;position:relative;overflow:hidden}
 .callout.p{background:linear-gradient(135deg,#7d1cff,#5405c9)}
 .callout.o{background:linear-gradient(135deg,#ff6a34,#e23d0c)}
@@ -86,10 +78,8 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 .callout p{font-size:14.5px;opacity:.95}
 .callout .em{font-family:'Unbounded';font-weight:800;font-size:22px}
 
-/* table */
 .tbl{width:100%;border-collapse:collapse;font-size:13.5px}
-.tbl th{text-align:left;font-weight:800;color:var(--ink2);padding:9px 10px;border-bottom:2px solid var(--line);
-  text-transform:uppercase;font-size:11.5px;letter-spacing:.04em}
+.tbl th{text-align:left;font-weight:800;color:var(--ink2);padding:9px 10px;border-bottom:2px solid var(--line);text-transform:uppercase;font-size:11.5px;letter-spacing:.04em}
 .tbl td{padding:9px 10px;border-bottom:1px solid #f1ead2}
 .tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums}
 .tbl tr:last-child td{border-bottom:none}
@@ -97,41 +87,81 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 .bar{height:7px;border-radius:99px;background:var(--soft);overflow:hidden;margin-top:4px}
 .bar>i{display:block;height:100%;border-radius:99px}
 
-/* list */
 .ul{list-style:none;display:grid;gap:11px}
 .ul li{display:flex;gap:11px;font-size:14.5px;align-items:flex-start}
-.ul li .ic{flex:0 0 auto;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-weight:800;
-  font-size:13px;color:#fff;margin-top:1px}
+.ul li .ic{flex:0 0 auto;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:13px;color:#fff;margin-top:1px}
 .note{font-size:12.5px;color:var(--ink2);margin-top:12px;font-style:italic}
-.section-t{font-family:'Unbounded';font-weight:800;font-size:20px;margin:26px 0 14px;letter-spacing:-.01em}
+.section-t{font-family:'Unbounded';font-weight:800;font-size:22px;margin:30px 0 14px;letter-spacing:-.01em}
+.section-t.sm{font-size:18px;margin:22px 0 12px}
 .hero-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-.chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;
-  display:flex;align-items:center;gap:8px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
 .chip b{color:var(--purple)}
+.chip.warn{border-color:var(--orange);background:#fff5f0}
+.chip.warn b{color:var(--orange)}
 
-/* offer cards */
-.offer{border:2px solid var(--line);border-radius:var(--radius);padding:22px;background:#fff;display:flex;flex-direction:column}
-.offer.feat{border-color:var(--purple);box-shadow:0 12px 34px rgba(98,9,237,.16)}
-.offer .n{font-family:'Unbounded';font-weight:800;font-size:18px;margin-bottom:4px}
-.offer .pr{font-family:'Unbounded';font-weight:800;font-size:26px;margin:8px 0;color:var(--purple)}
-.offer ul{list-style:none;display:grid;gap:8px;font-size:13.5px;margin-top:6px}
-.offer ul li{padding-left:20px;position:relative}
-.offer ul li:before{content:"→";position:absolute;left:0;color:var(--orange);font-weight:800}
-.badge{align-self:flex-start;background:var(--yellow);color:var(--ink);font-size:11px;font-weight:800;
-  padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+/* HERO */
+.hero{background:linear-gradient(135deg,#1b1810,#241a06);color:#fff;border-radius:26px;padding:36px 32px;position:relative;overflow:hidden;margin-bottom:20px}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(239,221,5,.28),transparent 70%)}
+.hero .ey{font-size:12.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow)}
+.hero h1{font-size:clamp(26px,4.6vw,44px);font-weight:900;line-height:1.05;margin:12px 0;max-width:16ch}
+.hero h1 em{font-style:normal;color:var(--yellow)}
+.hero p{font-size:16px;color:#e9e2cf;max-width:60ch}
+.hero .strip{display:flex;flex-wrap:wrap;gap:22px;margin-top:22px}
+.hero .st b{font-family:'Unbounded';font-weight:800;font-size:26px;display:block;line-height:1}
+.hero .st span{font-size:12.5px;color:#cbc3ad}
+.hero .st b.bad{color:#ff7a5c}.hero .st b.good{color:var(--yellow)}
+
+/* before/after */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ba .col{border-radius:var(--radius);padding:20px;border:1.5px solid var(--line)}
+.ba .col.now{background:#fff6f2;border-color:#f5cdbb}
+.ba .col.fut{background:#f2ecff;border-color:#d8c7ff}
+.ba .col h4{font-family:'Unbounded';font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ba .col.now h4{color:var(--bad)} .ba .col.fut h4{color:var(--purple)}
+.ba ul{list-style:none;display:grid;gap:9px;font-size:14px}
+.ba ul li{padding-left:22px;position:relative}
+.ba .now ul li:before{content:"✕";position:absolute;left:0;color:var(--bad);font-weight:800}
+.ba .fut ul li:before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
+
+/* price comparison */
+.pricecmp{display:grid;gap:12px}
+.pcrow{display:flex;align-items:center;gap:14px}
+.pcrow .plab{width:150px;flex:0 0 auto;font-weight:700;font-size:14px}
+.pcrow .track{flex:1;height:34px;background:var(--soft);border-radius:10px;overflow:hidden;position:relative}
+.pcrow .track>i{display:block;height:100%;border-radius:10px;display:flex;align-items:center;justify-content:flex-end;padding-right:12px;color:#fff;font-weight:800;font-family:'Unbounded';font-size:14px}
+
+/* roadmap steps */
+.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative}
+.step{background:#fff;border:2px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;position:relative}
+.step.s2{border-color:var(--purple);box-shadow:0 14px 34px rgba(98,9,237,.14)}
+.step .num{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-family:'Unbounded';font-weight:800;color:#fff;font-size:16px;margin-bottom:12px}
+.step .st-name{font-family:'Unbounded';font-weight:800;font-size:17px;line-height:1.1}
+.step .st-dur{font-size:12.5px;font-weight:700;color:var(--ink2);margin-top:4px}
+.step .st-price{font-family:'Unbounded';font-weight:800;font-size:30px;margin:12px 0 4px;color:var(--purple)}
+.step .st-goal{font-size:13px;color:var(--ink2);margin-bottom:12px;font-style:italic}
+.step ul{list-style:none;display:grid;gap:8px;font-size:13.5px;margin-top:auto}
+.step ul li{padding-left:20px;position:relative}
+.step ul li:before{content:"→";position:absolute;left:0;color:var(--orange);font-weight:800}
+.badge{align-self:flex-start;background:var(--yellow);color:var(--ink);font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.total-bar{margin-top:18px;background:var(--ink);color:#fff;border-radius:var(--radius);padding:20px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between}
+.total-bar .l{font-family:'Unbounded';font-weight:800;font-size:18px}
+.total-bar .r{font-family:'Unbounded';font-weight:900;font-size:30px;color:var(--yellow)}
+.total-bar .old{color:#9b937d;text-decoration:line-through;font-size:16px;font-weight:700;margin-right:6px}
 
 .foot{text-align:center;color:var(--ink2);font-size:12.5px;margin-top:40px;padding-top:20px;border-top:1px solid var(--line)}
 
-@media(max-width:920px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:920px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}.roadmap{grid-template-columns:1fr}}
 @media(max-width:640px){
   .topbar-in{flex-wrap:wrap;gap:8px;padding:9px 14px}
   .brand .tag{display:none}
   .nav{width:100%;order:3;margin-left:0;padding-bottom:2px}
   .wrap{padding:16px 13px 80px}
-  .g2,.g3,.g4{grid-template-columns:1fr}
+  .g2,.g3,.g4,.ba{grid-template-columns:1fr}
   .chartbox{height:260px}
   .kpi .big{font-size:26px}
   .card{padding:16px;border-radius:16px}
+  .hero{padding:26px 20px}
+  .pcrow .plab{width:96px;font-size:12.5px}
 }
 </style>
 </head>
@@ -139,16 +169,14 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 
 <header class="topbar">
   <div class="topbar-in">
-    <div class="brand">
-      <img src="logo.svg" alt="ХА-ХА ШОУ">
-      <span class="tag">Аналитика<br>2020–2026</span>
-    </div>
+    <div class="brand"><img src="logo.svg" alt="ХА-ХА ШОУ"><span class="tag">Аналитика<br>+ предложение</span></div>
     <nav class="nav" id="nav">
-      <button data-v="over" class="on">Обзор</button>
+      <button data-v="over" class="on">Суть</button>
       <button data-v="rev">Выручка</button>
       <button data-v="ads">Реклама</button>
       <button data-v="cli">Клиенты</button>
       <button data-v="fun">Воронка</button>
+      <button data-v="cost">Затраты</button>
       <button data-v="plan">Решение</button>
     </nav>
   </div>
@@ -156,462 +184,385 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 
 <main class="wrap">
 
-<!-- ============ ОБЗОР ============ -->
+<!-- ============ СУТЬ ============ -->
 <section class="view on" id="over">
-  <div class="phead">
-    <h1><span class="layer">Бизнес под лупой</span></h1>
-    <p>Полная картина по данным компании за 6 лет: 3 города, ~5 000 мероприятий, 1 528 анкет клиентов и вся статистика Яндекс.Директа. Ниже — где деньги, где течёт и что с этим делать.</p>
+  <div class="hero">
+    <div class="ey">ХА-ХА ШОУ · диагностика по данным 2020–2026</div>
+    <h1>Бизнес теряет деньги на <em>ручном учёте</em> и <em>слепой рекламе</em></h1>
+    <p>Я изучил всё: 6 учётных книг на ~370 листов, 1 528 анкет клиентов и полную статистику Яндекс.Директа. Ниже — где деньги, где течёт и как это чинится одной системой с AI. Это не отчёт ради отчёта, а план.</p>
+    <div class="strip">
+      <div class="st"><b class="bad">−19,2%</b><span>выручка H1 2026 г/г</span></div>
+      <div class="st"><b>~8 млн ₽</b><span>реклама/год вслепую</span></div>
+      <div class="st"><b>370</b><span>листов Excel вручную</span></div>
+      <div class="st"><b class="good">2,5–3,2 млн</b><span>потенциал/год</span></div>
+    </div>
   </div>
 
   <div class="grid g4">
     <div class="card kpi"><span class="accent" style="background:var(--purple)"></span>
-      <div class="big">42,1 млн ₽</div><div class="lab">Выручка 2025</div>
-      <span class="pill up">+8,8% к 2024</span></div>
+      <div class="big">42,1 млн ₽</div><div class="lab">Выручка 2025</div><span class="pill up">+8,8% к 2024</span></div>
     <div class="card kpi"><span class="accent" style="background:var(--orange)"></span>
-      <div class="big">−19,2%</div><div class="lab">I полугодие 2026 г/г</div>
-      <span class="pill down">спад 6 мес. подряд</span></div>
+      <div class="big">−19,2%</div><div class="lab">I полугодие 2026</div><span class="pill down">спад 6 мес подряд</span></div>
     <div class="card kpi"><span class="accent" style="background:var(--yellow)"></span>
-      <div class="big">29 235 ₽</div><div class="lab">Средний чек 2025</div>
-      <span class="pill up">растёт — цена не проблема</span></div>
+      <div class="big">29 235 ₽</div><div class="lab">Средний чек 2025</div><span class="pill up">растёт — цена не проблема</span></div>
     <div class="card kpi"><span class="accent" style="background:var(--purple)"></span>
-      <div class="big">2,60%</div><div class="lab">Конверсия сайта (Директ)</div>
-      <span class="pill info">407 580 визитов</span></div>
+      <div class="big">2,60%</div><div class="lab">Конверсия сайта</div><span class="pill info">407 580 визитов Директа</span></div>
   </div>
 
   <div class="grid g2" style="margin-top:16px">
-    <div class="card">
-      <h3><span class="dot" style="background:var(--purple)"></span>Выручка и число игр по годам</h3>
-      <div class="chartbox" data-chart="ovYear"></div>
-    </div>
-    <div class="card">
-      <h3><span class="dot" style="background:var(--orange)"></span>Помесячно: 2026 против 2025</h3>
-      <div class="chartbox" data-chart="ovMonth"></div>
-    </div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Выручка и число игр по годам</h3><div class="chartbox" data-chart="ovYear"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Помесячно: 2026 против 2025</h3><div class="chartbox" data-chart="ovMonth"></div></div>
   </div>
 
   <div class="grid g3" style="margin-top:16px">
-    <div class="callout p">
-      <h3>Рост остановился</h3>
-      <p>После +62% в год рост упал до <b>+8,8%</b>, а в 2026 начался спад. Впереди Q4 — <span class="em">38%</span> годовой выручки. Окно закрывается к октябрю.</p>
-    </div>
-    <div class="callout o">
-      <h3>Реклама вслепую</h3>
-      <p><span class="em">~8 млн ₽/год</span> уходит почти целиком в Яндекс, а окупаемость по каналам не измеряется. Roistat оплачен, но лист «каналы продаж» пустой.</p>
-    </div>
-    <div class="callout k">
-      <h3>Потенциал на столе</h3>
-      <p>Порядок и автоматизация на текущих данных дают <span class="em">2,5–3,2 млн ₽/год</span> — без роста рекламного бюджета.</p>
-    </div>
+    <div class="callout p"><h3>Рост остановился</h3><p>После +62% в год рост упал до <b>+8,8%</b>, а в 2026 — спад. Впереди Q4 — <span class="em">38%</span> годовой выручки. Окно закрывается к октябрю.</p></div>
+    <div class="callout o"><h3>Реклама вслепую</h3><p><span class="em">~8 млн ₽/год</span> уходит почти целиком в Яндекс, окупаемость каналов не измеряется. Roistat оплачен, но лист «каналы» пустой.</p></div>
+    <div class="callout k"><h3>Резерв на столе</h3><p>Порядок + автоматизация на текущих данных дают <span class="em">2,5–3,2 млн ₽/год</span> без роста рекламного бюджета.</p></div>
   </div>
 
-  <div class="section-t">Что уже есть у компании</div>
+  <div class="section-t">Что уже оплачено — но не связано между собой</div>
   <div class="hero-strip">
     <span class="chip">CRM: <b>FrontPad</b></span>
     <span class="chip">Сделки: <b>amoCRM</b></span>
     <span class="chip">Аналитика: <b>Roistat</b></span>
     <span class="chip">Трафик: <b>Яндекс.Метрика</b></span>
-    <span class="chip">Учёт: <b>6 Excel · ~370 листов</b></span>
-    <span class="chip">Опросы: <b>1 528 анкет</b></span>
+    <span class="chip warn">Учёт: <b>6 Excel · ~370 листов</b></span>
+    <span class="chip warn">Опросы: <b>Google Forms</b></span>
   </div>
-  <p class="note">Проблема не в нехватке инструментов, а в том, что они не связаны между собой. Данные вводятся руками в нескольких местах — единого источника правды нет.</p>
+  <p class="note">4 платных системы + ручные таблицы, и ни одна не связана с другой. Данные вбиваются по 2–3 раза руками. Единого источника правды нет — отсюда и слепые решения. Решение — на вкладке «Решение».</p>
 </section>
 
 <!-- ============ ВЫРУЧКА ============ -->
 <section class="view" id="rev">
-  <div class="phead">
-    <h1><span class="layer">Выручка и тренды</span></h1>
-    <p>Где растём, где падаем и на чём держится бизнес. Все суммы — фактические данные из учётных таблиц компании.</p>
-  </div>
-
+  <div class="phead"><h1><span class="layer">Выручка и тренды</span></h1>
+    <p>Где растём, где падаем и на чём держится бизнес. Все суммы — фактические данные из учётных книг компании.</p></div>
   <div class="grid g4">
     <div class="card kpi"><div class="big">119,4 млн ₽</div><div class="lab">Выручка 2022–2025</div></div>
     <div class="card kpi"><div class="big">58,8%</div><div class="lab">Доля Москвы 2025</div><div class="sub">СПб 30,1% · Тула 11,1%</div></div>
     <div class="card kpi"><div class="big">1 440</div><div class="lab">Игр за 2025</div><span class="pill up">+6,2%</span></div>
     <div class="card kpi"><div class="big">37,6%</div><div class="lab">Доля Q4 в году</div><span class="pill warn">пик — ноябрь</span></div>
   </div>
-
   <div class="grid g2" style="margin-top:16px">
-    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Выручка по городам (стек по годам)</h3>
-      <div class="chartbox" data-chart="revCity"></div></div>
-    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Сезонность 2025 — куда смещён спрос</h3>
-      <div class="chartbox" data-chart="revSeason"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Выручка по городам (стек по годам)</h3><div class="chartbox" data-chart="revCity"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Сезонность 2025 — куда смещён спрос</h3><div class="chartbox" data-chart="revSeason"></div></div>
   </div>
-
   <div class="grid g2" style="margin-top:16px">
-    <div class="card"><h3><span class="dot" style="background:var(--yellow)"></span>Средний чек по годам</h3>
-      <div class="chartbox sm" data-chart="revCheck"></div></div>
-    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Сегменты мероприятий · средний чек, ₽</h3>
-      <div class="chartbox sm" data-chart="revSeg"></div>
-      <p class="note">Корпоративы — самый доходный сегмент (чек выезда до 85 тыс ₽) с пиком в декабре.</p>
-    </div>
+    <div class="card"><h3><span class="dot" style="background:var(--yellow)"></span>Средний чек по годам</h3><div class="chartbox sm" data-chart="revCheck"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Сегменты мероприятий · средний чек, ₽</h3><div class="chartbox sm" data-chart="revSeg"></div>
+      <p class="note">Корпоративы — самый доходный сегмент (чек выезда до 85 тыс ₽) с пиком в декабре.</p></div>
   </div>
-
-  <div class="callout o" style="margin-top:16px">
-    <h3>Проблема в объёме, а не в цене</h3>
-    <p>Средний чек в 2026 даже вырос до 31,7 тыс ₽, но число игр и выручка падают. Значит, чинить нужно привлечение и обработку заявок, а не тарифы. I полугодие 2026: <span class="em">15,47 млн ₽</span> против 19,14 млн ₽ годом ранее — минус 3,67 млн ₽.</p>
-  </div>
+  <div class="callout o" style="margin-top:16px"><h3>Проблема в объёме, а не в цене</h3>
+    <p>Средний чек в 2026 вырос до 31,7 тыс ₽, но число игр и выручка падают. Чинить нужно привлечение и обработку заявок, а не тарифы. I полугодие 2026: <span class="em">15,47 млн ₽</span> против 19,14 млн годом ранее — минус 3,67 млн ₽.</p></div>
 </section>
 
 <!-- ============ РЕКЛАМА ============ -->
 <section class="view" id="ads">
-  <div class="phead">
-    <h1><span class="layer">Реклама и каналы</span></h1>
-    <p>Данные Яндекс.Директа за весь период плюс атрибуция выручки по каналам. Здесь спрятан самый быстрый резерв прибыли.</p>
-  </div>
-
+  <div class="phead"><h1><span class="layer">Реклама и каналы</span></h1>
+    <p>Данные Яндекс.Директа за весь период плюс атрибуция выручки по каналам. Здесь спрятан самый быстрый резерв прибыли.</p></div>
   <div class="grid g4">
     <div class="card kpi"><div class="big">407 580</div><div class="lab">Визитов из Директа</div></div>
     <div class="card kpi"><div class="big">10 582</div><div class="lab">Достижений целей</div><span class="pill info">CR 2,60%</span></div>
-    <div class="card kpi"><div class="big">~486 тыс ₽</div><div class="lab">Реклама в месяц</div><div class="sub">М 219 · СПб 195 · Тула 72</div></div>
+    <div class="card kpi"><div class="big">26,4 млн ₽</div><div class="lab">Доход по целям (Метрика)</div></div>
     <div class="card kpi"><div class="big">41,7%</div><div class="lab">Отказы на сайте</div><span class="pill warn">глубина 1,25 стр</span></div>
   </div>
-
   <div class="grid g2" style="margin-top:16px">
-    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Атрибуция выручки по каналам</h3>
-      <div class="chartbox" data-chart="adChan"></div></div>
-    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Директ по городам: трафик и конверсия</h3>
-      <div class="chartbox" data-chart="adCity"></div>
-      <p class="note">Тула получает <b>больше всего</b> трафика (132 963), но конвертит <b>хуже всех</b> (2,39%). Москва — лучший CR (3,22%).</p>
-    </div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Атрибуция выручки по каналам</h3><div class="chartbox" data-chart="adChan"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Директ по городам: трафик и конверсия</h3><div class="chartbox" data-chart="adCity"></div>
+      <p class="note">Тула получает <b>больше всего</b> трафика (132 963), но конвертит <b>хуже всех</b> (2,39%). Москва — лучший CR (3,22%).</p></div>
   </div>
-
-  <div class="card" style="margin-top:16px">
-    <h3><span class="dot" style="background:var(--yellow)"></span>Поиск против Сетей — конверсия кратно разная</h3>
+  <div class="card" style="margin-top:16px"><h3><span class="dot" style="background:var(--yellow)"></span>Поиск против Сетей — конверсия кратно разная</h3>
     <div class="chartbox sm" data-chart="adSearch"></div>
-    <p class="note">Поисковые кампании конвертят 7–10%, сети и «Мастер кампаний» — 1,4–3,7%. При этом самый большой поток («Мастер кампаний Тула», 77 274 визита) идёт по ставке 1,8%.</p>
-  </div>
-
+    <p class="note">Поисковые кампании конвертят 7–10%, сети и «Мастер кампаний» — 1,4–3,7%. При этом самый большой поток («Мастер кампаний Тула», 77 274 визита) идёт по ставке 1,8%.</p></div>
   <div class="grid g2" style="margin-top:16px">
-    <div class="card pad0" style="padding:20px">
-      <h3><span class="dot" style="background:var(--purple)"></span>Топ-кампании по объёму (визиты / конверсия)</h3>
-      <table class="tbl">
-        <thead><tr><th>Кампания</th><th class="n">Визиты</th><th class="n">CR</th></tr></thead>
-        <tbody id="tblCamp"></tbody>
-      </table>
-    </div>
-    <div class="callout p">
-      <h3>Главный рычаг прибыли</h3>
-      <p>Перелив бюджета из низкоконверсионных сетей и «Мастера кампаний» в поиск и в Москву поднимает отдачу тех же <span class="em">486 тыс ₽/мес</span> без роста расходов. Первый шаг — дашборд «канал × город × окупаемость» на связке Метрика + Roistat + выручка.</p>
-    </div>
+    <div class="card" style="padding:20px"><h3><span class="dot" style="background:var(--purple)"></span>Топ-кампании: визиты / конверсия</h3>
+      <table class="tbl"><thead><tr><th>Кампания</th><th class="n">Визиты</th><th class="n">CR</th></tr></thead><tbody id="tblCamp"></tbody></table></div>
+    <div class="callout p"><h3>Главный рычаг прибыли</h3>
+      <p>Перелив бюджета из низкоконверсионных сетей и «Мастера кампаний» в поиск и в Москву поднимает отдачу тех же <span class="em">~486 тыс ₽/мес</span> без роста расходов. Первый шаг — дашборд «канал × город × окупаемость» на связке Метрика + Roistat + выручка.</p></div>
   </div>
 </section>
 
 <!-- ============ КЛИЕНТЫ ============ -->
 <section class="view" id="cli">
-  <div class="phead">
-    <h1><span class="layer">Портрет клиента</span></h1>
-    <p>По опросу 1 528 гостей (~424 с полным профилем). Это готовая база для таргетинга, персональных офферов и обучения AI-ассистента.</p>
-  </div>
-
+  <div class="phead"><h1><span class="layer">Портрет клиента</span></h1>
+    <p>По опросу 1 528 гостей (~424 с полным профилем). Это готовая база для таргетинга, персональных офферов и обучения AI-ассистента.</p></div>
   <div class="grid g4">
     <div class="card kpi"><div class="big">56%</div><div class="lab">Доход 100 тыс ₽+</div><span class="pill up">платёжеспособны</span></div>
     <div class="card kpi"><div class="big">64%</div><div class="lab">С детьми</div><span class="pill info">семейный сегмент</span></div>
     <div class="card kpi"><div class="big">76%</div><div class="lab">Заходят с телефона</div><span class="pill warn">mobile-first</span></div>
     <div class="card kpi"><div class="big">80%</div><div class="lab">Нравится сайт</div><div class="sub">сайт — не бутылочное горлышко</div></div>
   </div>
-
   <div class="grid g2" style="margin-top:16px">
-    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Откуда узнают о нас (реальные клиенты)</h3>
-      <div class="chartbox" data-chart="cliSrc"></div>
-      <p class="note">Сарафан почти равен Яндексу (38% vs 41%) — но им никто не управляет. Самый дешёвый канал роста.</p>
-    </div>
-    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Уровень дохода</h3>
-      <div class="chartbox" data-chart="cliInc"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Откуда узнают о нас (реальные клиенты)</h3><div class="chartbox" data-chart="cliSrc"></div>
+      <p class="note">Сарафан почти равен Яндексу (38% vs 41%) — но им никто не управляет. Самый дешёвый канал роста.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Уровень дохода</h3><div class="chartbox" data-chart="cliInc"></div></div>
   </div>
-
   <div class="grid g3" style="margin-top:16px">
-    <div class="card"><h3><span class="dot" style="background:var(--yellow)"></span>Профессии клиентов</h3>
-      <div class="chartbox sm" data-chart="cliProf"></div></div>
-    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Устройство</h3>
-      <div class="chartbox sm" data-chart="cliDev"></div></div>
-    <div class="card">
-      <h3><span class="dot" style="background:var(--orange)"></span>С кем сравнивают (конкуренты)</h3>
-      <table class="tbl" style="margin-top:4px">
-        <tbody>
-          <tr><td>Квизы (формат)</td><td class="n hi">35</td></tr>
-          <tr><td>«Мафия»</td><td class="n hi">9</td></tr>
-          <tr><td>Show Today <span style="color:var(--bad)">(прямой аналог)</span></td><td class="n hi">6</td></tr>
-          <tr><td>«Краса»</td><td class="n hi">1</td></tr>
-        </tbody>
-      </table>
-      <p class="note">Клиенты сами пишут: «у вас лучше, чем у Show Today». Это позиционирование, которое надо усиливать в рекламе.</p>
-    </div>
+    <div class="card"><h3><span class="dot" style="background:var(--yellow)"></span>Профессии клиентов</h3><div class="chartbox sm" data-chart="cliProf"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Устройство</h3><div class="chartbox sm" data-chart="cliDev"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>С кем сравнивают</h3>
+      <table class="tbl" style="margin-top:4px"><tbody>
+        <tr><td>Квизы (формат)</td><td class="n hi">35</td></tr>
+        <tr><td>«Мафия»</td><td class="n hi">9</td></tr>
+        <tr><td>Show Today <span style="color:var(--bad)">(прямой аналог)</span></td><td class="n hi">6</td></tr>
+        <tr><td>«Краса»</td><td class="n hi">1</td></tr></tbody></table>
+      <p class="note">Клиенты сами пишут: «у вас лучше, чем у Show Today». Это позиционирование, которое надо усиливать в рекламе.</p></div>
   </div>
 </section>
 
 <!-- ============ ВОРОНКА ============ -->
 <section class="view" id="fun">
-  <div class="phead">
-    <h1><span class="layer">Воронка и потери</span></h1>
-    <p>Где сделки утекают и сколько можно вернуть. По листам «Причины отказа» за весь период.</p>
-  </div>
-
+  <div class="phead"><h1><span class="layer">Воронка и потери</span></h1>
+    <p>Где сделки утекают и сколько можно вернуть. По листам «Причины отказа» за весь период.</p></div>
   <div class="grid g3">
-    <div class="card kpi"><span class="accent" style="background:var(--bad)"></span>
-      <div class="big">1 723</div><div class="lab">Задокументированных отказа</div></div>
-    <div class="card kpi"><span class="accent" style="background:var(--orange)"></span>
-      <div class="big">≈ 48,3 млн ₽</div><div class="lab">Сумма упущенных заказов</div><div class="sub">ориентировочно, за период</div></div>
-    <div class="card kpi"><span class="accent" style="background:var(--good)"></span>
-      <div class="big">~310</div><div class="lab">Сделок дожимается автоматикой</div><span class="pill up">~18% отказов</span></div>
+    <div class="card kpi"><span class="accent" style="background:var(--bad)"></span><div class="big">1 723</div><div class="lab">Задокументированных отказа</div></div>
+    <div class="card kpi"><span class="accent" style="background:var(--orange)"></span><div class="big">≈ 48,3 млн ₽</div><div class="lab">Сумма упущенных заказов</div><div class="sub">ориентировочно, за период</div></div>
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span><div class="big">~310</div><div class="lab">Сделок дожимается автоматикой</div><span class="pill up">~18% отказов</span></div>
   </div>
-
   <div class="grid g2" style="margin-top:16px">
-    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Причины отказа</h3>
-      <div class="chartbox" data-chart="funReason"></div></div>
-    <div class="card">
-      <h3><span class="dot" style="background:var(--purple)"></span>Что с этим делать</h3>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Причины отказа</h3><div class="chartbox" data-chart="funReason"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Что с этим делать</h3>
       <ul class="ul">
         <li><span class="ic" style="background:var(--purple)">1</span><div><b>Мгновенный ответ 24/7.</b> Топ-потеря — «ушёл в игнор». AI-ассистент отвечает и считает смету за секунды, пока лид тёплый.</div></li>
         <li><span class="ic" style="background:var(--orange)">2</span><div><b>Авто-дожим молчунов.</b> Сценарные касания по «передумали» и «не ответили» возвращают ~18% сделок.</div></li>
-        <li><span class="ic" style="background:var(--good)">3</span><div><b>Разметка причин.</b> Половина отказов вообще не размечена — чиним аналитику, чтобы видеть реальные узкие места.</div></li>
+        <li><span class="ic" style="background:var(--good)">3</span><div><b>Разметка причин.</b> Половина отказов не размечена — чиним аналитику, чтобы видеть реальные узкие места.</div></li>
       </ul>
-      <p class="note">50% отказов без причины — это отдельный разрыв: сейчас невозможно понять, что именно ломает продажу.</p>
+      <p class="note">50% отказов без причины — отдельный разрыв: сейчас невозможно понять, что именно ломает продажу.</p></div>
+  </div>
+  <div class="callout k" style="margin-top:16px"><h3>Реактивация базы под высокий сезон</h3>
+    <p>1 528+ профилей клиентов и сегменты по типам событий. Персональные касания «год назад был корпоратив — забронируй новогодний слот» бьют прямо в повторные продажи, а это <span class="em">25% выручки</span>.</p></div>
+</section>
+
+<!-- ============ ЗАТРАТЫ ============ -->
+<section class="view" id="cost">
+  <div class="phead"><h1><span class="layer">Куда уходят деньги</span></h1>
+    <p>Структура расходов и «ручные» косты, которые съедают маржу и время. Именно здесь мы сокращаем — до внедрения чего-либо.</p></div>
+  <div class="grid g4">
+    <div class="card kpi"><div class="big">~486 тыс ₽</div><div class="lab">Реклама в месяц</div><div class="sub">без измерения ROI</div></div>
+    <div class="card kpi"><div class="big">4 системы</div><div class="lab">Платных и несвязанных</div><span class="pill warn">FrontPad·amo·Roistat·Метрика</span></div>
+    <div class="card kpi"><div class="big">~370</div><div class="lab">Листов Excel вручную</div><span class="pill down">двойной-тройной ввод</span></div>
+    <div class="card kpi"><div class="big">60–70%</div><div class="lab">Маржа мероприятия</div><div class="sub">до постоянных расходов</div></div>
+  </div>
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Куда уходит каждый рубль выручки</h3><div class="chartbox" data-chart="costStruct"></div>
+      <p class="note">Модель «конвертов» из учёта: реклама ~19% и ФОТ ~45% — самые большие статьи, и обе управляются на глаз.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Ручные шаги, которые убираем</h3>
+      <ul class="ul">
+        <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Перенос заказов FrontPad → Excel руками.</b> Ежедневно, с ошибками. Уже завели колонки «Фронтпад» в таблицах — но всё равно вбивают вручную.</div></li>
+        <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Ведение 370 листов</b> в 6 книгах: заказы, учёт, расчёт игр по 3 городам — параллельно и несводимо.</div></li>
+        <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Разнос финансов по фондам вручную</b> каждую неделю.</div></li>
+        <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Опросы Google Forms → Excel</b> и ручная разметка ответов.</div></li>
+        <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Ответ на заявки вручную</b> — медленно, теряются «молчуны».</div></li>
+      </ul>
     </div>
   </div>
-
-  <div class="callout k" style="margin-top:16px">
-    <h3>Реактивация базы под высокий сезон</h3>
-    <p>1 528+ профилей клиентов и сегменты по типам событий. Персональные касания «год назад был корпоратив — забронируй новогодний слот» бьют прямо в повторные продажи, а это <span class="em">25% выручки</span>.</p>
-  </div>
+  <div class="callout o" style="margin-top:16px"><h3>Платите за 4 системы — а решения принимаете вслепую</h3>
+    <p>FrontPad, amoCRM, Roistat и Метрика оплачиваются отдельно и дублируют друг друга, но не связаны. Roistat должен показывать окупаемость каналов — а лист «каналы продаж» в учёте пустой. Сначала связываем и настраиваем то, что <b>уже есть</b>, а не покупаем новое.</p></div>
 </section>
 
 <!-- ============ РЕШЕНИЕ ============ -->
 <section class="view" id="plan">
-  <div class="phead">
-    <h1><span class="layer">Что делаем</span></h1>
-    <p>Два направления одновременно: остановить спад к высокому сезону — и собрать единую систему с AI, которая масштабирует бизнес.</p>
+  <div class="phead"><h1><span class="layer">Операционное ядро + AI</span></h1>
+    <p>Одна система вместо шести книг и четырёх несвязанных сервисов. Ниже — что меняется и как мы к этому идём по шагам.</p></div>
+
+  <div class="section-t sm">Было → Станет</div>
+  <div class="ba">
+    <div class="col now"><h4>● Сейчас</h4>
+      <ul>
+        <li>Данные в 6 Excel + 4 сервисах, не связаны</li>
+        <li>Заказы переносятся руками, с ошибками</li>
+        <li>Окупаемость рекламы неизвестна</li>
+        <li>Заявки обрабатываются вручную, «молчуны» теряются</li>
+        <li>База клиентов не работает на повтор</li>
+        <li>Отчёты собираются часами по таблицам</li>
+      </ul></div>
+    <div class="col fut"><h4>● Станет</h4>
+      <ul>
+        <li>Единое ядро: заявки, заказы, финансы в одном месте</li>
+        <li>Запись автоматом из FrontPad — без ручного ввода</li>
+        <li>Живой дашборд ROI по каналам и городам</li>
+        <li>AI-ассистент отвечает и дожимает 24/7</li>
+        <li>AI-реактивация базы под сезон</li>
+        <li>Отчёт и прогноз — на одном экране</li>
+      </ul></div>
   </div>
 
+  <div class="section-t">Как идём — по шагам</div>
+  <p style="color:var(--ink2);font-size:14.5px;margin:-6px 0 16px;max-width:70ch">Не «пакеты на выбор», а последовательный путь к полной автоматизации. Каждый шаг самостоятельный и окупается до следующего — можно остановиться на любом.</p>
+
+  <div class="roadmap">
+    <div class="step s1"><div class="num" style="background:var(--orange)">1</div>
+      <div class="st-name">Аудит + подключение</div><div class="st-dur">1–2 недели</div>
+      <div class="st-price">40 000 ₽</div>
+      <div class="st-goal">Полная картина и план автоматизации</div>
+      <ul>
+        <li>Подключаюсь к Яндекс.Директу и Метрике</li>
+        <li>Вскрываю провалы и считаю окупаемость каналов</li>
+        <li>Нахожу ручные шаги и лишние косты</li>
+        <li>Строю пошаговый план перехода</li>
+      </ul></div>
+    <div class="step s2"><span class="badge">Ядро</span><div class="num" style="background:var(--purple)">2</div>
+      <div class="st-name">Операционное ядро</div><div class="st-dur">3–4 недели</div>
+      <div class="st-price">90 000 ₽</div>
+      <div class="st-goal">Управление бизнесом с одного экрана</div>
+      <ul>
+        <li>Заявки, заказы, финансы — в одной системе</li>
+        <li>Конец 370 листам и двойному вводу</li>
+        <li>Запись автоматом из FrontPad (API)</li>
+        <li>Живые дашборды выручки, маржи, загрузки</li>
+      </ul></div>
+    <div class="step s3"><div class="num" style="background:var(--good)">3</div>
+      <div class="st-name">AI-автоматизация</div><div class="st-dur">3–4 недели</div>
+      <div class="st-price">70 000 ₽</div>
+      <div class="st-goal">Продажи и рутина без ручного труда</div>
+      <ul>
+        <li>AI-ассистент: ответ, смета, бронь 24/7</li>
+        <li>Авто-дожим молчунов и реактивация базы</li>
+        <li>Рассылки по сегментам ЦА</li>
+        <li>AI-аналитик: «почему упал март», прогноз</li>
+      </ul></div>
+  </div>
+
+  <div class="total-bar">
+    <div class="l">Полное операционное ядро с AI — за всё</div>
+    <div class="r"><span class="old">500–700 тыс ₽</span> 200 000 ₽</div>
+  </div>
+
+  <div class="section-t">Сколько это стоит на рынке — и почему для вас иначе</div>
   <div class="grid g2">
     <div class="card">
-      <span class="badge" style="background:var(--orange);color:#fff">Сейчас · недели</span>
-      <h3 style="font-family:'Unbounded';font-size:19px;text-transform:none;color:var(--ink)">Развернуть спад к Q4</h3>
-      <ul class="ul" style="margin-top:12px">
-        <li><span class="ic" style="background:var(--purple)">1</span><div><b>Дашборд окупаемости каналов</b> — Метрика + Roistat + выручка. Видно, где горят 486 тыс ₽/мес.</div></li>
-        <li><span class="ic" style="background:var(--orange)">2</span><div><b>Перелив бюджета</b> в поиск и Москву (CR ×3), урезание слабой Тулы-сетей.</div></li>
-        <li><span class="ic" style="background:var(--good)">3</span><div><b>AI-обработка и дожим заявок</b> 24/7 с записью в FrontPad.</div></li>
-        <li><span class="ic" style="background:var(--purple)">4</span><div><b>Реферальная программа</b> — управляем сарафаном (38% клиентов).</div></li>
-        <li><span class="ic" style="background:var(--orange)">5</span><div><b>Реактивация базы</b> под ноябрьский пик.</div></li>
-      </ul>
-    </div>
-    <div class="card">
-      <span class="badge" style="background:var(--purple);color:#fff">Масштаб · продукт</span>
-      <h3 style="font-family:'Unbounded';font-size:19px;text-transform:none;color:var(--ink)">Единая система + AI</h3>
-      <ul class="ul" style="margin-top:12px">
-        <li><span class="ic" style="background:var(--purple)">◆</span><div><b>Data Core.</b> FrontPad + amoCRM + Метрика + опросы стекаются в одну базу. Конец 370 листам Excel.</div></li>
-        <li><span class="ic" style="background:var(--orange)">◆</span><div><b>CRM под ХА-ХА ШОУ.</b> Заявка → смета → бронь → игра → маржа → пост-опрос → реактивация.</div></li>
-        <li><span class="ic" style="background:var(--good)">◆</span><div><b>AI-продажник</b> — квалифицирует, считает, бронирует, дожимает.</div></li>
-        <li><span class="ic" style="background:var(--purple)">◆</span><div><b>AI-аналитик</b> — «почему упал март?», прогноз, рекомендации по бюджету на языке человека.</div></li>
-        <li><span class="ic" style="background:var(--orange)">◆</span><div><b>AI-маркетолог</b> — контент, персональные рассылки по сегментам ЦА.</div></li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="section-t">Пакеты сотрудничества</div>
-  <div class="grid g3">
-    <div class="offer">
-      <div class="n">1 · Аудит-спринт</div>
-      <div class="pr">120–150 тыс ₽</div>
-      <div class="sub" style="color:var(--ink2);font-size:13px;font-weight:700">1–2 недели</div>
-      <ul>
-        <li>Подключение Метрики + Директа + FrontPad</li>
-        <li>Первый дашборд окупаемости</li>
-        <li>Карта разрывов и план внедрения</li>
-      </ul>
-    </div>
-    <div class="offer feat">
-      <span class="badge">Рекомендуем</span>
-      <div class="n">2 · Внедрение (MVP)</div>
-      <div class="pr">400–600 тыс ₽</div>
-      <div class="sub" style="color:var(--ink2);font-size:13px;font-weight:700">4–6 недель</div>
-      <ul>
-        <li>Единый слой данных + живой дашборд</li>
-        <li>AI-ответ и дожим заявок 24/7</li>
-        <li>Запись заказов в FrontPad через API</li>
-      </ul>
-    </div>
-    <div class="offer">
-      <div class="n">3 · Партнёрство</div>
-      <div class="pr">550–650 тыс ₽<span style="font-size:14px"> + 50–80 тыс/мес</span></div>
-      <div class="sub" style="color:var(--ink2);font-size:13px;font-weight:700">внедрение + сопровождение</div>
-      <ul>
-        <li>Всё из пакета 2</li>
-        <li>AI-реактивация базы и авто-отчётность</li>
-        <li>Развитие системы и новые сценарии</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="grid g2" style="margin-top:18px">
-    <div class="card">
-      <h3><span class="dot" style="background:var(--good)"></span>Экономика эффекта · ₽/год</h3>
-      <div class="chartbox sm" data-chart="planEff"></div>
+      <h3><span class="dot" style="background:var(--orange)"></span>Честное сравнение цен</h3>
+      <div class="pricecmp">
+        <div class="pcrow"><div class="plab">По рынку</div><div class="track"><i style="width:100%;background:linear-gradient(90deg,#ff6a34,#e23d0c)">500–700 тыс ₽+</i></div></div>
+        <div class="pcrow"><div class="plab">Для вас</div><div class="track"><i style="width:33%;background:var(--purple)">200 тыс ₽</i></div></div>
+      </div>
+      <p class="note">Рыночные ориентиры: внедрение CRM с интеграциями — 400–600 тыс ₽, AI-ассистент с function calling — от 120 тыс, кастомная разработка — 500 тыс – 3 млн ₽. Полный стек «ядро + AI + аналитика» легко выходит за 700 тыс.</p>
     </div>
     <div class="callout p" style="display:flex;flex-direction:column;justify-content:center">
-      <h3>Почему это окупается</h3>
-      <p>Система двигает <span class="em">2,5–3,2 млн ₽/год</span>. Запрос за внедрение и первый год сопровождения — порядка 1,0–1,5 млн ₽, это 5–7% от эффекта в первый год и меньше на дистанции. Окупаемость — <b>2–3 месяца</b>.</p>
+      <h3>Почему для вас 200, а не 700</h3>
+      <p>Во-первых, мы не чужие — это работа по-знакомству. Во-вторых, сейчас у бизнеса непростой период, и я захожу как <b>партнёр</b>, а не подрядчик со стороны: беру по стоимости своего времени, а не по рынку. Цена фиксируется на весь путь — дорожает только когда бизнес вырастет.</p>
     </div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3><span class="dot" style="background:var(--good)"></span>Экономика эффекта · ₽/год</h3><div class="chartbox sm" data-chart="planEff"></div></div>
+    <div class="callout k" style="display:flex;flex-direction:column;justify-content:center">
+      <h3>Окупаемость</h3>
+      <p>Система двигает <span class="em">2,5–3,2 млн ₽/год</span>. Полная стоимость 200 тыс — это <b>6–8% от годового эффекта</b>. А первый шаг за 40 тыс уже показывает, где горят деньги в рекламе. Окупаемость — <b>1–2 месяца</b>.</p>
+    </div>
+  </div>
+
+  <div class="section-t">Почему я</div>
+  <div class="hero-strip">
+    <span class="chip">Опыт: <b>сайты · CRM · автоматизация</b></span>
+    <span class="chip">Заход как <b>партнёр, не подрядчик</b></span>
+    <span class="chip">Уже <b>изучил все ваши данные</b></span>
+    <span class="chip">Работаю на <b>ваших системах</b>, без «покупок»</span>
+  </div>
+  <div class="total-bar" style="margin-top:20px;background:var(--purple)">
+    <div class="l">Начнём с шага 1 — аудита за 40 000 ₽</div>
+    <div class="r" style="font-size:20px">Дайте доступ к Директу — соберу картину за 1–2 недели</div>
   </div>
 </section>
 
 <div class="foot">
-  ХА-ХА ШОУ · аналитический дашборд · данные компании 2020–2026 (Заказы, Учёт, Расчёт игр, опросы, Яндекс.Директ).<br>
-  Оценки эффекта консервативны и уточняются после аудита.
+  ХА-ХА ШОУ · аналитика и предложение · данные компании 2020–2026 (Заказы, Учёт, Расчёт игр, опросы 1 528 анкет, Яндекс.Директ).<br>
+  Оценки эффекта консервативны и уточняются после аудита. Стоимость — специальная, по-знакомству.
 </div>
 </main>
 
 <script>
 const DATA = {
   ovYearLabels:['2022','2023','2024','2025','2026 H1'],
-  ovYearRev:[14.70,23.81,38.68,42.10,16.10],
-  ovYearGames:[731,970,1356,1440,507],
+  ovYearRev:[14.70,23.81,38.68,42.10,16.10], ovYearGames:[731,970,1356,1440,507],
   months:['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
   rev2025:[3.84,3.80,3.77,2.44,2.85,2.44,2.02,2.17,2.94,5.47,7.08,3.29],
   rev2026:[3.01,2.96,2.85,2.19,2.21,2.25,0.63,null,null,null,null,null],
   cityYears:['2022','2023','2024','2025','2026 H1'],
   spb:[7.27,9.70,12.28,12.67,5.37], msk:[7.44,14.08,23.82,24.76,8.43], tula:[0,0.03,2.57,4.67,2.30],
   check:[20111,24550,28522,29235,31752],
-  seg:['Корп. выезд','Корп. студия','Детский ДР','ДР студия','Свадьба/девичник'],
-  segV:[84800,55100,65000,38300,44000],
-  chan:['Яндекс','Повторные','Сарафан','Не указан','Instagram','Квизы/VK','Ивенты','Google'],
-  chanV:[46.4,24.9,10.6,8.1,2.1,1.9,1.7,1.5],
+  seg:['Корп. выезд','Корп. студия','Детский ДР','ДР студия','Свадьба/девичник'], segV:[84800,55100,65000,38300,44000],
+  chan:['Яндекс','Повторные','Сарафан','Не указан','Instagram','Квизы/VK','Ивенты','Google'], chanV:[46.4,24.9,10.6,8.1,2.1,1.9,1.7,1.5],
   adCityL:['Москва','СПб','Тула'], adCityVisits:[109849,94033,132963], adCityCR:[3.22,2.68,2.39],
-  adSearchL:['Мск Поиск','СПб Поиск','Тула Поиск','ЕПК Сети Тула','ЕПК Сети СПб','МК Тула (макс. трафик)'],
-  adSearchCR:[9.85,9.27,7.44,3.71,3.49,1.80],
+  adSearchL:['Мск Поиск','СПб Поиск','Тула Поиск','ЕПК Сети Тула','ЕПК Сети СПб','МК Тула (макс. трафик)'], adSearchCR:[9.85,9.27,7.44,3.71,3.49,1.80],
   camp:[['Мастер кампаний · Тула',77274,1.80],['ЕПК Сети · Москва',54336,3.09],['ЕПК Сети ДР · Тула',26909,3.71],
     ['Сети · СПб',23304,1.42],['ЕПК Поиск · Москва',21189,2.87],['МК · Санкт-Петербург',19648,1.90],
     ['ЕПК Сети · СПб',19090,3.49],['ХА-ХА Сети · Москва',10846,2.48]],
   cliSrc:['Яндекс','Сарафан/друзья','Google','VK','Instagram','Прочее'], cliSrcV:[41.3,38.4,9.9,3.5,2.8,4.1],
   cliInc:['100–200 тыс','50–100 тыс','>200 тыс','<50 тыс'], cliIncV:[36.1,34.9,20.3,8.7],
-  cliProf:['Менеджеры','Образование','Предприниматели','Медицина','Финансы','Инженеры','Маркетинг','IT'],
-  cliProfV:[10.5,9.6,8.5,8.2,7.0,6.7,6.1,4.7],
+  cliProf:['Менеджеры','Образование','Предприниматели','Медицина','Финансы','Инженеры','Маркетинг','IT'], cliProfV:[10.5,9.6,8.5,8.2,7.0,6.7,6.1,4.7],
   cliDev:['Телефон','Компьютер','Планшет'], cliDevV:[76.4,22.9,0.7],
-  funReason:['Не размечено','Ушли к конкуренту','Дорого','Передумали','Молчание/игнор'],
-  funReasonV:[49,18,16,10,8],
+  funReason:['Не размечено','Ушли к конкуренту','Дорого','Передумали','Молчание/игнор'], funReasonV:[49,18,16,10,8],
+  costStruct:['ФОТ команды','ФОТ ТОПов','Реклама','Аренда','Прочее','Налоги','Инвестиции','Логистика'], costStructV:[25,20,19,14,7,7,5,3],
   planEff:['ROI рекламы','AI-заявки','Реактивация базы'], planEffLo:[0.8,0.5,1.0], planEffHi:[1.2,1.0,1.0]
 };
-const C={yellow:'#EFDD05',orange:'#F35417',purple:'#6209ED',ink:'#17140C',ink2:'#6b6552',
-  line:'#eadfbf',good:'#1f9d57',bad:'#e0402a'};
-Chart.defaults.font.family="Manrope, sans-serif";
-Chart.defaults.font.size=12;
-Chart.defaults.color=C.ink2;
+const C={yellow:'#EFDD05',orange:'#F35417',purple:'#6209ED',ink:'#17140C',ink2:'#6b6552',line:'#eadfbf',good:'#1f9d57',bad:'#e0402a'};
+Chart.defaults.font.family="Manrope, sans-serif"; Chart.defaults.font.size=12; Chart.defaults.color=C.ink2;
 const money=v=>v.toLocaleString('ru-RU');
-const built={};
-function mk(el,cfg){ if(el.__c) return; el.__c=new Chart(document.createElement('canvas').getContext('2d'),cfg);
-  el.innerHTML=''; el.appendChild(el.__c.canvas); }
-// simpler: append canvas then chart
-function chart(el,cfg){
-  if(el.dataset.done) return; el.dataset.done=1;
-  const cv=document.createElement('canvas'); el.appendChild(cv);
-  new Chart(cv.getContext('2d'),cfg);
-}
-const grid={color:'rgba(0,0,0,.05)'};
 const noGrid={grid:{display:false}};
 const isM=()=>window.innerWidth<640;
 const LP=pos=>isM()?'bottom':pos;
+function chart(el,cfg){ if(el.dataset.done) return; el.dataset.done=1;
+  const cv=document.createElement('canvas'); el.appendChild(cv); new Chart(cv.getContext('2d'),cfg); }
 
-function build(name,el){
- const D=DATA;
- switch(name){
+function build(name,el){ const D=DATA; switch(name){
   case 'ovYear': chart(el,{type:'bar',data:{labels:D.ovYearLabels,datasets:[
     {label:'Выручка, млн ₽',data:D.ovYearRev,backgroundColor:C.purple,borderRadius:7,yAxisID:'y',order:2},
-    {label:'Игр, шт',data:D.ovYearGames,type:'line',borderColor:C.orange,backgroundColor:C.orange,
-      borderWidth:3,tension:.35,pointRadius:4,pointBackgroundColor:C.orange,yAxisID:'y1',order:1}]},
-    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},
-      scales:{y:{position:'left',title:{display:true,text:'млн ₽'},...noGrid},
-        y1:{position:'right',grid:{display:false},title:{display:true,text:'игр'}},x:noGrid}}}); break;
+    {label:'Игр, шт',data:D.ovYearGames,type:'line',borderColor:C.orange,backgroundColor:C.orange,borderWidth:3,tension:.35,pointRadius:4,yAxisID:'y1',order:1}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{position:'left',title:{display:true,text:'млн ₽'},...noGrid},y1:{position:'right',grid:{display:false},title:{display:true,text:'игр'}},x:noGrid}}}); break;
   case 'ovMonth': chart(el,{type:'bar',data:{labels:D.months,datasets:[
     {label:'2025',data:D.rev2025,backgroundColor:'#d9c7a0',borderRadius:5},
     {label:'2026',data:D.rev2026,backgroundColor:C.orange,borderRadius:5}]},
-    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},
-      tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.raw??'—')+' млн ₽'}}},
-      scales:{y:{title:{display:true,text:'млн ₽'},...noGrid},x:noGrid}}}); break;
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+(c.raw??'—')+' млн ₽'}}},scales:{y:{title:{display:true,text:'млн ₽'},...noGrid},x:noGrid}}}); break;
   case 'revCity': chart(el,{type:'bar',data:{labels:D.cityYears,datasets:[
     {label:'Москва',data:D.msk,backgroundColor:C.purple,borderRadius:4},
     {label:'СПб',data:D.spb,backgroundColor:C.orange,borderRadius:4},
     {label:'Тула',data:D.tula,backgroundColor:C.yellow,borderRadius:4}]},
-    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},
-      scales:{x:{stacked:true,...noGrid},y:{stacked:true,title:{display:true,text:'млн ₽'},...noGrid}}}}); break;
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{x:{stacked:true,...noGrid},y:{stacked:true,title:{display:true,text:'млн ₽'},...noGrid}}}}); break;
   case 'revSeason': chart(el,{type:'line',data:{labels:D.months,datasets:[
-    {label:'Выручка 2025, млн ₽',data:D.rev2025,borderColor:C.purple,backgroundColor:'rgba(98,9,237,.12)',
-      fill:true,tension:.4,pointRadius:3,borderWidth:3}]},
-    options:{maintainAspectRatio:false,plugins:{legend:{display:false}},
-      scales:{y:{...noGrid},x:noGrid}}}); break;
+    {label:'Выручка 2025',data:D.rev2025,borderColor:C.purple,backgroundColor:'rgba(98,9,237,.12)',fill:true,tension:.4,pointRadius:3,borderWidth:3}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{...noGrid},x:noGrid}}}); break;
   case 'revCheck': chart(el,{type:'line',data:{labels:D.ovYearLabels,datasets:[
-    {label:'Средний чек, ₽',data:D.check,borderColor:C.orange,backgroundColor:'rgba(243,84,23,.1)',
-      fill:true,tension:.35,pointRadius:4,borderWidth:3}]},
-    options:{maintainAspectRatio:false,plugins:{legend:{display:false},
-      tooltip:{callbacks:{label:c=>money(c.raw)+' ₽'}}},scales:{y:{...noGrid,ticks:{callback:v=>money(v)}},x:noGrid}}}); break;
-  case 'revSeg': chart(el,{type:'bar',data:{labels:D.seg,datasets:[
-    {data:D.segV,backgroundColor:[C.purple,'#8a3cff',C.orange,'#f7864f',C.yellow],borderRadius:6}]},
-    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},
-      tooltip:{callbacks:{label:c=>money(c.raw)+' ₽'}}},scales:{x:{...noGrid,ticks:{callback:v=>money(v)}},y:noGrid}}}); break;
-  case 'adChan': chart(el,{type:'doughnut',data:{labels:D.chan,datasets:[
-    {data:D.chanV,backgroundColor:[C.purple,C.orange,C.yellow,'#c9bfa0','#8a3cff','#f7864f','#ffe94d','#a86bff'],
-      borderColor:'#fff',borderWidth:2}]},
-    options:{maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:LP('right'),labels:{boxWidth:12,padding:8}},
-      tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}}); break;
+    {label:'Средний чек',data:D.check,borderColor:C.orange,backgroundColor:'rgba(243,84,23,.1)',fill:true,tension:.35,pointRadius:4,borderWidth:3}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>money(c.raw)+' ₽'}}},scales:{y:{...noGrid,ticks:{callback:v=>money(v)}},x:noGrid}}}); break;
+  case 'revSeg': chart(el,{type:'bar',data:{labels:D.seg,datasets:[{data:D.segV,backgroundColor:[C.purple,'#8a3cff',C.orange,'#f7864f',C.yellow],borderRadius:6}]},
+    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>money(c.raw)+' ₽'}}},scales:{x:{...noGrid,ticks:{callback:v=>money(v)}},y:noGrid}}}); break;
+  case 'adChan': chart(el,{type:'doughnut',data:{labels:D.chan,datasets:[{data:D.chanV,backgroundColor:[C.purple,C.orange,C.yellow,'#c9bfa0','#8a3cff','#f7864f','#ffe94d','#a86bff'],borderColor:'#fff',borderWidth:2}]},
+    options:{maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:LP('right'),labels:{boxWidth:12,padding:8}},tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}}); break;
   case 'adCity': chart(el,{type:'bar',data:{labels:D.adCityL,datasets:[
     {label:'Визиты',data:D.adCityVisits,backgroundColor:C.purple,borderRadius:6,yAxisID:'y',order:2},
-    {label:'Конверсия, %',data:D.adCityCR,type:'line',borderColor:C.orange,backgroundColor:C.orange,
-      borderWidth:3,pointRadius:5,yAxisID:'y1',order:1}]},
-    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},
-      scales:{y:{position:'left',title:{display:true,text:'визиты'},...noGrid,ticks:{callback:v=>money(v)}},
-        y1:{position:'right',grid:{display:false},title:{display:true,text:'CR %'},min:0,max:4},x:noGrid}}}); break;
-  case 'adSearch': chart(el,{type:'bar',data:{labels:D.adSearchL,datasets:[
-    {label:'Конверсия, %',data:D.adSearchCR,
-      backgroundColor:D.adSearchCR.map(v=>v>=7?C.good:v>=3?C.orange:C.bad),borderRadius:6}]},
-    options:{maintainAspectRatio:false,plugins:{legend:{display:false},
-      tooltip:{callbacks:{label:c=>'CR '+c.raw+'%'}}},scales:{y:{...noGrid,title:{display:true,text:'CR %'}},x:noGrid}}}); break;
-  case 'cliSrc': chart(el,{type:'bar',data:{labels:D.cliSrc,datasets:[
-    {data:D.cliSrcV,backgroundColor:D.cliSrc.map((l,i)=>i===1?C.orange:C.purple),borderRadius:6}]},
-    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},
-      tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{...noGrid,ticks:{callback:v=>v+'%'}},y:noGrid}}}); break;
-  case 'cliInc': chart(el,{type:'doughnut',data:{labels:D.cliInc,datasets:[
-    {data:D.cliIncV,backgroundColor:[C.purple,'#8a3cff',C.orange,C.yellow],borderColor:'#fff',borderWidth:2}]},
-    options:{maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:LP('right'),labels:{boxWidth:12,padding:8}},
-      tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}}); break;
-  case 'cliProf': chart(el,{type:'bar',data:{labels:D.cliProf,datasets:[
-    {data:D.cliProfV,backgroundColor:C.purple,borderRadius:5}]},
-    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},
-      tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{...noGrid,ticks:{callback:v=>v+'%'}},y:noGrid}}}); break;
-  case 'cliDev': chart(el,{type:'doughnut',data:{labels:D.cliDev,datasets:[
-    {data:D.cliDevV,backgroundColor:[C.purple,C.yellow,C.orange],borderColor:'#fff',borderWidth:2}]},
-    options:{maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:8}},
-      tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}}); break;
-  case 'funReason': chart(el,{type:'bar',data:{labels:D.funReason,datasets:[
-    {data:D.funReasonV,backgroundColor:['#c9bfa0',C.purple,C.orange,'#f7864f',C.bad],borderRadius:6}]},
-    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},
-      tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{...noGrid,ticks:{callback:v=>v+'%'}},y:noGrid}}}); break;
+    {label:'Конверсия, %',data:D.adCityCR,type:'line',borderColor:C.orange,backgroundColor:C.orange,borderWidth:3,pointRadius:5,yAxisID:'y1',order:1}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},scales:{y:{position:'left',title:{display:true,text:'визиты'},...noGrid,ticks:{callback:v=>money(v)}},y1:{position:'right',grid:{display:false},title:{display:true,text:'CR %'},min:0,max:4},x:noGrid}}}); break;
+  case 'adSearch': chart(el,{type:'bar',data:{labels:D.adSearchL,datasets:[{label:'CR %',data:D.adSearchCR,backgroundColor:D.adSearchCR.map(v=>v>=7?C.good:v>=3?C.orange:C.bad),borderRadius:6}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'CR '+c.raw+'%'}}},scales:{y:{...noGrid,title:{display:true,text:'CR %'}},x:noGrid}}}); break;
+  case 'cliSrc': chart(el,{type:'bar',data:{labels:D.cliSrc,datasets:[{data:D.cliSrcV,backgroundColor:D.cliSrc.map((l,i)=>i===1?C.orange:C.purple),borderRadius:6}]},
+    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{...noGrid,ticks:{callback:v=>v+'%'}},y:noGrid}}}); break;
+  case 'cliInc': chart(el,{type:'doughnut',data:{labels:D.cliInc,datasets:[{data:D.cliIncV,backgroundColor:[C.purple,'#8a3cff',C.orange,C.yellow],borderColor:'#fff',borderWidth:2}]},
+    options:{maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:LP('right'),labels:{boxWidth:12,padding:8}},tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}}); break;
+  case 'cliProf': chart(el,{type:'bar',data:{labels:D.cliProf,datasets:[{data:D.cliProfV,backgroundColor:C.purple,borderRadius:5}]},
+    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{...noGrid,ticks:{callback:v=>v+'%'}},y:noGrid}}}); break;
+  case 'cliDev': chart(el,{type:'doughnut',data:{labels:D.cliDev,datasets:[{data:D.cliDevV,backgroundColor:[C.purple,C.yellow,C.orange],borderColor:'#fff',borderWidth:2}]},
+    options:{maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:8}},tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}}); break;
+  case 'funReason': chart(el,{type:'bar',data:{labels:D.funReason,datasets:[{data:D.funReasonV,backgroundColor:['#c9bfa0',C.purple,C.orange,'#f7864f',C.bad],borderRadius:6}]},
+    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>c.raw+'%'}}},scales:{x:{...noGrid,ticks:{callback:v=>v+'%'}},y:noGrid}}}); break;
+  case 'costStruct': chart(el,{type:'doughnut',data:{labels:D.costStruct,datasets:[{data:D.costStructV,backgroundColor:[C.purple,'#8a3cff',C.orange,'#f7864f',C.yellow,'#ffe94d','#c9bfa0','#a86bff'],borderColor:'#fff',borderWidth:2}]},
+    options:{maintainAspectRatio:false,cutout:'56%',plugins:{legend:{position:LP('right'),labels:{boxWidth:12,padding:7}},tooltip:{callbacks:{label:c=>c.label+': '+c.raw+'%'}}}}}); break;
   case 'planEff': chart(el,{type:'bar',data:{labels:D.planEff,datasets:[
     {label:'Мин.',data:D.planEffLo,backgroundColor:C.yellow,borderRadius:5},
     {label:'Макс.',data:D.planEffHi,backgroundColor:C.purple,borderRadius:5}]},
-    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},
-      tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+' млн ₽'}}},
-      scales:{y:{...noGrid,title:{display:true,text:'млн ₽'}},x:noGrid}}}); break;
- }
-}
-// campaigns table
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+' млн ₽'}}},scales:{y:{...noGrid,title:{display:true,text:'млн ₽'}},x:noGrid}}}); break;
+}}
 (function(){const tb=document.getElementById('tblCamp');const max=Math.max(...DATA.camp.map(c=>c[1]));
   DATA.camp.forEach(([n,v,cr])=>{const col=cr>=3?C.good:cr>=2?C.orange:C.bad;
-    tb.insertAdjacentHTML('beforeend',
-    `<tr><td>${n}<div class="bar"><i style="width:${(v/max*100).toFixed(0)}%;background:${C.purple}"></i></div></td>
-     <td class="n hi">${money(v)}</td><td class="n" style="color:${col};font-weight:800">${cr}%</td></tr>`);});
+    tb.insertAdjacentHTML('beforeend',`<tr><td>${n}<div class="bar"><i style="width:${(v/max*100).toFixed(0)}%;background:${C.purple}"></i></div></td><td class="n hi">${money(v)}</td><td class="n" style="color:${col};font-weight:800">${cr}%</td></tr>`);});
 })();
-
 function activate(v){
   document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id===v));
   document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
-  // build charts inside active view
   document.querySelectorAll('#'+v+' [data-chart]').forEach(el=>build(el.dataset.chart,el));
   window.scrollTo({top:0,behavior:'smooth'});
 }
-document.getElementById('nav').addEventListener('click',e=>{
-  const b=e.target.closest('button'); if(b) activate(b.dataset.v);
-});
-// initial
+document.getElementById('nav').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) activate(b.dataset.v);});
 document.querySelectorAll('#over [data-chart]').forEach(el=>build(el.dataset.chart,el));
-window.addEventListener('resize',()=>{});
 </script>
 </body>
 </html>
