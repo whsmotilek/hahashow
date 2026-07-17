@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ХА-ХА ШОУ · Аналитика и предложение</title>
-<meta name="description" content="Диагностика бизнеса ХА-ХА ШОУ и предложение: операционное ядро с AI вместо ручного учёта и слепой рекламы">
+<meta name="description" content="Диагностика ХА-ХА ШОУ по данным 2020–2026 и предложение: операционное ядро с AI вместо ручного учёта и слепой рекламы">
 <link rel="icon" href="logo.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,12 +28,10 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 .topbar-in{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px}
 .brand{display:flex;align-items:center;gap:12px;flex:0 0 auto}
 .brand img{height:38px;width:auto;display:block}
-.brand .tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);
-  border-left:2px solid var(--line);padding-left:12px;line-height:1.2}
+.brand .tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);border-left:2px solid var(--line);padding-left:12px;line-height:1.2}
 .nav{margin-left:auto;display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}
 .nav::-webkit-scrollbar{display:none}
-.nav button{font-family:'Manrope';font-weight:700;font-size:13.5px;color:var(--ink2);background:transparent;
-  border:none;padding:9px 13px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:.15s}
+.nav button{font-family:'Manrope';font-weight:700;font-size:13.5px;color:var(--ink2);background:transparent;border:none;padding:9px 12px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:.15s}
 .nav button:hover{background:var(--soft);color:var(--ink)}
 .nav button.on{background:var(--ink);color:#fff}
 
@@ -51,8 +49,7 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 .g3{grid-template-columns:repeat(3,1fr)}
 .g4{grid-template-columns:repeat(4,1fr)}
 .card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
-.card h3{font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--ink2);
-  font-family:'Manrope';margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card h3{font-size:14px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--ink2);font-family:'Manrope';margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .card h3 .dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
 
 .kpi{position:relative;overflow:hidden}
@@ -93,37 +90,48 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 .note{font-size:12.5px;color:var(--ink2);margin-top:12px;font-style:italic}
 .section-t{font-family:'Unbounded';font-weight:800;font-size:22px;margin:30px 0 14px;letter-spacing:-.01em}
 .section-t.sm{font-size:18px;margin:22px 0 12px}
+.lead{color:var(--ink2);font-size:14.5px;margin:-6px 0 16px;max-width:74ch}
 .hero-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 .chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:8px}
 .chip b{color:var(--purple)}
 .chip.warn{border-color:var(--orange);background:#fff5f0}
 .chip.warn b{color:var(--orange)}
 
-/* HERO */
 .hero{background:linear-gradient(135deg,#1b1810,#241a06);color:#fff;border-radius:26px;padding:36px 32px;position:relative;overflow:hidden;margin-bottom:20px}
 .hero:after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(239,221,5,.28),transparent 70%)}
 .hero .ey{font-size:12.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow)}
-.hero h1{font-size:clamp(26px,4.6vw,44px);font-weight:900;line-height:1.05;margin:12px 0;max-width:16ch}
+.hero h1{font-size:clamp(26px,4.6vw,44px);font-weight:900;line-height:1.05;margin:12px 0;max-width:17ch}
 .hero h1 em{font-style:normal;color:var(--yellow)}
-.hero p{font-size:16px;color:#e9e2cf;max-width:60ch}
+.hero p{font-size:16px;color:#e9e2cf;max-width:62ch}
 .hero .strip{display:flex;flex-wrap:wrap;gap:22px;margin-top:22px}
 .hero .st b{font-family:'Unbounded';font-weight:800;font-size:26px;display:block;line-height:1}
 .hero .st span{font-size:12.5px;color:#cbc3ad}
 .hero .st b.bad{color:#ff7a5c}.hero .st b.good{color:var(--yellow)}
+
+/* big contrast: cost of inaction */
+.contrast{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch}
+.contrast .side{border-radius:var(--radius);padding:24px;text-align:center;display:flex;flex-direction:column;justify-content:center}
+.contrast .side.l{background:#fff1ec;border:2px solid #f5c3ae}
+.contrast .side.r{background:#f1ecff;border:2px solid var(--purple)}
+.contrast .side .t{font-size:12.5px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2)}
+.contrast .side .v{font-family:'Unbounded';font-weight:900;font-size:clamp(28px,4.2vw,40px);line-height:1;margin:10px 0 6px}
+.contrast .side.l .v{color:var(--bad)} .contrast .side.r .v{color:var(--purple)}
+.contrast .side .d{font-size:13px;color:var(--ink2)}
+.contrast .vs{align-self:center;font-family:'Unbounded';font-weight:900;font-size:20px;color:var(--ink2)}
 
 /* before/after */
 .ba{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .ba .col{border-radius:var(--radius);padding:20px;border:1.5px solid var(--line)}
 .ba .col.now{background:#fff6f2;border-color:#f5cdbb}
 .ba .col.fut{background:#f2ecff;border-color:#d8c7ff}
-.ba .col h4{font-family:'Unbounded';font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.ba .col h4{font-family:'Unbounded';font-size:15px;margin-bottom:12px}
 .ba .col.now h4{color:var(--bad)} .ba .col.fut h4{color:var(--purple)}
 .ba ul{list-style:none;display:grid;gap:9px;font-size:14px}
 .ba ul li{padding-left:22px;position:relative}
 .ba .now ul li:before{content:"✕";position:absolute;left:0;color:var(--bad);font-weight:800}
 .ba .fut ul li:before{content:"✓";position:absolute;left:0;color:var(--good);font-weight:800}
 
-/* price comparison */
+/* price compare */
 .pricecmp{display:grid;gap:14px}
 .pcrow{display:flex;align-items:center;gap:14px}
 .pcrow .plab{width:110px;flex:0 0 auto;font-weight:700;font-size:14px}
@@ -131,8 +139,8 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 .pcrow .track>i{display:block;height:100%;border-radius:10px}
 .pcrow .val{flex:0 0 auto;font-family:'Unbounded';font-weight:800;font-size:15px;white-space:nowrap}
 
-/* roadmap steps */
-.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;position:relative}
+/* roadmap */
+.roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .step{background:#fff;border:2px solid var(--line);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;position:relative}
 .step.s2{border-color:var(--purple);box-shadow:0 14px 34px rgba(98,9,237,.14)}
 .step .num{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font-family:'Unbounded';font-weight:800;color:#fff;font-size:16px;margin-bottom:12px}
@@ -144,31 +152,55 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 .step ul li{padding-left:20px;position:relative}
 .step ul li:before{content:"→";position:absolute;left:0;color:var(--orange);font-weight:800}
 .badge{align-self:flex-start;background:var(--yellow);color:var(--ink);font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+
 .total-bar{margin-top:18px;background:var(--ink);color:#fff;border-radius:var(--radius);padding:20px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:14px;justify-content:space-between}
 .total-bar .l{font-family:'Unbounded';font-weight:800;font-size:18px}
 .total-bar .r{font-family:'Unbounded';font-weight:900;font-size:30px;color:var(--yellow)}
 .total-bar .old{color:#9b937d;text-decoration:line-through;font-size:16px;font-weight:700;margin-right:6px}
 
+/* timeline */
+.tl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;position:relative}
+.tl .t{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px;position:relative}
+.tl .t.win{border-color:var(--good);background:#f0fbf5}
+.tl .t .m{font-family:'Unbounded';font-weight:800;font-size:15px;color:var(--purple)}
+.tl .t.win .m{color:var(--good)}
+.tl .t .w{font-size:13px;color:var(--ink2);margin-top:6px}
+.tl .t .badge2{position:absolute;top:-9px;right:12px;background:var(--yellow);font-size:10px;font-weight:800;padding:2px 8px;border-radius:99px;text-transform:uppercase}
+
+/* faq */
+.faq{display:grid;gap:10px}
+.faq details{background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px}
+.faq details[open]{border-color:var(--purple);box-shadow:var(--shadow)}
+.faq summary{font-weight:800;font-size:14.5px;cursor:pointer;list-style:none;display:flex;gap:10px;align-items:flex-start}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:before{content:"?";flex:0 0 auto;width:20px;height:20px;border-radius:6px;background:var(--yellow);color:var(--ink);display:grid;place-items:center;font-size:12px;font-weight:900;margin-top:1px}
+.faq details[open] summary:before{content:"−";background:var(--purple);color:#fff}
+.faq p{font-size:14px;color:var(--ink2);margin-top:10px;padding-left:30px}
+
 .foot{text-align:center;color:var(--ink2);font-size:12.5px;margin-top:40px;padding-top:20px;border-top:1px solid var(--line)}
 
-@media(max-width:920px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}.roadmap{grid-template-columns:1fr}}
+@media(max-width:920px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}.roadmap{grid-template-columns:1fr}.tl{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:640px){
   .topbar-in{flex-wrap:wrap;gap:8px;padding:9px 14px}
   .brand .tag{display:none}
-  .nav{width:100%;order:3;margin-left:0;padding:4px 0 2px;flex-wrap:wrap;gap:6px;overflow:visible}
-  .nav button{flex:1 1 auto;text-align:center;font-size:13px;padding:9px 10px;
-    background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+  .nav{width:100%;order:3;margin-left:0;padding:3px 0 2px;flex-wrap:wrap;gap:5px;overflow:visible}
+  .nav button{flex:1 1 auto;text-align:center;font-size:12.5px;padding:7px 6px;background:#fff;border:1.5px solid var(--line);color:var(--ink)}
   .nav button.on{background:var(--ink);border-color:var(--ink);color:#fff}
   .wrap{padding:16px 13px 80px}
   .g2,.g3,.g4,.ba{grid-template-columns:1fr}
+  .tl{grid-template-columns:1fr}
   .chartbox{height:260px}
   .kpi .big{font-size:26px}
   .card{padding:16px;border-radius:16px}
   .hero{padding:26px 20px}
+  .contrast{grid-template-columns:1fr;gap:10px}
+  .contrast .vs{justify-self:center}
   .pcrow{flex-wrap:wrap;gap:6px 12px}
   .pcrow .plab{width:auto;flex:1;font-size:13.5px}
   .pcrow .val{font-size:15px}
   .pcrow .track{flex:1 0 100%;height:22px}
+  .total-bar{padding:18px}
+  .total-bar .r{font-size:24px}
 }
 </style>
 </head>
@@ -185,6 +217,7 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
       <button data-v="fun">Воронка</button>
       <button data-v="cost">Затраты</button>
       <button data-v="plan">Решение</button>
+      <button data-v="deal">Условия</button>
     </nav>
   </div>
 </header>
@@ -195,8 +228,8 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
 <section class="view on" id="over">
   <div class="hero">
     <div class="ey">ХА-ХА ШОУ · диагностика по данным 2020–2026</div>
-    <h1>Бизнес теряет деньги на <em>ручном учёте</em> и <em>слепой рекламе</em></h1>
-    <p>Я изучил всё: 6 учётных книг на ~370 листов, 1 528 анкет клиентов и полную статистику Яндекс.Директа. Ниже — где деньги, где течёт и как это чинится одной системой с AI. Это не отчёт ради отчёта, а план.</p>
+    <h1>Спад уже стоил <em>3,67 млн ₽</em>. Система стоит <em>200 тысяч</em></h1>
+    <p>Я перелопатил всё: 6 учётных книг на ~370 листов, 1 528 анкет гостей и полную статистику Яндекс.Директа за 6 лет. Нашёл, где течёт и почему. Этот сайт — уже сделанная работа, до всякой оплаты. Ниже — что происходит и как это чинится.</p>
     <div class="strip">
       <div class="st"><b class="bad">−19,2%</b><span>выручка H1 2026 г/г</span></div>
       <div class="st"><b>~8 млн ₽</b><span>реклама/год вслепую</span></div>
@@ -205,15 +238,27 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
     </div>
   </div>
 
-  <div class="grid g4">
-    <div class="card kpi"><span class="accent" style="background:var(--purple)"></span>
-      <div class="big">42,1 млн ₽</div><div class="lab">Выручка 2025</div><span class="pill up">+8,8% к 2024</span></div>
-    <div class="card kpi"><span class="accent" style="background:var(--orange)"></span>
-      <div class="big">−19,2%</div><div class="lab">I полугодие 2026</div><span class="pill down">спад 6 мес подряд</span></div>
-    <div class="card kpi"><span class="accent" style="background:var(--yellow)"></span>
-      <div class="big">29 235 ₽</div><div class="lab">Средний чек 2025</div><span class="pill up">растёт — цена не проблема</span></div>
-    <div class="card kpi"><span class="accent" style="background:var(--purple)"></span>
-      <div class="big">2,60%</div><div class="lab">Конверсия сайта</div><span class="pill info">407 580 визитов Директа</span></div>
+  <div class="section-t" style="margin-top:22px">Цена бездействия против цены решения</div>
+  <div class="contrast">
+    <div class="side l">
+      <div class="t">Уже потеряно</div>
+      <div class="v">−3,67 млн ₽</div>
+      <div class="d">за I полугодие 2026 к прошлому году. Тренд не развернулся — падение шестой месяц подряд.</div>
+    </div>
+    <div class="vs">против</div>
+    <div class="side r">
+      <div class="t">Стоит всё решение</div>
+      <div class="v">200 000 ₽</div>
+      <div class="d">полное операционное ядро с AI. Первый шаг — 40 тыс, и он уже показывает, где горят деньги.</div>
+    </div>
+  </div>
+  <p class="note">Дальше — не мнение, а цифры из твоих же таблиц и Директа. Каждая вкладка сверху — отдельный срез.</p>
+
+  <div class="section-t">Что происходит — за 30 секунд</div>
+  <div class="grid g3">
+    <div class="callout p"><h3>1. Рост встал, начался спад</h3><p>После +62% в год рост упал до <b>+8,8%</b>, а в 2026 — минус каждый месяц. Впереди Q4 — <span class="em">38%</span> годовой выручки.</p></div>
+    <div class="callout o"><h3>2. Реклама работает вслепую</h3><p><span class="em">~8 млн ₽/год</span> уходит почти целиком в Яндекс, окупаемость каналов не измеряется. Roistat оплачен, а лист «каналы» — пустой.</p></div>
+    <div class="callout k"><h3>3. Заявки и база утекают</h3><p><span class="em">1 723</span> отказа задокументировано, половина даже без причины. Сарафан даёт 38% клиентов — и им никто не управляет.</p></div>
   </div>
 
   <div class="grid g2" style="margin-top:16px">
@@ -221,28 +266,25 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
     <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Помесячно: 2026 против 2025</h3><div class="chartbox" data-chart="ovMonth"></div></div>
   </div>
 
-  <div class="grid g3" style="margin-top:16px">
-    <div class="callout p"><h3>Рост остановился</h3><p>После +62% в год рост упал до <b>+8,8%</b>, а в 2026 — спад. Впереди Q4 — <span class="em">38%</span> годовой выручки. Окно закрывается к октябрю.</p></div>
-    <div class="callout o"><h3>Реклама вслепую</h3><p><span class="em">~8 млн ₽/год</span> уходит почти целиком в Яндекс, окупаемость каналов не измеряется. Roistat оплачен, но лист «каналы» пустой.</p></div>
-    <div class="callout k"><h3>Резерв на столе</h3><p>Порядок + автоматизация на текущих данных дают <span class="em">2,5–3,2 млн ₽/год</span> без роста рекламного бюджета.</p></div>
+  <div class="section-t">Причина не в цене и не в сайте</div>
+  <div class="grid g4">
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span><div class="big">29 235 ₽</div><div class="lab">Средний чек</div><span class="pill up">растёт — цена ок</span></div>
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span><div class="big">80%</div><div class="lab">Гостям нравится сайт</div><span class="pill up">сайт ок</span></div>
+    <div class="card kpi"><span class="accent" style="background:var(--bad)"></span><div class="big">−19,2%</div><div class="lab">Но выручка падает</div><span class="pill down">мало заявок</span></div>
+    <div class="card kpi"><span class="accent" style="background:var(--bad)"></span><div class="big">2,60%</div><div class="lab">Конверсия трафика</div><span class="pill down">воронка течёт</span></div>
   </div>
+  <p class="note">Продукт и цена в порядке — ломается привлечение и обработка заявок. Значит, чинить надо систему, а не продукт.</p>
 
-  <div class="section-t">Что уже оплачено — но не связано между собой</div>
-  <div class="hero-strip">
-    <span class="chip">CRM: <b>FrontPad</b></span>
-    <span class="chip">Сделки: <b>amoCRM</b></span>
-    <span class="chip">Аналитика: <b>Roistat</b></span>
-    <span class="chip">Трафик: <b>Яндекс.Метрика</b></span>
-    <span class="chip warn">Учёт: <b>6 Excel · ~370 листов</b></span>
-    <span class="chip warn">Опросы: <b>Google Forms</b></span>
+  <div class="total-bar" style="background:var(--purple)">
+    <div class="l">Начнём с шага 1 — аудита за 40 000 ₽</div>
+    <div class="r" style="font-size:19px">Дай доступ к Директу — соберу картину за 1–2 недели</div>
   </div>
-  <p class="note">4 платных системы + ручные таблицы, и ни одна не связана с другой. Данные вбиваются по 2–3 раза руками. Единого источника правды нет — отсюда и слепые решения. Решение — на вкладке «Решение».</p>
 </section>
 
 <!-- ============ ВЫРУЧКА ============ -->
 <section class="view" id="rev">
   <div class="phead"><h1><span class="layer">Выручка и тренды</span></h1>
-    <p>Где растём, где падаем и на чём держится бизнес. Все суммы — фактические данные из учётных книг компании.</p></div>
+    <p>Где растём, где падаем и на чём держится бизнес. Все суммы — фактические данные из твоих учётных книг.</p></div>
   <div class="grid g4">
     <div class="card kpi"><div class="big">119,4 млн ₽</div><div class="lab">Выручка 2022–2025</div></div>
     <div class="card kpi"><div class="big">58,8%</div><div class="lab">Доля Москвы 2025</div><div class="sub">СПб 30,1% · Тула 11,1%</div></div>
@@ -312,7 +354,7 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
         <tr><td>«Мафия»</td><td class="n hi">9</td></tr>
         <tr><td>Show Today <span style="color:var(--bad)">(прямой аналог)</span></td><td class="n hi">6</td></tr>
         <tr><td>«Краса»</td><td class="n hi">1</td></tr></tbody></table>
-      <p class="note">Клиенты сами пишут: «у вас лучше, чем у Show Today». Это позиционирование, которое надо усиливать в рекламе.</p></div>
+      <p class="note">Гости сами пишут: «у вас лучше, чем у Show Today». Это позиционирование, которое надо усиливать в рекламе.</p></div>
   </div>
 </section>
 
@@ -336,13 +378,13 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
       <p class="note">50% отказов без причины — отдельный разрыв: сейчас невозможно понять, что именно ломает продажу.</p></div>
   </div>
   <div class="callout k" style="margin-top:16px"><h3>Реактивация базы под высокий сезон</h3>
-    <p>1 528+ профилей клиентов и сегменты по типам событий. Персональные касания «год назад был корпоратив — забронируй новогодний слот» бьют прямо в повторные продажи, а это <span class="em">25% выручки</span>.</p></div>
+    <p>1 528+ профилей гостей и сегменты по типам событий. Персональные касания «год назад был корпоратив — забронируй новогодний слот» бьют прямо в повторные продажи, а это <span class="em">25% выручки</span>.</p></div>
 </section>
 
 <!-- ============ ЗАТРАТЫ ============ -->
 <section class="view" id="cost">
   <div class="phead"><h1><span class="layer">Куда уходят деньги</span></h1>
-    <p>Структура расходов и «ручные» косты, которые съедают маржу и время. Именно здесь мы сокращаем — до внедрения чего-либо.</p></div>
+    <p>Структура расходов и «ручные» косты, которые съедают маржу и время. Именно здесь мы сокращаем — ещё до внедрения чего-либо.</p></div>
   <div class="grid g4">
     <div class="card kpi"><div class="big">~486 тыс ₽</div><div class="lab">Реклама в месяц</div><div class="sub">без измерения ROI</div></div>
     <div class="card kpi"><div class="big">4 системы</div><div class="lab">Платных и несвязанных</div><span class="pill warn">FrontPad·amo·Roistat·Метрика</span></div>
@@ -354,7 +396,7 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
       <p class="note">Модель «конвертов» из учёта: реклама ~19% и ФОТ ~45% — самые большие статьи, и обе управляются на глаз.</p></div>
     <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Ручные шаги, которые убираем</h3>
       <ul class="ul">
-        <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Перенос заказов FrontPad → Excel руками.</b> Ежедневно, с ошибками. Уже завели колонки «Фронтпад» в таблицах — но всё равно вбивают вручную.</div></li>
+        <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Перенос заказов FrontPad → Excel руками.</b> Ежедневно, с ошибками. Колонки «Фронтпад» в таблицах уже заведены — но всё равно вбиваются вручную.</div></li>
         <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Ведение 370 листов</b> в 6 книгах: заказы, учёт, расчёт игр по 3 городам — параллельно и несводимо.</div></li>
         <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Разнос финансов по фондам вручную</b> каждую неделю.</div></li>
         <li><span class="ic" style="background:var(--bad)">✕</span><div><b>Опросы Google Forms → Excel</b> и ручная разметка ответов.</div></li>
@@ -362,14 +404,14 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
       </ul>
     </div>
   </div>
-  <div class="callout o" style="margin-top:16px"><h3>Платите за 4 системы — а решения принимаете вслепую</h3>
+  <div class="callout o" style="margin-top:16px"><h3>Платишь за 4 системы — а решения принимаешь вслепую</h3>
     <p>FrontPad, amoCRM, Roistat и Метрика оплачиваются отдельно и дублируют друг друга, но не связаны. Roistat должен показывать окупаемость каналов — а лист «каналы продаж» в учёте пустой. Сначала связываем и настраиваем то, что <b>уже есть</b>, а не покупаем новое.</p></div>
 </section>
 
 <!-- ============ РЕШЕНИЕ ============ -->
 <section class="view" id="plan">
-  <div class="phead"><h1><span class="layer">Операционное ядро + AI</span></h1>
-    <p>Одна система вместо шести книг и четырёх несвязанных сервисов. Ниже — что меняется и как мы к этому идём по шагам.</p></div>
+  <div class="phead"><h1><span class="layer">Что получишь</span></h1>
+    <p>Одна система вместо шести книг и четырёх несвязанных сервисов. Конкретно — вот что появится.</p></div>
 
   <div class="section-t sm">Было → Станет</div>
   <div class="ba">
@@ -379,7 +421,7 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
         <li>Заказы переносятся руками, с ошибками</li>
         <li>Окупаемость рекламы неизвестна</li>
         <li>Заявки обрабатываются вручную, «молчуны» теряются</li>
-        <li>База клиентов не работает на повтор</li>
+        <li>База гостей не работает на повтор</li>
         <li>Отчёты собираются часами по таблицам</li>
       </ul></div>
     <div class="col fut"><h4>● Станет</h4>
@@ -393,8 +435,48 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
       </ul></div>
   </div>
 
-  <div class="section-t">Как идём — по шагам</div>
-  <p style="color:var(--ink2);font-size:14.5px;margin:-6px 0 16px;max-width:70ch">Не «пакеты на выбор», а последовательный путь к полной автоматизации. Каждый шаг самостоятельный и окупается до следующего — можно остановиться на любом.</p>
+  <div class="section-t">Операционное ядро — по пунктам</div>
+  <p class="lead">Не «абстрактная автоматизация», а конкретные вещи, которые появятся у тебя на экране.</p>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Учёт и управление</h3>
+      <ul class="ul">
+        <li><span class="ic" style="background:var(--purple)">✓</span><div><b>Один экран вместо 370 листов:</b> заявки, заказы, финансы, загрузка по 3 городам.</div></li>
+        <li><span class="ic" style="background:var(--purple)">✓</span><div><b>Заказы падают из FrontPad сами</b> через API — ручной ввод исчезает как класс.</div></li>
+        <li><span class="ic" style="background:var(--purple)">✓</span><div><b>Маржа каждого мероприятия</b> считается автоматом (выручка − зал − ЗП − логистика).</div></li>
+        <li><span class="ic" style="background:var(--purple)">✓</span><div><b>Финмодель по фондам</b> заполняется фактом, без ручного разноса.</div></li>
+      </ul></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Продажи и AI</h3>
+      <ul class="ul">
+        <li><span class="ic" style="background:var(--orange)">✓</span><div><b>AI-ассистент 24/7:</b> отвечает на заявку, считает смету, бронирует, пишет заказ в ядро.</div></li>
+        <li><span class="ic" style="background:var(--orange)">✓</span><div><b>Авто-дожим молчунов</b> — тех самых, что «ушли в игнор».</div></li>
+        <li><span class="ic" style="background:var(--orange)">✓</span><div><b>Реактивация базы:</b> «год назад был корпоратив — вот новогодний слот».</div></li>
+        <li><span class="ic" style="background:var(--orange)">✓</span><div><b>AI-аналитик:</b> спрашиваешь «почему упал март» — получаешь ответ, а не таблицу.</div></li>
+      </ul></div>
+  </div>
+
+  <div class="section-t">Дашборд окупаемости — то, чего нет сейчас</div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--yellow)"></span>Что увидишь в первый же месяц</h3>
+      <ul class="ul">
+        <li><span class="ic" style="background:var(--good)">₽</span><div>Сколько приносит <b>каждый канал и город</b> — в рублях, а не в кликах.</div></li>
+        <li><span class="ic" style="background:var(--good)">₽</span><div>Какие кампании <b>горят</b> (например, Тула-сети при CR 1,8%).</div></li>
+        <li><span class="ic" style="background:var(--good)">₽</span><div>Что будет, если <b>срезать бюджет</b> — тот самый вопрос из твоей таблицы.</div></li>
+        <li><span class="ic" style="background:var(--good)">₽</span><div>Прогноз выручки и загрузки на сезон.</div></li>
+      </ul></div>
+    <div class="callout p" style="display:flex;flex-direction:column;justify-content:center">
+      <h3>Работаю на том, что уже оплачено</h3>
+      <p>Я ничего не заставляю покупать. FrontPad, amoCRM, Roistat, Метрика — всё это уже есть и оплачено. Задача — <b>связать их</b> и достроить то, чего не хватает. Никаких новых подписок ради подписок.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ УСЛОВИЯ ============ -->
+<section class="view" id="deal">
+  <div class="phead"><h1><span class="layer">Условия</span></h1>
+    <p>Как идём, сколько стоит, почему так дёшево и что нужно от тебя. Без мелкого шрифта.</p></div>
+
+  <div class="section-t sm">Путь — по шагам</div>
+  <p class="lead">Не «пакеты на выбор», а последовательный путь к полной автоматизации. Каждый шаг самостоятельный и окупается до следующего — остановиться можно на любом.</p>
 
   <div class="roadmap">
     <div class="step s1"><div class="num" style="background:var(--orange)">1</div>
@@ -403,7 +485,7 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
       <div class="st-goal">Полная картина и план автоматизации</div>
       <ul>
         <li>Подключаюсь к Яндекс.Директу и Метрике</li>
-        <li>Вскрываю провалы и считаю окупаемость каналов</li>
+        <li>Вскрываю провалы, считаю окупаемость каналов</li>
         <li>Нахожу ручные шаги и лишние косты</li>
         <li>Строю пошаговый план перехода</li>
       </ul></div>
@@ -424,7 +506,7 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
       <ul>
         <li>AI-ассистент: ответ, смета, бронь 24/7</li>
         <li>Авто-дожим молчунов и реактивация базы</li>
-        <li>Рассылки по сегментам ЦА</li>
+        <li>Рассылки по сегментам гостей</li>
         <li>AI-аналитик: «почему упал март», прогноз</li>
       </ul></div>
   </div>
@@ -434,45 +516,99 @@ h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
     <div class="r"><span class="old">500–700 тыс ₽</span> 200 000 ₽</div>
   </div>
 
-  <div class="section-t">Сколько это стоит на рынке — и почему для вас иначе</div>
+  <div class="section-t">Почему успеть надо сейчас</div>
+  <p class="lead">Q4 (октябрь–декабрь) — это <b>38% годовой выручки</b>, пик в ноябре. Если стартуем в июле, к высокому сезону система уже работает и зарабатывает. Каждый месяц промедления — это минус один месяц отдачи на самом жирном отрезке года.</p>
+  <div class="tl">
+    <div class="t"><div class="m">Июль — сейчас</div><div class="w">Шаг 1: аудит, подключаюсь к Директу. Видно, где горят деньги.</div></div>
+    <div class="t"><div class="m">Август</div><div class="w">Шаг 2: собираем операционное ядро. Ручной ввод исчезает.</div></div>
+    <div class="t"><div class="m">Сентябрь</div><div class="w">Шаг 3: AI-ассистент и дожим базы. Реактивация под сезон.</div></div>
+    <div class="t win"><span class="badge2">цель</span><div class="m">Октябрь–Ноябрь</div><div class="w">Пик сезона (38% выручки) — уже с работающей системой.</div></div>
+  </div>
+
+  <div class="section-t">Сколько это стоит на рынке — и почему для тебя иначе</div>
   <div class="grid g2">
     <div class="card">
       <h3><span class="dot" style="background:var(--orange)"></span>Честное сравнение цен</h3>
       <div class="pricecmp">
         <div class="pcrow"><div class="plab">По рынку</div><div class="track"><i style="width:100%;background:linear-gradient(90deg,#ff6a34,#e23d0c)"></i></div><div class="val" style="color:var(--orange)">500–700 тыс&nbsp;₽+</div></div>
-        <div class="pcrow"><div class="plab">Для вас</div><div class="track"><i style="width:33%;background:var(--purple)"></i></div><div class="val" style="color:var(--purple)">200 тыс&nbsp;₽</div></div>
+        <div class="pcrow"><div class="plab">Для тебя</div><div class="track"><i style="width:33%;background:var(--purple)"></i></div><div class="val" style="color:var(--purple)">200 тыс&nbsp;₽</div></div>
       </div>
       <p class="note">Рыночные ориентиры: внедрение CRM с интеграциями — 400–600 тыс ₽, AI-ассистент с function calling — от 120 тыс, кастомная разработка — 500 тыс – 3 млн ₽. Полный стек «ядро + AI + аналитика» легко выходит за 700 тыс.</p>
     </div>
     <div class="callout p" style="display:flex;flex-direction:column;justify-content:center">
-      <h3>Почему для вас 200, а не 700</h3>
-      <p>Во-первых, мы не чужие — это работа по-знакомству. Во-вторых, сейчас у бизнеса непростой период, и я захожу как <b>партнёр</b>, а не подрядчик со стороны: беру по стоимости своего времени, а не по рынку. Цена фиксируется на весь путь — дорожает только когда бизнес вырастет.</p>
+      <h3>Почему тебе дешевле</h3>
+      <p>Во-первых, мы не чужие — это работа по-знакомству, а не тендер. Во-вторых, у бизнеса сейчас непростой период, и я захожу как <b>партнёр</b>, а не подрядчик со стороны: беру по стоимости своего времени, а не по рынку. Объём работ при этом тот же. Цена фиксируется на весь путь — поднимется только когда бизнес вырастет.</p>
     </div>
   </div>
 
-  <div class="grid g2" style="margin-top:16px">
-    <div class="card"><h3><span class="dot" style="background:var(--good)"></span>Экономика эффекта · ₽/год</h3><div class="chartbox sm" data-chart="planEff"></div></div>
+  <div class="section-t">Откуда берётся эффект — и как он бьётся с ценой</div>
+  <p class="lead">Цифра 2,5–3,2 млн ₽ в год — не с потолка. Вот из чего она складывается, консервативно.</p>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--good)"></span>Три источника эффекта · млн ₽/год</h3>
+      <div class="chartbox sm" data-chart="planEff"></div>
+      <p class="note">ROI рекламы — перелив бюджета в конверсионные каналы (те же 8 млн работают точнее). AI-заявки — возврат части из 1 723 отказов. Реактивация — повторные, которые уже дают 25% выручки.</p></div>
     <div class="callout k" style="display:flex;flex-direction:column;justify-content:center">
-      <h3>Окупаемость</h3>
-      <p>Система двигает <span class="em">2,5–3,2 млн ₽/год</span>. Полная стоимость 200 тыс — это <b>6–8% от годового эффекта</b>. А первый шаг за 40 тыс уже показывает, где горят деньги в рекламе. Окупаемость — <b>1–2 месяца</b>.</p>
+      <h3>Считаем на пальцах</h3>
+      <p>Система двигает <span class="em">2,5–3,2 млн ₽/год</span>. Стоит она <span class="em">200 тыс ₽</span> — это <b>6–8% от годового эффекта</b>. Первый шаг за 40 тыс окупается ещё до внедрения: он показывает, где именно горят деньги в рекламе. Окупаемость всего пути — <b>1–2 месяца</b>.</p>
     </div>
+  </div>
+
+  <div class="section-t">Чем ты рискуешь (почти ничем)</div>
+  <div class="grid g3">
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span>
+      <div class="big" style="font-size:22px">Платишь по шагам</div>
+      <div class="sub" style="margin-top:10px">Никакой предоплаты за всё сразу. Каждый шаг оплачивается отдельно, когда предыдущий сдан.</div></div>
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span>
+      <div class="big" style="font-size:22px">Стоп на любом шаге</div>
+      <div class="sub" style="margin-top:10px">Не убедил на аудите за 40 тыс — расходимся, и у тебя на руках остаётся полная картина и план.</div></div>
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span>
+      <div class="big" style="font-size:22px">Всё остаётся твоим</div>
+      <div class="sub" style="margin-top:10px">Система живёт на твоих аккаунтах и сервисах. Никакой привязки ко мне — обучу команду.</div></div>
+  </div>
+
+  <div class="section-t">Что нужно от тебя</div>
+  <div class="grid g3">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>1 · Доступы</h3>
+      <p style="font-size:14px;color:var(--ink2)">Яндекс.Директ и Метрика, FrontPad (API-ключ), amoCRM, Roistat. Всё на чтение — ничего не ломаю.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>2 · Один человек</h3>
+      <p style="font-size:14px;color:var(--ink2)">Контакт на твоей стороне, кто ответит на вопросы по процессам. Больше никого отвлекать не нужно.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--good)"></span>3 · Час в неделю</h3>
+      <p style="font-size:14px;color:var(--ink2)">Короткий созвон раз в неделю — показать результат и сверить курс. Всё остальное я делаю сам.</p></div>
+  </div>
+
+  <div class="section-t">Вопросы, которые обычно возникают</div>
+  <div class="faq">
+    <details><summary>Сейчас спад, лишних денег нет. Может, позже?</summary>
+      <p>Спад — это и есть причина начать. За полугодие он уже стоил 3,67 млн ₽, и тренд не развернулся сам. Первый шаг стоит 40 тыс и показывает, где ты <b>уже</b> теряешь деньги в рекламе — то есть окупается ещё до внедрения. Ждать до сезона — значит зайти в Q4 (38% выручки) с теми же дырами.</p></details>
+    <details><summary>У нас уже есть amoCRM и Roistat. Зачем ещё что-то?</summary>
+      <p>Именно в этом и проблема: они оплачены, но не связаны и не дают ответов. Roistat должен показывать окупаемость каналов — а лист «каналы продаж» в учёте пустой, и заказы всё равно переносятся в Excel руками. Я не продаю новые подписки: связываю то, что уже есть, и достраиваю недостающее.</p></details>
+    <details><summary>А если не сработает?</summary>
+      <p>Оплата по шагам, без предоплаты за весь объём. После аудита за 40 тыс ты сам решаешь, идти ли дальше — и в любом случае остаёшься с полной картиной и планом. Остановиться можно на любом шаге, всё сделанное остаётся у тебя.</p></details>
+    <details><summary>Нет времени на внедрение, команда загружена.</summary>
+      <p>От тебя нужны доступы, один контактный человек и час в неделю. Ручной работы у команды станет <b>меньше</b>, а не больше: ввод данных в 370 листов исчезает, заказы падают из FrontPad сами.</p></details>
+    <details><summary>Почему так дёшево? Это точно нормально сделано?</summary>
+      <p>По рынку такой стек — 500–700 тыс ₽ и выше. Дешевле, потому что мы знакомы и я захожу партнёром, а не через агентство с наценкой. Объём работ тот же. Этот сайт с разбором всех твоих данных я сделал до оплаты — можешь оценить подход по нему.</p></details>
+    <details><summary>Кто будет это поддерживать потом?</summary>
+      <p>Система работает на твоих аккаунтах, привязки ко мне нет. Команду обучаю, инструкции оставляю. Дальше — по желанию: могу сопровождать и развивать, могу отойти.</p></details>
   </div>
 
   <div class="section-t">Почему я</div>
   <div class="hero-strip">
     <span class="chip">Опыт: <b>сайты · CRM · автоматизация</b></span>
     <span class="chip">Заход как <b>партнёр, не подрядчик</b></span>
-    <span class="chip">Уже <b>изучил все ваши данные</b></span>
-    <span class="chip">Работаю на <b>ваших системах</b>, без «покупок»</span>
+    <span class="chip warn">Уже <b>разобрал все твои данные бесплатно</b></span>
+    <span class="chip">Работаю на <b>твоих системах</b>, без «покупок»</span>
   </div>
-  <div class="total-bar" style="margin-top:20px;background:var(--purple)">
-    <div class="l">Начнём с шага 1 — аудита за 40 000 ₽</div>
-    <div class="r" style="font-size:20px">Дайте доступ к Директу — соберу картину за 1–2 недели</div>
+  <p class="note">Этот сайт — не презентация из шаблона. Это результат разбора 370 листов, 1 528 анкет и 407 580 визитов Директа. Работа уже началась.</p>
+
+  <div class="total-bar" style="background:var(--purple);margin-top:22px">
+    <div class="l">Следующий шаг — аудит за 40 000 ₽</div>
+    <div class="r" style="font-size:19px">Дай доступ к Директу — через 1–2 недели покажу, где горят деньги</div>
   </div>
 </section>
 
 <div class="foot">
-  ХА-ХА ШОУ · аналитика и предложение · данные компании 2020–2026 (Заказы, Учёт, Расчёт игр, опросы 1 528 анкет, Яндекс.Директ).<br>
+  ХА-ХА ШОУ · аналитика и предложение · данные компании 2020–2026 (Заказы, Учёт, Расчёт игр, 1 528 анкет, Яндекс.Директ).<br>
   Оценки эффекта консервативны и уточняются после аудита. Стоимость — специальная, по-знакомству.
 </div>
 </main>
