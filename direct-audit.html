@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ХА-ХА ШОУ · Аудит Яндекс.Директа</title>
+<meta name="description" content="Полный аудит рекламных кабинетов Яндекс.Директа: диагностика, экономика, охват спроса, план действий">
+<link rel="icon" href="logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+:root{
+  --yellow:#EFDD05; --orange:#F35417; --purple:#6209ED;
+  --ink:#17140C; --ink2:#4a4636; --paper:#FFFDF4; --card:#ffffff;
+  --line:#eadfbf; --soft:#FCF7DA; --good:#1f9d57; --bad:#e0402a; --warn:#e08a00;
+  --shadow:0 10px 30px rgba(98,9,237,.08), 0 2px 8px rgba(0,0,0,.04);
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:clip}
+body{font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:var(--paper);
+  -webkit-font-smoothing:antialiased;line-height:1.55;overflow-x:clip;max-width:100vw}
+h1,h2,h3,.disp{font-family:'Unbounded',sans-serif}
+
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,253,244,.93);backdrop-filter:blur(12px);border-bottom:2px solid var(--line)}
+.topbar-in{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:10px 18px}
+.brand{display:flex;align-items:center;gap:12px;flex:0 0 auto}
+.brand img{height:36px;width:auto;display:block}
+.brand .tag{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);border-left:2px solid var(--line);padding-left:12px;line-height:1.2}
+.nav{margin-left:auto;display:flex;gap:3px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button,.nav a{font-family:'Manrope';font-weight:700;font-size:13px;color:var(--ink2);background:transparent;border:none;padding:8px 11px;border-radius:999px;cursor:pointer;white-space:nowrap;transition:.15s;text-decoration:none}
+.nav button:hover,.nav a:hover{background:var(--soft);color:var(--ink)}
+.nav button.on{background:var(--ink);color:#fff}
+.nav a.ext{border:1.5px solid var(--line)}
+
+.wrap{max-width:1180px;margin:0 auto;padding:22px 18px 90px}
+.view{display:none;animation:fade .35s ease}
+.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.phead{margin:6px 0 22px}
+.phead h1{font-size:clamp(25px,4.6vw,38px);font-weight:900;line-height:1.05;letter-spacing:-.01em}
+.phead .layer{color:var(--ink);text-shadow:3px 3px 0 var(--orange),6px 6px 0 var(--purple)}
+.phead p{margin-top:12px;color:var(--ink2);font-size:15px;max-width:80ch}
+
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.card h3{font-size:13.5px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--ink2);font-family:'Manrope';margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.card h3 .dot{width:9px;height:9px;border-radius:3px;flex:0 0 auto}
+
+.kpi{position:relative;overflow:hidden}
+.kpi .big{font-family:'Unbounded';font-weight:800;font-size:clamp(22px,3.2vw,31px);line-height:1;letter-spacing:-.02em}
+.kpi .lab{font-size:12.5px;font-weight:700;color:var(--ink2);margin-top:8px;text-transform:uppercase;letter-spacing:.03em}
+.kpi .sub{font-size:12.5px;color:var(--ink2);margin-top:6px}
+.kpi .accent{position:absolute;right:-14px;top:-14px;width:66px;height:66px;border-radius:18px;opacity:.13;transform:rotate(18deg)}
+.pill{display:inline-block;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:999px;margin-top:8px}
+.pill.up{background:rgba(31,157,87,.12);color:var(--good)}
+.pill.down{background:rgba(224,64,42,.12);color:var(--bad)}
+.pill.warn{background:rgba(243,84,23,.14);color:var(--orange)}
+.pill.info{background:rgba(98,9,237,.1);color:var(--purple)}
+
+.chartbox{position:relative;height:300px;overflow:hidden}
+.chartbox.sm{height:250px}
+.chartbox canvas{max-width:100%!important}
+
+.callout{border-radius:var(--radius);padding:20px 22px;color:#fff;position:relative;overflow:hidden}
+.callout.p{background:linear-gradient(135deg,#7d1cff,#5405c9)}
+.callout.o{background:linear-gradient(135deg,#ff6a34,#e23d0c)}
+.callout.k{background:var(--yellow);color:var(--ink)}
+.callout.d{background:linear-gradient(135deg,#2b2618,#1a1610)}
+.callout h3{color:inherit;font-family:'Unbounded';text-transform:none;font-size:17.5px;margin-bottom:9px;letter-spacing:-.01em}
+.callout p{font-size:14.5px;opacity:.95}
+.callout p+p{margin-top:8px}
+.callout .em{font-family:'Unbounded';font-weight:800;font-size:21px}
+
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;min-width:520px}
+.tbl th{text-align:left;font-weight:800;color:var(--ink2);padding:9px 10px;border-bottom:2px solid var(--line);text-transform:uppercase;font-size:11px;letter-spacing:.04em;white-space:nowrap}
+.tbl td{padding:8px 10px;border-bottom:1px solid #f1ead2}
+.tbl td.n,.tbl th.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl tr:last-child td{border-bottom:none}
+.tbl .hi{font-weight:800}
+.tbl tr.total td{background:var(--soft);font-weight:800}
+.tbl .g{color:var(--good);font-weight:800}
+.tbl .b{color:var(--bad);font-weight:800}
+.tbl .w{color:var(--orange);font-weight:800}
+
+.ul{list-style:none;display:grid;gap:11px}
+.ul li{display:flex;gap:11px;font-size:14.5px;align-items:flex-start}
+.ul li .ic{flex:0 0 auto;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-weight:800;font-size:12.5px;color:#fff;margin-top:2px}
+.note{font-size:12.5px;color:var(--ink2);margin-top:12px;font-style:italic}
+.section-t{font-family:'Unbounded';font-weight:800;font-size:21px;margin:30px 0 14px;letter-spacing:-.01em}
+.section-t.sm{font-size:17px;margin:22px 0 12px}
+.lead{color:var(--ink2);font-size:14.5px;margin:-6px 0 16px;max-width:82ch}
+.hero-strip{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.chip{background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:6px 13px;font-size:12.5px;font-weight:700;display:flex;align-items:center;gap:7px}
+.chip b{color:var(--purple)}
+.chip.bad{border-color:var(--bad);background:#fff4f2}.chip.bad b{color:var(--bad)}
+.chip.good{border-color:var(--good);background:#f2fbf6}.chip.good b{color:var(--good)}
+
+.hero{background:linear-gradient(135deg,#1b1810,#241a06);color:#fff;border-radius:26px;padding:34px 30px;position:relative;overflow:hidden;margin-bottom:20px}
+.hero:after{content:"";position:absolute;right:-60px;top:-60px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(239,221,5,.26),transparent 70%)}
+.hero .ey{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--yellow)}
+.hero h1{font-size:clamp(24px,4.2vw,40px);font-weight:900;line-height:1.06;margin:12px 0;max-width:20ch}
+.hero h1 em{font-style:normal;color:var(--yellow)}
+.hero p{font-size:15.5px;color:#e9e2cf;max-width:70ch}
+.hero .strip{display:flex;flex-wrap:wrap;gap:20px;margin-top:22px}
+.hero .st b{font-family:'Unbounded';font-weight:800;font-size:24px;display:block;line-height:1}
+.hero .st span{font-size:12px;color:#cbc3ad}
+.hero .st b.bad{color:#ff7a5c}.hero .st b.good{color:var(--yellow)}
+
+.diag{border-left:5px solid var(--bad);background:#fff6f4;border-radius:14px;padding:18px 20px;margin:14px 0}
+.diag.warn{border-left-color:var(--orange);background:#fff8f2}
+.diag.ok{border-left-color:var(--good);background:#f3fbf6}
+.diag h4{font-family:'Unbounded';font-size:16px;margin-bottom:8px}
+.diag p{font-size:14.5px;color:var(--ink2)}
+.diag p+p{margin-top:7px}
+.diag .fact{background:#fff;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:13.5px}
+.diag .fact b{color:var(--ink)}
+
+.quote{border-left:4px solid var(--purple);padding:10px 0 10px 16px;margin:12px 0;font-style:italic;color:var(--ink2);font-size:14px}
+.quote cite{display:block;font-style:normal;font-size:12.5px;color:var(--purple);font-weight:700;margin-top:6px}
+
+.prio{display:grid;gap:12px}
+.pitem{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.pitem .num{flex:0 0 auto;width:30px;height:30px;border-radius:10px;display:grid;place-items:center;font-family:'Unbounded';font-weight:800;color:#fff;font-size:14px}
+.pitem .body h4{font-family:'Unbounded';font-size:15.5px;margin-bottom:5px}
+.pitem .body p{font-size:14px;color:var(--ink2)}
+.pitem .meta{margin-top:8px;display:flex;flex-wrap:wrap;gap:7px}
+.tagx{font-size:11px;font-weight:800;padding:3px 8px;border-radius:99px;background:var(--soft);color:var(--ink2)}
+.tagx.hi{background:rgba(224,64,42,.12);color:var(--bad)}
+.tagx.md{background:rgba(243,84,23,.14);color:var(--orange)}
+.tagx.lo{background:rgba(31,157,87,.12);color:var(--good)}
+
+.hyp{background:#fff;border:1.5px solid var(--line);border-radius:16px;padding:0;overflow:hidden;margin-bottom:12px}
+.hyp summary{padding:14px 18px;font-weight:800;font-size:14.5px;cursor:pointer;list-style:none;display:flex;gap:10px;align-items:flex-start}
+.hyp summary::-webkit-details-marker{display:none}
+.hyp summary:before{content:"H";flex:0 0 auto;width:22px;height:22px;border-radius:7px;background:var(--purple);color:#fff;display:grid;place-items:center;font-size:11px;font-weight:900;margin-top:1px;font-family:'Unbounded'}
+.hyp[open]{border-color:var(--purple);box-shadow:var(--shadow)}
+.hyp .in{padding:0 18px 16px 50px;font-size:14px;color:var(--ink2)}
+.hyp .in b{color:var(--ink)}
+.hyp .in .row{margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+
+.foot{text-align:center;color:var(--ink2);font-size:12.5px;margin-top:40px;padding-top:20px;border-top:1px solid var(--line)}
+.src{font-size:12px;color:var(--ink2);background:var(--soft);border-radius:12px;padding:12px 14px;margin-top:14px}
+
+@media(max-width:960px){.g4{grid-template-columns:repeat(2,1fr)}.g3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){
+  .topbar-in{flex-wrap:wrap;gap:8px;padding:9px 13px}
+  .brand .tag{display:none}
+  .nav{width:100%;order:3;margin-left:0;padding:3px 0 2px;flex-wrap:wrap;gap:5px;overflow:visible}
+  .nav button,.nav a{flex:1 1 auto;text-align:center;font-size:12px;padding:7px 6px;background:#fff;border:1.5px solid var(--line);color:var(--ink)}
+  .nav button.on{background:var(--ink);border-color:var(--ink);color:#fff}
+  .wrap{padding:16px 13px 80px}
+  .g2,.g3,.g4{grid-template-columns:1fr}
+  .chartbox{height:260px}
+  .kpi .big{font-size:25px}
+  .card{padding:16px;border-radius:16px}
+  .hero{padding:24px 19px}
+  .pitem{flex-direction:column;gap:10px}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><img src="logo.svg" alt="ХА-ХА ШОУ"><span class="tag">Аудит<br>Директа</span></div>
+    <nav class="nav" id="nav">
+      <button data-v="sum" class="on">Итоги</button>
+      <button data-v="method">Методика</button>
+      <button data-v="money">Экономика</button>
+      <button data-v="reach">Охват</button>
+      <button data-v="acc">Кабинеты</button>
+      <button data-v="tech">Техразбор</button>
+      <button data-v="hist">История</button>
+      <button data-v="plan">План</button>
+      <button data-v="hyp">Гипотезы</button>
+      <a href="index.html" class="ext">← К обзору</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ================= ИТОГИ ================= -->
+<section class="view on" id="sum">
+  <div class="hero">
+    <div class="ey">Аудит рекламы · данные февраль–июль 2026 · подготовлено 3 августа 2026</div>
+    <h1>Реклама окупается. Но её <em>задушили</em> и она <em>невидима</em></h1>
+    <p>Проверены три рекламных кабинета через официальный API Яндекс.Директа, сверены с Метрикой, Wordstat, четырьмя сторонними аудитами и внутренними данными продаж. Главный вывод: реклама прибыльна — доля расходов 9,9% от выручки. Но её сократили на треть, заявки упали пропорционально, а результат не виден в отчётах: система считает лишь треть реальных обращений.</p>
+    <div class="strip">
+      <div class="st"><b class="good">9,9%</b><span>доля расходов на Директ от выручки</span></div>
+      <div class="st"><b>3 846 ₽</b><span>реальная цена заявки</span></div>
+      <div class="st"><b class="bad">−35%</b><span>заявок после сокращения бюджета</span></div>
+      <div class="st"><b class="bad">36%</b><span>заявок видит аналитика</span></div>
+    </div>
+  </div>
+
+  <div class="section-t" style="margin-top:20px">Пять выводов, если читать только это</div>
+  <div class="prio">
+    <div class="pitem"><div class="num" style="background:var(--bad)">1</div><div class="body">
+      <h4>Сократили бюджет — потеряли заявки, почти один в один</h4>
+      <p>С февраля по июнь расходы на маркетинг снизились с 710 до 486 тысяч (<b>−32%</b>), количество заявок — с 95 до 62 (<b>−35%</b>). Связь почти линейная. Это же подтверждает и то, что средний чек за период вырос: падает не спрос, а объём привлечения.</p>
+      <div class="meta"><span class="tagx hi">главная причина спада</span><span class="tagx">решается бюджетом</span></div>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--bad)">2</div><div class="body">
+      <h4>Аналитика видит треть заявок — решения принимаются вслепую</h4>
+      <p>За период пришло <b>405 реальных заявок</b>, из них с Яндекса около 330. Целевая цель, под которую оптимизируются все кампании, зафиксировала <b>118</b> — это 36%. Одновременно в отчётах отображается 839 «конверсий» — вдвое больше реальности. Коллтрекинг отключён, звонки не считаются вообще.</p>
+      <div class="meta"><span class="tagx hi">критично</span><span class="tagx">чинится за 1–2 недели</span></div>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--orange)">3</div><div class="body">
+      <h4>Клик стоит в 2–5 раз дороже рынка</h4>
+      <p>Средняя цена клика на Поиске — <b>206 ₽</b> при отраслевом ориентире 40–90 ₽. По данным Яндекса, переплата против конкурентов: <b>+138% в Москве, +210% в СПб</b>. Причина — узкая семантика с операторами, дубли фраз и конкуренция кампаний между собой.</p>
+      <div class="meta"><span class="tagx md">высокий приоритет</span><span class="tagx">резерв: до 2× кликов за те же деньги</span></div>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--orange)">4</div><div class="body">
+      <h4>Охвачено 3% спроса Москвы</h4>
+      <p>Кластер «где отметить день рождения» — около 9 000 запросов в месяц — не охвачен вообще: ноль показов. При этом расширение охвата, по прогнозу Яндекса, <b>не удорожает заявку</b>, а в Туле даже удешевляет её на 31%.</p>
+      <div class="meta"><span class="tagx md">высокий приоритет</span><span class="tagx lo">рост ×6,5 по Москве</span></div>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--purple)">5</div><div class="body">
+      <h4>Проблемы тянутся полтора года и не лечатся</h4>
+      <p>Четыре аудита подряд (январь, апрель, июль 2026 и внешний) пишут одно и то же: стратегии не обучаются, цели заданы неверно, объявления бедные. Кабинеты пересобрали заново — болезни переехали вместе с ними.</p>
+      <div class="meta"><span class="tagx">системное</span><span class="tagx">нужен владелец процесса</span></div>
+    </div></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:20px">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Расход и заявки по месяцам</h3>
+      <div class="chartbox" data-chart="mon"></div></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Что видно в отчётах и что есть на самом деле</h3>
+      <div class="chartbox" data-chart="gap"></div>
+      <p class="note">Слева — цифра, на которую сейчас смотрят. Справа — то, под что реально оптимизируется Яндекс.</p></div>
+  </div>
+
+  <div class="callout d" style="margin-top:16px">
+    <h3>Что это значит простыми словами</h3>
+    <p>Представь, что нанял продавца и платишь ему за «разговоры с клиентами», а не за продажи. Он честно наберёт много разговоров. Ровно это сейчас происходит с Яндексом: ему сказали считать успехом действие, которое не равно заявке, и он оптимизируется под него.</p>
+    <p>Поэтому первый шаг — не менять ставки и не резать кампании, а <b>починить сигнал</b>. Всё остальное без этого — стрельба в темноте.</p>
+  </div>
+</section>
+
+<!-- ================= МЕТОДИКА ================= -->
+<section class="view" id="method">
+  <div class="phead"><h1><span class="layer">Как проверялось</span></h1>
+    <p>Чтобы выводам можно было доверять, каждая цифра получена из первоисточника и перепроверена минимум двумя независимыми способами. Ниже — что использовано и где границы точности.</p></div>
+
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Источники данных</h3>
+      <ul class="ul">
+        <li><span class="ic" style="background:var(--purple)">1</span><div><b>API Яндекс.Директа v5</b> — прямая выгрузка из трёх кабинетов: кампании, стратегии, статистика по дням, поисковые запросы. Режим только чтение.</div></li>
+        <li><span class="ic" style="background:var(--purple)">2</span><div><b>Яндекс.Метрика</b> — выгрузка по всем визитам из рекламы за 2020–2026 (407 580 визитов).</div></li>
+        <li><span class="ic" style="background:var(--purple)">3</span><div><b>Wordstat</b> — статистика спроса по трём регионам, март 2026 (36 755 запросов).</div></li>
+        <li><span class="ic" style="background:var(--purple)">4</span><div><b>Четыре сторонних аудита</b> — январь и апрель 2026 (старый кабинет), июль 2026 (новый), конкурентный анализ Яндекса.</div></li>
+        <li><span class="ic" style="background:var(--purple)">5</span><div><b>Данные бизнеса</b> — таблицы заказов и учёта 2020–2026, юнит-экономика мероприятий, опрос 1 528 гостей.</div></li>
+      </ul>
+    </div>
+    <div class="card"><h3><span class="dot" style="background:var(--good)"></span>Как перепроверялось</h3>
+      <ul class="ul">
+        <li><span class="ic" style="background:var(--good)">✓</span><div><b>Конверсии</b> — сверены три раза: все цели против целевой цели через API, затем против отчёта менеджера Яндекса (10 заказов при 150 898 ₽) и против таблицы заказов.</div></li>
+        <li><span class="ic" style="background:var(--good)">✓</span><div><b>Охват спроса</b> — самостоятельный расчёт по Wordstat (2,6% / 12,4% / 41,3%) совпал с официальным SOI Яндекса (3% / 10% / 33%).</div></li>
+        <li><span class="ic" style="background:var(--good)">✓</span><div><b>Расходы</b> — выгрузка API сверена с внутренней таблицей расходов компании.</div></li>
+        <li><span class="ic" style="background:var(--good)">✓</span><div><b>Автотаргетинг</b> — эффект подтверждён независимо на двух разных кабинетах и периодах.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section-t">Границы точности — что важно знать</div>
+  <div class="grid g3">
+    <div class="diag warn" style="margin:0"><h4>Старый кабинет</h4>
+      <p>Доступа к кабинету <b>hahashowdirect</b> нет — он привязан к телефону прежнего подрядчика. Данные по нему взяты из PDF-аудитов и Метрики, поэтому по нему нет разбивки по дням.</p></div>
+    <div class="diag warn" style="margin:0"><h4>Звонки не учтены</h4>
+      <p>Коллтрекинг отключён вместе с заморозкой Roistat. Часть заявок приходит звонками и <b>не попадает ни в одну систему</b>. Реальное число заявок выше того, что видно в отчётах.</p></div>
+    <div class="diag warn" style="margin:0"><h4>Прогнозы — оценка</h4>
+      <p>Расчёт потенциала роста взят из официального прогноза Яндекса. Он не учитывает действия конкурентов, поэтому это ориентир, а не обещание.</p></div>
+  </div>
+
+  <div class="src">
+    <b>Период основного анализа:</b> 1 февраля — 25 июля 2026 (три действующих кабинета: Москва, Санкт-Петербург, Тула).
+    <b>Исторический контекст:</b> октябрь 2025 — март 2026 по старому кабинету, 2020–2026 по Метрике.
+    Все суммы указаны с НДС, как в интерфейсе Директа.
+  </div>
+</section>
+
+<!-- ================= ЭКОНОМИКА ================= -->
+<section class="view" id="money">
+  <div class="phead"><h1><span class="layer">Экономика рекламы</span></h1>
+    <p>Сколько на самом деле стоит заявка, сходится ли реклама с бизнесом и где именно теряются деньги.</p></div>
+
+  <div class="grid g4">
+    <div class="card kpi"><span class="accent" style="background:var(--purple)"></span><div class="big">1 268 587 ₽</div><div class="lab">Расход Директа</div><div class="sub">февраль–июль 2026</div></div>
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span><div class="big">405</div><div class="lab">Реальных заявок</div><div class="sub">из них ≈330 с Яндекса</div></div>
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span><div class="big">3 846 ₽</div><div class="lab">Реальная цена заявки</div><span class="pill up">при чеке 32 308 ₽</span></div>
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span><div class="big">9,9%</div><div class="lab">Доля расходов от выручки</div><span class="pill up">реклама окупается</span></div>
+  </div>
+
+  <div class="section-t">Главный вывод: с окупаемостью всё в порядке</div>
+  <div class="diag ok">
+    <h4>Реклама прибыльна — и это важно зафиксировать</h4>
+    <p>Расход на Директ составляет <b>9,9% от выручки</b>, весь маркетинг вместе с подрядчиками и сервисами — <b>20,2%</b>. При среднем чеке 32 308 ₽ и цене заявки около 3 846 ₽ канал работает в плюс.</p>
+    <div class="fact">
+      Выручка за февраль–июнь: <b>12 848 750 ₽</b><br>
+      Расход на Директ за период: <b>1 268 587 ₽</b> → доля <b>9,9%</b><br>
+      Весь маркетинг (Директ, подрядчики, сервисы, рассылки): <b>2 592 000 ₽</b> → доля <b>20,2%</b>
+    </div>
+    <p>Поэтому задача аудита — не «спасать убыточный канал», а вернуть ему объём и сделать результат видимым.</p>
+  </div>
+
+  <div class="section-t">Реальная воронка против того, что видно в отчётах</div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Как есть на самом деле</h3>
+      <div class="tbl-wrap"><table class="tbl">
+        <tbody>
+          <tr><td>Обращений всего</td><td class="n hi">986</td></tr>
+          <tr><td>Из них с Яндекса</td><td class="n hi">803 (81%)</td></tr>
+          <tr><td>Стали заявками</td><td class="n hi">405 <span style="color:var(--ink2)">(41%)</span></td></tr>
+          <tr><td>Дошли до предоплаты</td><td class="n g">381 <span style="color:var(--ink2)">(94%)</span></td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Ключевое: если человек оставил заявку, он почти наверняка платит — конверсия 94%. Значит узкое место находится <b>раньше</b>: на этапе обращения в заявку теряется 59%.</p>
+    </div>
+    <div class="card"><h3><span class="dot" style="background:var(--bad)"></span>Что показывает аналитика</h3>
+      <div class="chartbox sm" data-chart="gap2"></div>
+      <p class="note">Все 24 кампании оптимизируются под одну цель (идентификатор 515512996). Она фиксирует 118 конверсий — 36% реальных заявок с Яндекса. Одновременно суммарный показатель по всем целям (839) завышает реальность вдвое.</p>
+    </div>
+  </div>
+
+  <div class="diag warn">
+    <h4>Почему это ломает рекламу</h4>
+    <p>Алгоритм Яндекса учится на том сигнале, который ему дают. Сейчас он видит 36% результата — и оптимизируется под искажённую картину. Часть по-настоящему успешных кампаний выглядит неэффективной просто потому, что их заявки пришли звонком или в мессенджер и не были засчитаны.</p>
+    <p>Это же объясняет, почему во всех предыдущих аудитах повторяется фраза «стратегия не обучилась»: при недельном бюджете 12 295 ₽ и видимой цене конверсии система получает около одной конверсии в неделю вместо необходимых десяти.</p>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3><span class="dot" style="background:var(--bad)"></span>Цена заявки по городам</h3>
+      <div class="chartbox" data-chart="cpa"></div>
+      <p class="note">Тула вдвое эффективнее столиц: 5 037 ₽ против 13 300–13 400 ₽.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Расход по городам</h3>
+      <div class="chartbox" data-chart="spend"></div></div>
+  </div>
+
+  <div class="section-t">Что произошло со спадом: бюджет и заявки</div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--bad)"></span>Расход маркетинга и число заявок</h3>
+      <div class="chartbox" data-chart="budget"></div>
+      <p class="note">Февраль → июнь: расход −32%, заявки −35%. Линии идут почти параллельно.</p></div>
+    <div class="card">
+      <h3><span class="dot" style="background:var(--orange)"></span>Помесячно</h3>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Месяц</th><th class="n">Маркетинг</th><th class="n">Заявки</th><th class="n">Цена заявки</th></tr></thead>
+        <tbody>
+          <tr><td>Февраль</td><td class="n">710 000 ₽</td><td class="n">95</td><td class="n">7 474 ₽</td></tr>
+          <tr><td>Март</td><td class="n">601 350 ₽</td><td class="n">91</td><td class="n">6 608 ₽</td></tr>
+          <tr><td>Апрель</td><td class="n">401 700 ₽</td><td class="n">76</td><td class="n g">5 286 ₽</td></tr>
+          <tr><td>Май</td><td class="n">392 700 ₽</td><td class="n">65</td><td class="n">6 042 ₽</td></tr>
+          <tr><td>Июнь</td><td class="n">486 230 ₽</td><td class="n b">62</td><td class="n b">7 842 ₽</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Летний спад усиливает картину — июнь и июль в этой нише традиционно слабые. Но масштаб падения объясняется прежде всего сокращением вложений.</p>
+    </div>
+  </div>
+
+  <div class="callout o" style="margin-top:16px">
+    <h3>Где рычаг на самом деле</h3>
+    <p>Конверсия из заявки в предоплату — <span class="em">94%</span>. Это отличный показатель: продажи работают, продукт покупают. Проблема на входе — из 986 обращений заявками стали только 405, то есть <b>теряется 59% на этапе первого контакта</b>.</p>
+    <p>Второй рычаг — объём. Реклама окупается при доле расходов 9,9%, а охвачено лишь 3% спроса Москвы. Значит канал можно масштабировать, а не сокращать.</p>
+  </div>
+
+  <div class="section-t">Куда уходит бюджет</div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Поиск против Сетей</h3>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Площадка</th><th class="n">Расход</th><th class="n">Клики</th><th class="n">Цена клика</th><th class="n">Конверсия</th></tr></thead>
+        <tbody>
+          <tr><td><b>Поиск</b></td><td class="n">919 843 ₽</td><td class="n">4 459</td><td class="n b">206 ₽</td><td class="n g">10,23%</td></tr>
+          <tr><td><b>Сети (РСЯ)</b></td><td class="n">348 744 ₽</td><td class="n">14 196</td><td class="n g">25 ₽</td><td class="n">2,70%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Поиск даёт качество, Сети — объём. Цена клика на Поиске (206 ₽) — главный источник переплаты.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Устройства</h3>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Устройство</th><th class="n">Расход</th><th class="n">Конверсия</th><th class="n">Цена заявки</th></tr></thead>
+        <tbody>
+          <tr><td><b>Смартфоны</b></td><td class="n">888 067 ₽ (70%)</td><td class="n b">3,88%</td><td class="n">1 542 ₽</td></tr>
+          <tr><td><b>Компьютеры</b></td><td class="n">365 841 ₽ (29%)</td><td class="n g">10,43%</td><td class="n">1 452 ₽</td></tr>
+          <tr><td>Планшеты</td><td class="n">14 641 ₽</td><td class="n">0,79%</td><td class="n">1 331 ₽</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Компьютеры конвертят в 2,7 раза лучше, но 70% денег уходит в мобильный трафик. Причина, скорее всего, в мобильной версии сайта: по Метрике на смартфонах отказы 84%, время на сайте 15 секунд.</p></div>
+  </div>
+</section>
+
+<!-- ================= ОХВАТ ================= -->
+<section class="view" id="reach">
+  <div class="phead"><h1><span class="layer">Охват спроса</span></h1>
+    <p>Сколько людей ищут подобные услуги, какую долю из них видит реклама и сколько денег лежит нетронутыми.</p></div>
+
+  <div class="grid g3">
+    <div class="card kpi"><span class="accent" style="background:var(--bad)"></span><div class="big">3%</div><div class="lab">Охват спроса · Москва</div><span class="pill down">97% не видят рекламу</span></div>
+    <div class="card kpi"><span class="accent" style="background:var(--orange)"></span><div class="big">10%</div><div class="lab">Охват спроса · СПб</div><span class="pill warn">88% не охвачено</span></div>
+    <div class="card kpi"><span class="accent" style="background:var(--good)"></span><div class="big">33%</div><div class="lab">Охват спроса · Тула</div><span class="pill up">лидер рынка в городе</span></div>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Доля охвата против конкурентов</h3>
+      <div class="chartbox" data-chart="soi"></div>
+      <p class="note">В Москве конкуренты охватывают 8–13% спроса, ХА-ХА ШОУ — 3%.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--orange)"></span>Топ запросов Москвы: спрос против показов</h3>
+      <div class="chartbox" data-chart="miss"></div>
+      <p class="note">По самым частотным запросам про день рождения показов нет вообще.</p></div>
+  </div>
+
+  <div class="section-t">Что именно упущено</div>
+  <div class="card">
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Запрос (Москва, март 2026)</th><th class="n">Спрос в месяц</th><th class="n">Показов</th><th class="n">Охват</th></tr></thead>
+      <tbody>
+        <tr><td>где отметить день рождения в москве</td><td class="n">2 116</td><td class="n b">0</td><td class="n b">0%</td></tr>
+        <tr><td>где отметить день рождения</td><td class="n">1 177</td><td class="n b">0</td><td class="n b">0%</td></tr>
+        <tr><td>где отпраздновать день рождения в москве</td><td class="n">1 078</td><td class="n b">0</td><td class="n b">0%</td></tr>
+        <tr><td>квиз в москве</td><td class="n">1 062</td><td class="n">78</td><td class="n w">7%</td></tr>
+        <tr><td>квиз на корпоратив</td><td class="n">877</td><td class="n">214</td><td class="n w">24%</td></tr>
+        <tr><td>ведущий на день рождения</td><td class="n">834</td><td class="n b">1</td><td class="n b">0%</td></tr>
+        <tr><td>детский день рождения</td><td class="n">726</td><td class="n b">0</td><td class="n b">0%</td></tr>
+        <tr><td>где отметить день рождения ребенка в москве</td><td class="n">634</td><td class="n b">0</td><td class="n b">0%</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Из 15 самых частотных запросов категории охвачены только два — и оба квизовые. Весь кластер «день рождения» (около 9 000 запросов в месяц) не обрабатывается.</p>
+  </div>
+
+  <div class="section-t">Даже собственный бренд охвачен не полностью</div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--bad)"></span>Охват брендовых запросов</h3>
+      <div class="chartbox sm" data-chart="brand"></div>
+      <p class="note">Люди ищут «ха ха шоу» — и в трети случаев не видят компанию. При этом число конкурентов, показывающихся по бренду, выросло с 5–6 до 15–20.</p></div>
+    <div class="callout p" style="display:flex;flex-direction:column;justify-content:center">
+      <h3>Брендовые кампании сейчас отключены</h3>
+      <p>По данным API все три кампании «Поиск / Брендовая» находятся в архиве — их выключили 14 июля ради экономии. При этом по факту это <span class="em">самый дешёвый трафик</span> в аккаунте: цена заявки 376–493 ₽ при конверсии 25–27%.</p>
+      <p>Вопрос спорный: часть этих людей пришла бы и без рекламы. Но пока 32–46% брендового спроса не охвачено, а конкуренты по бренду показываются — экономия может стоить дороже.</p>
+    </div>
+  </div>
+
+  <div class="section-t">Прогноз Яндекса: что даёт расширение охвата</div>
+  <div class="card">
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Регион</th><th class="n">Заявок сейчас</th><th class="n">При росте охвата</th><th class="n">Что с ценой заявки</th></tr></thead>
+      <tbody>
+        <tr><td><b>Москва</b></td><td class="n">7</td><td class="n g">48</td><td class="n">8 094 → 8 132 ₽ (не меняется)</td></tr>
+        <tr><td><b>Санкт-Петербург</b></td><td class="n">8</td><td class="n g">26–42</td><td class="n g">7 210 → 7 003 ₽ (падает)</td></tr>
+        <tr><td><b>Тула</b></td><td class="n">8</td><td class="n g">27</td><td class="n g">7 302 → 5 012 ₽ (падает на 31%)</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Официальный прогноз эластичности Яндекса на март 2026. Ключевой смысл: рост охвата не удорожает заявку, а в Туле удешевляет. Это означает, что сейчас бюджет упирается не в аукцион, а в узость семантики.</p>
+  </div>
+</section>
+
+<!-- ================= КАБИНЕТЫ ================= -->
+<section class="view" id="acc">
+  <div class="phead"><h1><span class="layer">Что в кабинетах</span></h1>
+    <p>Структура, кампании и результаты каждой из них. Раздел одинаково полезен и для оценки картины в целом, и для работы со ставками.</p></div>
+
+  <div class="diag ok">
+    <h4>Хорошая новость: структура собрана грамотно</h4>
+    <p>Три кабинета по городам, в каждом — одинаковая понятная сетка кампаний: отдельно День рождения, Корпоративы, Квизы, Конкуренты, Брендовая, Профпраздники, плюс РСЯ и Ретаргетинг. Это заметно лучше того, что было в старом кабинете, и с этой структурой можно работать дальше.</p>
+  </div>
+
+  <div class="grid g3" style="margin-top:16px">
+    <div class="card kpi"><div class="big">24</div><div class="lab">Активных кампании</div><div class="sub">по 8 в каждом городе</div></div>
+    <div class="card kpi"><div class="big">6</div><div class="lab">В архиве</div><div class="sub">брендовые и выпускные</div></div>
+    <div class="card kpi"><div class="big">1</div><div class="lab">Общая цель на все</div><span class="pill down">в этом корень проблемы</span></div>
+  </div>
+
+  <div class="section-t">Все кампании по расходу</div>
+  <div class="card">
+    <div class="tbl-wrap"><table class="tbl" id="tblCamp">
+      <thead><tr><th>Кампания</th><th>Город</th><th class="n">Расход</th><th class="n">Клики</th><th class="n">Цена клика</th><th class="n">Конв.</th><th class="n">CR</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <p class="note">Конверсии здесь — по всем целям Метрики (так их видно в интерфейсе). Реальных целевых конверсий в 7 раз меньше, поэтому таблицу стоит читать как сравнение кампаний между собой, а не как абсолютную истину.</p>
+  </div>
+
+  <div class="grid g2" style="margin-top:16px">
+    <div class="card"><h3><span class="dot" style="background:var(--good)"></span>Лучшие по конверсии</h3>
+      <ul class="ul">
+        <li><span class="ic" style="background:var(--good)">1</span><div><b>Брендовая СПб — 27,5%</b>, цена заявки 417 ₽. Сейчас в архиве.</div></li>
+        <li><span class="ic" style="background:var(--good)">2</span><div><b>Брендовая Москва — 26,1%</b>, цена 493 ₽. В архиве.</div></li>
+        <li><span class="ic" style="background:var(--good)">3</span><div><b>Брендовая Тула — 25,6%</b>, цена 376 ₽. В архиве.</div></li>
+        <li><span class="ic" style="background:var(--good)">4</span><div><b>Конкуренты Москва — 15,6%</b>, цена 1 438 ₽. Работает, стоит масштабировать.</div></li>
+        <li><span class="ic" style="background:var(--good)">5</span><div><b>Квизы Тула — 14,2%</b>, цена 883 ₽ — лучший результат среди небрендовых.</div></li>
+      </ul>
+    </div>
+    <div class="card"><h3><span class="dot" style="background:var(--bad)"></span>Самые дорогие</h3>
+      <ul class="ul">
+        <li><span class="ic" style="background:var(--bad)">1</span><div><b>Выпускные Москва</b> — 56 565 ₽ на 9 конверсий (6 285 ₽ за штуку). Сезон закончился, в архиве.</div></li>
+        <li><span class="ic" style="background:var(--bad)">2</span><div><b>День рождения СПб</b> — 5 140 ₽ за конверсию при том, что это ключевой сегмент.</div></li>
+        <li><span class="ic" style="background:var(--bad)">3</span><div><b>День рождения Москва</b> — 127 541 ₽ на 26 конверсий, цена клика 376 ₽.</div></li>
+        <li><span class="ic" style="background:var(--bad)">4</span><div><b>Корпоративы СПб</b> — 4 339 ₽ за конверсию, самый маржинальный сегмент работает слабо.</div></li>
+        <li><span class="ic" style="background:var(--bad)">5</span><div><b>Квизы Москва</b> — крупнейшая статья расхода (217 218 ₽) при спорной релевантности сегмента.</div></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="diag warn" style="margin-top:16px">
+    <h4>Отдельно: «Квизы и квесты» — самая дорогая кампания в аккаунте</h4>
+    <p>На неё уходит 217 218 ₽ в Москве и 133 002 ₽ в СПб — это крупнейшие статьи расхода. При этом компания не является квизом, а гости в опросе прямо называют квизы <b>конкурирующим форматом</b>.</p>
+    <p>Корень тянется из старого кабинета: там в объявлении стоял заголовок «Игровое шоу для компании от 6 человек. Лучше чем квиз!». Прошлый аудитор писал, что для алгоритма Яндекса это <b>прямая инструкция подбирать квизовые запросы</b>. Отдельный запрос «квиз в москве» тогда стоил 37 603 ₽ за одну конверсию.</p>
+    <div class="fact">Требует решения: продолжаем платить за чужой формат или переносим бюджет в сегменты, где компания уникальна (день рождения, корпоратив, девичник).</div>
+  </div>
+</section>
+
+<!-- ================= ТЕХРАЗБОР ================= -->
+<section class="view" id="tech">
+  <div class="phead"><h1><span class="layer">Технический разбор</span></h1>
+    <p>Раздел для работы со специалистом: настройки, стратегии, семантика и конкретные точки вмешательства.</p></div>
+
+  <div class="section-t sm">1. Стратегии и цели</div>
+  <div class="card">
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Что настроено</th><th>Как сейчас</th><th>Замечание</th></tr></thead>
+      <tbody>
+        <tr><td>Тип стратегии</td><td>Максимум конверсий (недельный бюджет)</td><td class="g">выбор верный</td></tr>
+        <tr><td>Целевая цель</td><td>одна на все 24 кампании (515512996)</td><td class="b">даёт 118 конверсий за 6 мес</td></tr>
+        <tr><td>Оплата</td><td>за клики</td><td class="g">верно при текущем объёме</td></tr>
+        <tr><td>Пакетные стратегии</td><td>да, кампании города делят бюджет</td><td class="g">верно, помогает обучению</td></tr>
+        <tr><td>Ретаргетинг СПб</td><td>Максимум кликов, без цели</td><td class="b">выбивается из логики</td></tr>
+        <tr><td>Недельный бюджет Москва (Поиск)</td><td>12 295 ₽</td><td class="w">≈1,1 конверсии в неделю по целевой цели</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Ключевой технический вывод: при цене целевой конверсии 10 751 ₽ и недельном бюджете 12 295 ₽ стратегия получает около одной конверсии в неделю. Для обучения алгоритму нужно не менее десяти. <b>Стратегия физически не может обучиться</b> — это объясняет и слова специалиста о том, что она «так и не обучилась».</p>
+  </div>
+
+  <div class="section-t sm">2. Автотаргетинг против ключевых фраз</div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Проверено на двух кабинетах</h3>
+      <div class="tbl-wrap"><table class="tbl">
+        <thead><tr><th>Условие показа</th><th class="n">Клики</th><th class="n">Расход</th><th class="n">Цена конв.</th></tr></thead>
+        <tbody>
+          <tr><td><b>Автотаргетинг</b></td><td class="n">13 988</td><td class="n">621 294 ₽</td><td class="n g">1 258 ₽</td></tr>
+          <tr><td>Ключевые фразы</td><td class="n">3 741</td><td class="n">606 420 ₽</td><td class="n b">2 056 ₽</td></tr>
+          <tr><td>Ретаргетинг</td><td class="n">926</td><td class="n">40 873 ₽</td><td class="n g">817 ₽</td></tr>
+        </tbody>
+      </table></div>
+      <p class="note">Тот же вывод в старом кабинете: автотаргетинг 104 конверсии по 4 727 ₽ против 57 конверсий по 6 635 ₽ на фразах.</p>
+    </div>
+    <div class="callout o" style="display:flex;flex-direction:column;justify-content:center">
+      <h3>Вопрос к обсуждению</h3>
+      <p>Автотаргетинг стабильно даёт заявки <span class="em">на 39% дешевле</span> ручной семантики — и так на обоих кабинетах, в разные периоды, у разных специалистов.</p>
+      <p>При этом ключевые фразы дают почти такой же расход при вчетверо меньшем числе кликов: клик по фразе стоит около 162 ₽ против 44 ₽ у автотаргетинга. Это прямое следствие узких формулировок с операторами.</p>
+      <p>Сейчас автотаргетинг планово сокращают. Возможно, стоит наоборот — сузить ручную семантику и дать больше свободы автотаргетингу с жёстким контролем минус-слов.</p>
+    </div>
+  </div>
+
+  <div class="section-t sm">3. Поисковые запросы: где утекает бюджет</div>
+  <div class="card">
+    <p class="lead">Разбор 36 755 запросов за период показал: <b>2 882 запроса потратили деньги и не дали ни одной конверсии</b>. Суммарно это 691 739 ₽ — 75% всего расхода на поиске. Часть из них — нормальный длинный хвост, но заметная доля явно нерелевантна.</p>
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Запрос</th><th class="n">Клики</th><th class="n">Расход</th><th>Проблема</th></tr></thead>
+      <tbody>
+        <tr><td>квест для детей на день рождения</td><td class="n">10</td><td class="n b">4 466 ₽</td><td>не наш продукт (квест)</td></tr>
+        <tr><td>квест для детей 8 лет на день рождения</td><td class="n">3</td><td class="n b">2 199 ₽</td><td>не наш продукт</td></tr>
+        <tr><td>форд боярд для детей в москве</td><td class="n">2</td><td class="n b">1 931 ₽</td><td>чужой формат</td></tr>
+        <tr><td>аренда банкетного зала на корпоратив</td><td class="n">1</td><td class="n b">1 865 ₽</td><td>аренда, не шоу</td></tr>
+        <tr><td>выездной тимбилдинг</td><td class="n">1</td><td class="n b">1 714 ₽</td><td>смежная услуга</td></tr>
+        <tr><td>аниматоры тула день рождения ребенка</td><td class="n">8</td><td class="n b">1 596 ₽</td><td>другая услуга</td></tr>
+        <tr><td>организация детских праздников спб</td><td class="n">4</td><td class="n b">1 612 ₽</td><td>слишком широко</td></tr>
+        <tr><td>досуг тула</td><td class="n">16</td><td class="n b">1 870 ₽</td><td>слишком широко</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Рекомендуемые минус-слова первого приоритета: квест, квесты, аниматор, аниматоры, форт боярд, аренда зала, банкетный, тимбилдинг, сценарий, конкурсы, своими руками, бесплатно, вакансии.</p>
+  </div>
+
+  <div class="section-t sm">4. Что не используется, хотя есть у конкурентов</div>
+  <div class="card">
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Инструмент</th><th class="n">У компании</th><th class="n">У конкурентов</th></tr></thead>
+      <tbody>
+        <tr><td>Групп с одним объявлением</td><td class="n b">98%</td><td class="n">40%</td></tr>
+        <tr><td>Видео в объявлениях</td><td class="n b">0%</td><td class="n">16%</td></tr>
+        <tr><td>Промоакции</td><td class="n b">0%</td><td class="n">62%</td></tr>
+        <tr><td>Комплект из 8 быстрых ссылок</td><td class="n b">0%</td><td class="n">62%</td></tr>
+        <tr><td>Изображения в объявлениях</td><td class="n w">28%</td><td class="n">64%</td></tr>
+        <tr><td>Автоматическая атрибуция</td><td class="n b">0%</td><td class="n">79%</td></tr>
+        <tr><td>Товарные объявления</td><td class="n b">нет</td><td class="n">есть у 4 из 9</td></tr>
+        <tr><td>Ретаргетинг в сетях</td><td class="n b">0%</td><td class="n">15%</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Данные конкурентного анализа Яндекса, январь 2026. Каждая незаполненная строка — потерянный CTR, а значит более дорогой клик.</p>
+  </div>
+
+  <div class="section-t sm">5. Прочие технические находки</div>
+  <div class="grid g2">
+    <div class="diag warn" style="margin:0"><h4>Межрегиональная утечка</h4>
+      <p>Запрос «хаха шоу тула» откручивается в кампаниях Москвы и Санкт-Петербурга. За один и тот же трафик платят дважды. Лечится минус-словами по городам.</p></div>
+    <div class="diag warn" style="margin:0"><h4>Мусор в брендовых запросах</h4>
+      <p>«скачать мэшапы липси ха х шоу», «малышева гонорар на первом канале», «ха ха 3 раза шоу» — тратят показы. Минусуются одним списком.</p></div>
+    <div class="diag warn" style="margin:0"><h4>Брошен горячий низ воронки</h4>
+      <p>Запросы «ха ха шоу бауманская отзывы / фото / цены» охвачены на 8–25%. Это люди, которые уже выбрали компанию и ищут детали — самая тёплая аудитория.</p></div>
+    <div class="diag warn" style="margin:0"><h4>Слабая кликабельность в Туле</h4>
+      <p>При охвате 33% против 24% у конкурента компания собирает вдвое меньше кликов (11% против 21%). Показы есть — на объявления не кликают.</p></div>
+  </div>
+</section>
+
+<!-- ================= ИСТОРИЯ ================= -->
+<section class="view" id="hist">
+  <div class="phead"><h1><span class="layer">История и повторяющиеся проблемы</span></h1>
+    <p>Полтора года, два кабинета, четыре аудита. Раздел показывает, что именно повторяется из раза в раз — и почему смена подрядчика или кабинета проблему не решала.</p></div>
+
+  <div class="section-t sm">Хронология</div>
+  <div class="prio">
+    <div class="pitem"><div class="num" style="background:var(--ink2)">1</div><div class="body">
+      <h4>Октябрь–декабрь 2025 · старый кабинет</h4>
+      <p>Расход 1 261 858 ₽ → 176 созданных заказов, 40 оплаченных. Стоимость оплаченного заказа ≈ 31 546 ₽ при среднем чеке около 29 000 ₽. Поиск давал 93% заказов, РСЯ при расходе 220 496 ₽ дала <b>одну</b> заявку.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--ink2)">2</div><div class="body">
+      <h4>26 января 2026 · первый аудит</h4>
+      <p>Отмечены: чрезмерное дробление кампаний, дубли, необученные стратегии, ограничение дневного бюджета на уровне кабинета, медленный сайт. Даны рекомендации.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--ink2)">3</div><div class="body">
+      <h4>Январь–март 2026 · старый кабинет</h4>
+      <p>Расход 904 832 ₽, 172 конверсии, цена 5 260 ₽. Динамика улучшалась: цена заявки падала с 6 852 до 3 872 ₽. Автотаргетинг давал 66% конверсий и был на 29% дешевле ручных фраз.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--ink2)">4</div><div class="body">
+      <h4>2 апреля 2026 · технический аудит</h4>
+      <p>Найдено: 547 дублей фраз на поиске, 32 пересечения, лишние операторы в 16 кампаниях, по одному объявлению в группе, отсутствие всех форматов кроме текстовых. <b>Ограничение дневного бюджета — повторно, не исправлено с января.</b></p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--purple)">5</div><div class="body">
+      <h4>Февраль–апрель 2026 · переезд на новые кабинеты</h4>
+      <p>Созданы три новых кабинета по городам с чистой структурой. Вместе с переездом <b>потеряна корректная связка целей</b>: в старом кабинете считались «Заказ создан», «Заказ оплачен», «Звонок», сейчас — одна общая цель.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--bad)">6</div><div class="body">
+      <h4>Июль 2026 · текущее состояние</h4>
+      <p>Roistat заморожен, коллтрекинг не работает, подмена номеров остановлена. Интеграция сайта с CRM не оплачена — заявки создаются без телефона. Бюджеты сокращены вдвое, брендовые кампании отключены.</p>
+    </div></div>
+  </div>
+
+  <div class="section-t">Что повторяется во всех аудитах</div>
+  <div class="card">
+    <div class="tbl-wrap"><table class="tbl">
+      <thead><tr><th>Проблема</th><th class="n">Янв 2026</th><th class="n">Апр 2026</th><th class="n">Июл 2026</th><th class="n">Сейчас</th></tr></thead>
+      <tbody>
+        <tr><td>Стратегии не обучаются</td><td class="n b">есть</td><td class="n b">есть</td><td class="n b">есть</td><td class="n b">есть</td></tr>
+        <tr><td>Цели заданы некорректно</td><td class="n b">есть</td><td class="n b">есть</td><td class="n b">есть</td><td class="n b">есть</td></tr>
+        <tr><td>Одно объявление в группе</td><td class="n b">есть</td><td class="n b">есть</td><td class="n">—</td><td class="n w">частично</td></tr>
+        <tr><td>Ограничение дневного бюджета</td><td class="n b">есть</td><td class="n b">есть</td><td class="n">—</td><td class="n g">снято</td></tr>
+        <tr><td>Нет форматов кроме текстовых</td><td class="n b">есть</td><td class="n b">есть</td><td class="n b">есть</td><td class="n w">частично</td></tr>
+        <tr><td>Дубли и пересечения фраз</td><td class="n b">есть</td><td class="n b">есть</td><td class="n">—</td><td class="n w">проверить</td></tr>
+        <tr><td>Медленный сайт, мобильная версия</td><td class="n b">есть</td><td class="n b">есть</td><td class="n b">есть</td><td class="n b">есть</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note">Вывод: дело не в конкретном подрядчике. Все специалисты видели проблемы и писали об одном и том же. Не хватало не диагноза, а <b>исполнения и владельца процесса</b>, который доводит правки до конца и проверяет результат.</p>
+  </div>
+
+  <div class="section-t">Конкурентная позиция</div>
+  <div class="grid g2">
+    <div class="card"><h3><span class="dot" style="background:var(--bad)"></span>Переплата за клик против рынка</h3>
+      <div class="chartbox sm" data-chart="comp"></div>
+      <p class="note">Данные Яндекса за ноябрь 2025 – январь 2026. В Санкт-Петербурге клик обходится втрое дороже, чем конкурентам.</p></div>
+    <div class="card"><h3><span class="dot" style="background:var(--purple)"></span>Кто конкуренты на самом деле</h3>
+      <p style="font-size:14px;color:var(--ink2);margin-bottom:10px">Расшифрованы по брендовым запросам, которые перехватываются в аукционе:</p>
+      <div class="hero-strip">
+        <span class="chip bad">Квиз Плиз <b>СПб, Тула</b></span>
+        <span class="chip bad">ВАУ Квиз <b>СПб, Тула</b></span>
+        <span class="chip bad">Шейкер Квиз <b>СПб, Тула</b></span>
+        <span class="chip bad">Смузи Квиз <b>СПб</b></span>
+        <span class="chip bad">Чиз Квиз <b>Тула</b></span>
+        <span class="chip bad">Форт Боярд <b>Тула</b></span>
+        <span class="chip bad">Мафия <b>Тула</b></span>
+        <span class="chip">Show Today <b>Москва</b></span>
+        <span class="chip">Два Дивана <b>Москва</b></span>
+        <span class="chip">Big Party Show</span>
+      </div>
+      <p class="note">Обратите внимание: основная конкуренция в рекламе идёт с квизами, хотя продукт — не квиз. Это же подтверждают гости в опросе. Отстройка от квизов в текстах объявлений — отдельная точка роста.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ПЛАН ================= -->
+<section class="view" id="plan">
+  <div class="phead"><h1><span class="layer">План действий</span></h1>
+    <p>Порядок важен: пока не починено измерение, любые правки ставок и бюджетов оцениваются вслепую. Ниже — три горизонта с конкретными шагами и ожидаемым эффектом.</p></div>
+
+  <div class="section-t sm">Горизонт 1 · Первые две недели — вернуть зрение</div>
+  <div class="prio">
+    <div class="pitem"><div class="num" style="background:var(--bad)">1</div><div class="body">
+      <h4>Восстановить корректные цели в Метрике</h4>
+      <p>Развести цели: заявка с формы, заявка через квиз, обращение в мессенджер, звонок, заказ создан, заказ оплачен. Убрать из оптимизации микро-действия. Настроить передачу сделок из CRM.</p>
+      <div class="meta"><span class="tagx hi">блокирует всё остальное</span><span class="tagx">ответственный: аналитика</span></div>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--bad)">2</div><div class="body">
+      <h4>Вернуть коллтрекинг</h4>
+      <p>Roistat заморожен, звонки не отслеживаются. Нужен динамический коллтрекинг с передачей звонков в Метрику как цели. Без этого значительная часть заявок остаётся невидимой, а Яндекс не может учиться.</p>
+      <div class="meta"><span class="tagx hi">критично</span><span class="tagx">от 240 ₽ за номер в месяц</span></div>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--bad)">3</div><div class="body">
+      <h4>Починить приём заявок с сайта</h4>
+      <p>Проверить капчу (она блокировала отправку тестовой заявки), оплатить интеграцию сайта с CRM — сейчас сделки создаются без номера телефона.</p>
+      <div class="meta"><span class="tagx hi">теряются живые заявки</span></div>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--orange)">4</div><div class="body">
+      <h4>Почистить очевидный мусор в запросах</h4>
+      <p>Добавить минус-слова по списку из технического раздела, устранить межрегиональную утечку. Это не требует ожидания и даёт эффект сразу.</p>
+      <div class="meta"><span class="tagx md">быстрый эффект</span></div>
+    </div></div>
+  </div>
+
+  <div class="section-t sm">Горизонт 2 · Три–шесть недель — вернуть эффективность</div>
+  <div class="prio">
+    <div class="pitem"><div class="num" style="background:var(--orange)">5</div><div class="body">
+      <h4>Пересобрать стратегии под реальные цели</h4>
+      <p>После починки целей заново задать целевые действия и бюджеты из расчёта минимум 10 конверсий в неделю на стратегию. При нехватке — объединять города в одну пакетную стратегию.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--orange)">6</div><div class="body">
+      <h4>Снизить цену клика на Поиске</h4>
+      <p>Убрать лишние операторы, устранить дубли фраз между кампаниями, расширить семантику. Цель — прийти к 90–120 ₽ вместо текущих 206 ₽. Это удвоит количество кликов без роста бюджета.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--orange)">7</div><div class="body">
+      <h4>Закрыть неохваченный спрос</h4>
+      <p>Запустить кластер «где отметить день рождения» в Москве и СПб — около 12 000 запросов в месяц, сейчас ноль показов. Прогноз Яндекса: рост заявок без удорожания.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--orange)">8</div><div class="body">
+      <h4>Дозаполнить объявления</h4>
+      <p>Добавить второе и третье объявление в группы, восемь быстрых ссылок с описаниями, промоакции, изображения и видео. Каждый элемент повышает кликабельность, а значит снижает цену клика.</p>
+    </div></div>
+  </div>
+
+  <div class="section-t sm">Горизонт 3 · Дальше — рост</div>
+  <div class="prio">
+    <div class="pitem"><div class="num" style="background:var(--purple)">9</div><div class="body">
+      <h4>Поднять конверсию обращения в заявку</h4>
+      <p>Из 986 обращений заявками стали 405 — теряется 59% на первом контакте. При этом дальше конверсия в предоплату 94%: кто дошёл до заявки, тот платит. Быстрый ответ и дожим молчунов на этом участке дают больше, чем любая правка ставок.</p>
+      <div class="meta"><span class="tagx lo">максимальный эффект</span><span class="tagx">вне Директа</span></div>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--purple)">10</div><div class="body">
+      <h4>Починить мобильную версию сайта</h4>
+      <p>70% бюджета уходит в мобильный трафик, который конвертит в 2,7 раза хуже десктопа. Отказы 84%, время на сайте 15 секунд. Это самая дешёвая точка роста конверсии.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--purple)">11</div><div class="body">
+      <h4>Запустить ретаргетинг и похожие аудитории</h4>
+      <p>База 1 528 клиентов превышает минимальный порог для загрузки в Яндекс Аудитории. Ретаргетинг уже показывает лучшую цену заявки в аккаунте (817 ₽), но почти не используется.</p>
+    </div></div>
+    <div class="pitem"><div class="num" style="background:var(--purple)">12</div><div class="body">
+      <h4>Отстроиться от квизов</h4>
+      <p>Пересобрать тексты объявлений так, чтобы алгоритм перестал тянуть квизовый трафик, а сообщение подчёркивало отличие формата. Сейчас на квизовые кампании уходит крупнейшая часть бюджета.</p>
+    </div></div>
+  </div>
+
+  <div class="callout k" style="margin-top:20px">
+    <h3>Ожидаемый результат</h3>
+    <p>После первого горизонта появится честная картина: станет видно, сколько реально стоит заявка и какие кампании окупаются. После второго — цена клика и охват придут к рыночным значениям. Третий горизонт даёт кратный рост, потому что работает уже не с рекламой, а с воронкой целиком.</p>
+  </div>
+</section>
+
+<!-- ================= ГИПОТЕЗЫ ================= -->
+<section class="view" id="hyp">
+  <div class="phead"><h1><span class="layer">Гипотезы для проверки</span></h1>
+    <p>Спорные вопросы, которые нельзя решить мнением — только тестом. Для каждой указано, что проверяем, как измеряем и какое решение принимаем по результату.</p></div>
+
+  <details class="hyp" open><summary>1. Отключение брендовых кампаний экономит деньги или теряет заявки?</summary>
+    <div class="in">
+      <b>Контекст спора.</b> Менеджер Яндекса рекомендует масштабировать брендовые кампании (лучший показатель в аккаунте). Специалист возражает: эти конверсии пришли бы и так через органику и карты. Кампании отключены 14 июля.
+      <div class="row"><b>Что говорят данные.</b> Цена заявки по брендовым 376–493 ₽ при конверсии 25–27% — лучший результат в аккаунте. Но охват собственного бренда только 54–68%, а число конкурентов, показывающихся по бренду, выросло с 5–6 до 15–20.</div>
+      <div class="row"><b>Как проверить.</b> Включить брендовые на две недели и сравнить <b>общее</b> число заявок (не только рекламных) с двумя неделями без них. Смотреть суммарно рекламу плюс органику.</div>
+      <div class="row"><b>Решение.</b> Если общий поток заявок не меняется — специалист прав, оставляем выключенными. Если падает — включаем и защищаем бренд от перехвата.</div>
+    </div>
+  </details>
+
+  <details class="hyp"><summary>2. Стоит ли сокращать автотаргетинг?</summary>
+    <div class="in">
+      <b>Контекст.</b> Сейчас автотаргетинг планово сокращают до узких и целевых категорий, считая источником широкого трафика.
+      <div class="row"><b>Что говорят данные.</b> На двух разных кабинетах, в разные периоды, у разных специалистов автотаргетинг стабильно дешевле ручной семантики: 1 258 ₽ против 2 056 ₽ сейчас и 4 727 ₽ против 6 635 ₽ раньше. Клик по автотаргетингу стоит 44 ₽, по ручной фразе — 162 ₽.</div>
+      <div class="row"><b>Как проверить.</b> Разделить: в половине кампаний оставить текущее сокращение, в половине — расширить автотаргетинг при жёсткой минусовке. Сравнить цену целевой конверсии за месяц.</div>
+      <div class="row"><b>Решение.</b> Если подтвердится — сместить акцент на автотаргетинг с еженедельной чисткой запросов, а ручные фразы оставить только на сверхцелевых.</div>
+    </div>
+  </details>
+
+  <details class="hyp"><summary>3. Сузиться на Поиске и перелить бюджет в РСЯ?</summary>
+    <div class="in">
+      <b>Контекст.</b> Специалист предложил сузить поиск до сверхцелевых запросов и развивать РСЯ, поскольку поисковый трафик дорогой и широкий.
+      <div class="row"><b>Что говорят данные.</b> Аргумент за: цена клика на Поиске 206 ₽ против 25 ₽ в Сетях. Аргумент против: исторически РСЯ давала околонулевой результат — 220 496 ₽ на одну заявку в конце 2025, ноль конверсий два месяца подряд в начале 2026. Сейчас РСЯ показывает лучшие цифры, но по мусорным целям, поэтому сравнение некорректно.</div>
+      <div class="row"><b>Как проверить.</b> Решение отложить до починки целей. После этого сравнить цену <b>целевой</b> конверсии по площадкам за месяц.</div>
+      <div class="row"><b>Решение.</b> Не принимать решение сейчас — риск повторить историю с РСЯ, которая уже дважды не оправдалась.</div>
+    </div>
+  </details>
+
+  <details class="hyp"><summary>4. Квизовый трафик — покупать или уходить?</summary>
+    <div class="in">
+      <b>Контекст.</b> Кампании «Квизы и квесты» — крупнейшая статья расхода (217 218 ₽ в Москве). При этом продукт не является квизом, а гости называют квизы конкурентом.
+      <div class="row"><b>Что говорят данные.</b> В Москве и СПб квизовые кампании дают конверсию 9,6% — неплохо. Но в старом кабинете отдельный запрос «квиз в москве» стоил 37 603 ₽ за конверсию. В Туле квизовая кампания, наоборот, лучшая (883 ₽).</div>
+      <div class="row"><b>Как проверить.</b> Разделить квизовые кампании на два кластера: «квиз + повод» (квиз на корпоратив, на день рождения) и чистые «квиз в городе». Сравнить цену целевой конверсии.</div>
+      <div class="row"><b>Решение.</b> Оставлять то, что содержит повод, отключать чистые квизовые запросы без повода. Параллельно — переписать тексты, чтобы алгоритм перестал воспринимать компанию как квиз.</div>
+    </div>
+  </details>
+
+  <details class="hyp"><summary>5. Почему мобильный трафик конвертит втрое хуже?</summary>
+    <div class="in">
+      <b>Контекст.</b> 70% бюджета уходит в мобильный трафик, конверсия 3,88% против 10,43% на десктопе. По Метрике отказы на смартфонах 84%, время на сайте 15 секунд.
+      <div class="row"><b>Гипотеза.</b> Проблема не в трафике, а в мобильной версии сайта: скорость загрузки, форма заявки, читаемость.</div>
+      <div class="row"><b>Как проверить.</b> Записи Вебвизора по мобильным сессиям, замер скорости, тестовая отправка заявки с телефона. Отдельно проверить капчу — она уже блокировала отправку.</div>
+      <div class="row"><b>Решение.</b> Если подтвердится — чинить сайт, а не резать мобильный трафик. Понижающая корректировка на мобильные — крайняя мера, она отрезает 70% рынка.</div>
+    </div>
+  </details>
+
+  <details class="hyp"><summary>6. Хватит ли бюджета для обучения стратегий?</summary>
+    <div class="in">
+      <b>Контекст.</b> Недельный бюджет на поиск Москвы — 12 295 ₽ при цене целевой конверсии 10 751 ₽. Это примерно одна конверсия в неделю при необходимых десяти.
+      <div class="row"><b>Следствие.</b> Стратегия не может обучиться математически, независимо от квалификации специалиста. Это же отмечалось во всех предыдущих аудитах.</div>
+      <div class="row"><b>Варианты.</b> Либо поднять бюджет на приоритетном направлении до уровня обучения, либо перейти на цель выше по воронке (более частую), либо объединить города в одну пакетную стратегию для накопления статистики.</div>
+      <div class="row"><b>Решение.</b> Выбирается после починки целей — возможно, реальных конверсий окажется достаточно, просто они сейчас не видны.</div>
+    </div>
+  </details>
+
+  <div class="section-t">Открытые вопросы к обсуждению</div>
+  <div class="card">
+    <ul class="ul">
+      <li><span class="ic" style="background:var(--purple)">?</span><div>Какая цель сейчас выбрана как целевая и почему именно она? Это определит план по горизонту 1.</div></li>
+      <li><span class="ic" style="background:var(--purple)">?</span><div>Сохранился ли доступ к старому кабинету через прежнего подрядчика — там осталась история и работающие связки целей.</div></li>
+      <li><span class="ic" style="background:var(--purple)">?</span><div>Какая реальная конверсия из заявки в оплату сейчас по данным CRM? От неё зависит расчёт допустимой цены заявки.</div></li>
+      <li><span class="ic" style="background:var(--purple)">?</span><div>Какой сегмент приоритетен на осенний сезон — корпоративы дают самый высокий чек, но требуют раннего старта.</div></li>
+      <li><span class="ic" style="background:var(--purple)">?</span><div>Есть ли решение по промостраницам, которые предлагались ранее и были отложены до сентября.</div></li>
+    </ul>
+  </div>
+</section>
+
+<div class="foot">
+  ХА-ХА ШОУ · аудит Яндекс.Директа · данные февраль–июль 2026, исторический контекст 2025–2026<br>
+  Источники: API Яндекс.Директа, Яндекс.Метрика, Wordstat, четыре сторонних аудита, внутренние данные компании.<br>
+  Все выводы перепроверены минимум двумя независимыми способами.
+</div>
+</main>
+
+<script>
+const D={
+  monLabels:['Фев','Мар','Апр','Май','Июн','Июл'],
+  monSpend:[11000,63473,248791,334811,379000,231513],
+  monConv:[25,62,164,169,305,114],
+  gapLabels:['«Конверсии» в отчёте','Целевая цель','Реальные заявки'],
+  gapVals:[839,118,330],
+  budLabels:['Фев','Мар','Апр','Май','Июн'],
+  budSpend:[710000,601350,401700,392700,486230], budZay:[95,91,76,65,62],
+  cpaLabels:['Москва','СПб','Тула'], cpaVals:[13346,13383,5037],
+  spendLabels:['Москва','СПб','Тула'], spendVals:[653952,428248,186387],
+  soiLabels:['Москва','СПб','Тула'], soiUs:[3,10,33], soiComp:[13,15,24],
+  missLabels:['где отметить ДР в мск','где отметить ДР','где отпраздновать ДР мск','квиз в москве','ведущий на ДР','детский день рождения'],
+  missDemand:[2116,1177,1078,1062,834,726], missShows:[0,0,0,78,1,0],
+  brandLabels:['Москва','СПб','Тула'], brandCov:[57.5,67.6,66.4],
+  compLabels:['Москва','СПб'], compCpc:[138,210]
+};
+const C={yellow:'#EFDD05',orange:'#F35417',purple:'#6209ED',ink:'#17140C',ink2:'#6b6552',good:'#1f9d57',bad:'#e0402a'};
+Chart.defaults.font.family="Manrope, sans-serif"; Chart.defaults.font.size=12; Chart.defaults.color=C.ink2;
+const money=v=>v.toLocaleString('ru-RU');
+const noGrid={grid:{display:false}};
+const isM=()=>window.innerWidth<640;
+const LP=p=>isM()?'bottom':p;
+function chart(el,cfg){ if(el.dataset.done) return; el.dataset.done=1;
+  const cv=document.createElement('canvas'); el.appendChild(cv); new Chart(cv.getContext('2d'),cfg); }
+
+function build(n,el){ switch(n){
+  case 'mon': chart(el,{type:'bar',data:{labels:D.monLabels,datasets:[
+    {label:'Расход, ₽',data:D.monSpend,backgroundColor:C.purple,borderRadius:6,yAxisID:'y',order:2},
+    {label:'Конверсии (все цели)',data:D.monConv,type:'line',borderColor:C.orange,backgroundColor:C.orange,borderWidth:3,tension:.35,pointRadius:4,yAxisID:'y1',order:1}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+money(c.raw)}}},
+      scales:{y:{position:'left',...noGrid,ticks:{callback:v=>(v/1000)+'к'}},y1:{position:'right',grid:{display:false}},x:noGrid}}}); break;
+  case 'gap': case 'gap2': chart(el,{type:'bar',data:{labels:D.gapLabels,datasets:[
+    {data:D.gapVals,backgroundColor:[C.ink2,C.bad,C.good],borderRadius:8}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>money(c.raw)}}},
+      scales:{y:{...noGrid},x:{...noGrid,ticks:{font:{size:11}}}}}}); break;
+  case 'budget': chart(el,{type:'bar',data:{labels:D.budLabels,datasets:[
+    {label:'Расход маркетинга, ₽',data:D.budSpend,backgroundColor:C.purple,borderRadius:6,yAxisID:'y',order:2},
+    {label:'Заявки, шт',data:D.budZay,type:'line',borderColor:C.bad,backgroundColor:C.bad,borderWidth:3,tension:.3,pointRadius:5,yAxisID:'y1',order:1}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+money(c.raw)}}},
+      scales:{y:{position:'left',...noGrid,ticks:{callback:v=>(v/1000)+'к'}},y1:{position:'right',grid:{display:false},min:0},x:noGrid}}}); break;
+  case 'cpa': chart(el,{type:'bar',data:{labels:D.cpaLabels,datasets:[
+    {data:D.cpaVals,backgroundColor:D.cpaVals.map(v=>v>10000?C.bad:C.good),borderRadius:7}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>money(c.raw)+' ₽ за заявку'}}},
+      scales:{y:{...noGrid,ticks:{callback:v=>money(v)}},x:noGrid}}}); break;
+  case 'spend': chart(el,{type:'doughnut',data:{labels:D.spendLabels,datasets:[
+    {data:D.spendVals,backgroundColor:[C.purple,C.orange,C.yellow],borderColor:'#fff',borderWidth:2}]},
+    options:{maintainAspectRatio:false,cutout:'58%',plugins:{legend:{position:LP('right'),labels:{boxWidth:12,padding:8}},
+      tooltip:{callbacks:{label:c=>c.label+': '+money(c.raw)+' ₽'}}}}}); break;
+  case 'soi': chart(el,{type:'bar',data:{labels:D.soiLabels,datasets:[
+    {label:'ХА-ХА ШОУ',data:D.soiUs,backgroundColor:C.purple,borderRadius:6},
+    {label:'Лучший конкурент',data:D.soiComp,backgroundColor:'#d9c7a0',borderRadius:6}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw+'% спроса'}}},
+      scales:{y:{...noGrid,ticks:{callback:v=>v+'%'}},x:noGrid}}}); break;
+  case 'miss': chart(el,{type:'bar',data:{labels:D.missLabels,datasets:[
+    {label:'Спрос в месяц',data:D.missDemand,backgroundColor:'#d9c7a0',borderRadius:5},
+    {label:'Показов',data:D.missShows,backgroundColor:C.bad,borderRadius:5}]},
+    options:{indexAxis:'y',maintainAspectRatio:false,plugins:{legend:{position:'bottom'}},
+      scales:{x:{...noGrid},y:{...noGrid,ticks:{font:{size:10}}}}}}); break;
+  case 'brand': chart(el,{type:'bar',data:{labels:D.brandLabels,datasets:[
+    {label:'Охвачено',data:D.brandCov,backgroundColor:C.good,borderRadius:6},
+    {label:'Упущено',data:D.brandCov.map(v=>100-v),backgroundColor:C.bad,borderRadius:6}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{position:'bottom'},tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.raw.toFixed(1)+'%'}}},
+      scales:{x:{stacked:true,...noGrid},y:{stacked:true,...noGrid,ticks:{callback:v=>v+'%'}}}}}); break;
+  case 'comp': chart(el,{type:'bar',data:{labels:D.compLabels,datasets:[
+    {label:'Переплата за клик',data:D.compCpc,backgroundColor:[C.orange,C.bad],borderRadius:7}]},
+    options:{maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>'+'+c.raw+'% к цене конкурентов'}}},
+      scales:{y:{...noGrid,ticks:{callback:v=>'+'+v+'%'}},x:noGrid}}}); break;
+}}
+
+const CAMP=[["Поиск / Квизы и квесты","МСК",217218,837,260,81,9.68],["Поиск / Квизы и квесты","СПб",133002,737,180,71,9.63],
+["Поиск / День Рождения","МСК",127541,339,376,26,7.67],["РСЯ / Ха-Ха Шоу","СПб",121601,5280,23,132,2.50],
+["РСЯ / Ха-Ха Шоу","МСК",69072,1525,45,52,3.41],["Поиск / Квизы и квесты","Тула",65356,522,125,74,14.18],
+["Поиск / Выпускные","МСК",56565,291,194,9,3.09],["Поиск / Конкуренты","МСК",53212,237,225,37,15.61],
+["Поиск / Корпоративы","МСК",50415,147,343,12,8.16],["РСЯ / Ха-Ха Шоу","Тула",49467,2422,20,31,1.28],
+["Поиск / Выпускные","СПб",40985,272,151,8,2.94],["Поиск / День Рождения","СПб",35982,150,240,7,4.67],
+["Поиск / Корпоративы","СПб",34712,177,196,8,4.52],["РСЯ / Выпускные","МСК",29043,1892,15,48,2.54],
+["РСЯ / Выпускные","СПб",24703,817,30,41,5.02],["Поиск / День Рождения","Тула",24041,144,167,12,8.33],
+["Поиск / Брендовая","МСК",21196,165,128,43,26.06],["Ретаргетинг","МСК",20214,323,63,20,6.19],
+["РСЯ / Выпускные","Тула",17452,1514,12,35,2.31],["Поиск / Конкуренты","СПб",16598,85,195,12,14.12],
+["Ретаргетинг","СПб",10658,213,50,13,6.10],["Поиск / Брендовая","Тула",8263,86,96,22,25.58],
+["Поиск / Шоу-игра","МСК",8240,34,242,5,14.71],["Поиск / Брендовая","СПб",7929,69,115,19,27.54],
+["Поиск / Выпускные","Тула",7927,77,103,3,3.90],["Ретаргетинг","Тула",6800,212,32,11,5.19],
+["Поиск / Корпоративы","Тула",6667,65,103,5,7.69],["Поиск / Шоу-игра","СПб",1752,6,292,0,0],
+["Поиск / Профпраздники","МСК",1235,9,137,0,0],["Поиск / Профпраздники","СПб",592,5,118,1,20.00],
+["Поиск / Шоу-игра","Тула",228,1,228,0,0],["Поиск / Профпраздники","Тула",186,4,46,0,0]];
+(function(){const tb=document.querySelector('#tblCamp tbody');
+  CAMP.forEach(([n,c,cost,clk,cpc,conv,cr])=>{
+    const crc=cr>=12?'g':cr>=5?'':'b';
+    const cpcc=cpc>=200?'b':cpc>=100?'w':'g';
+    tb.insertAdjacentHTML('beforeend',
+    `<tr><td><b>${n}</b></td><td>${c}</td><td class="n">${money(cost)} ₽</td><td class="n">${money(clk)}</td>
+     <td class="n ${cpcc}">${cpc} ₽</td><td class="n">${conv}</td><td class="n ${crc}">${cr.toFixed(2)}%</td></tr>`);});
+})();
+
+function activate(v){
+  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id===v));
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+  document.querySelectorAll('#'+v+' [data-chart]').forEach(el=>build(el.dataset.chart,el));
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.getElementById('nav').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) activate(b.dataset.v);});
+document.querySelectorAll('#sum [data-chart]').forEach(el=>build(el.dataset.chart,el));
+</script>
+</body>
+</html>
