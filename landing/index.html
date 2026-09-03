@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Четыре посадочные ХА-ХА ШОУ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;600;700;800&display=swap">
+
+<style>
+:root{
+  --ink:#17140C; --ink-2:#544D38; --ink-3:#8C846A;
+  --paper:#FFFDF4; --card:#FFFFFF; --soft:#FCF7DA; --line:#E4D9B8;
+  --purple:#6209ED; --yellow:#EFDD05; --orange:#F35417; --green:#1F7A4C;
+  --serif:'Unbounded',"Arial Black",system-ui,sans-serif;
+  --sans:'Manrope',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:16.5px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.narrow{max-width:680px}
+
+h1,h2,h3{font-family:var(--serif);font-weight:900;letter-spacing:-.03em;margin:0;text-wrap:balance}
+h1{font-size:clamp(32px,5vw,54px);line-height:1.02}
+h2{font-size:clamp(23px,3vw,32px);line-height:1.1;margin-bottom:12px}
+h3{font-size:20px;font-weight:700;letter-spacing:-.015em;line-height:1.2}
+p{margin:0 0 14px;max-width:66ch}
+.lead{font-size:clamp(17px,1.8vw,19.5px);color:var(--ink-2);line-height:1.55}
+.eyebrow{font-weight:800;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+
+header{padding:52px 0 34px;border-bottom:2px solid var(--ink)}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--yellow);
+  padding:6px 12px;border-radius:999px}
+
+section{padding:52px 0}
+section + section{border-top:1px solid var(--line)}
+
+/* карточки вариантов */
+.cards{display:grid;gap:18px;margin-top:30px}
+@media(min-width:840px){.cards{grid-template-columns:1fr 1fr}}
+.v{border:2px solid var(--ink);border-radius:22px;overflow:hidden;background:var(--card);
+  display:flex;flex-direction:column;transition:transform .18s ease,box-shadow .18s ease}
+.v:hover{transform:translateY(-3px);box-shadow:0 14px 0 -6px rgba(23,20,12,.16)}
+.v-top{padding:20px 22px;color:#fff;display:flex;align-items:flex-start;
+  justify-content:space-between;gap:14px}
+.v1 .v-top{background:var(--purple)}
+.v2 .v-top{background:#25055C}
+.v3 .v-top{background:var(--orange)}
+.v4 .v-top{background:var(--yellow);color:var(--ink)}
+.v-top .eyebrow{color:rgba(255,255,255,.7)}
+.v4 .v-top .eyebrow{color:#4A4429}
+.v-top h3{color:inherit;font-family:var(--serif);font-weight:900;font-size:22px;margin-top:6px}
+.v-no{font-family:var(--serif);font-weight:900;font-size:34px;line-height:1;opacity:.5;
+  font-variant-numeric:tabular-nums}
+.v-body{padding:20px 22px 22px;display:flex;flex-direction:column;gap:14px;flex:1}
+.v-body p{margin:0;font-size:15.5px;color:var(--ink-2)}
+.kv{display:grid;gap:8px;margin:2px 0 0}
+.kv div{display:flex;gap:10px;font-size:14.5px}
+.kv b{flex:none;min-width:104px;color:var(--ink-3);font-weight:800;font-size:11.5px;
+  letter-spacing:.1em;text-transform:uppercase;padding-top:3px}
+.kv span{color:var(--ink-2)}
+.v-go{margin-top:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:800;font-size:15px;padding:12px 20px;border-radius:999px;
+  border:2px solid var(--ink);background:var(--ink);color:var(--paper);
+  text-decoration:none;cursor:pointer;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible{outline:3px solid var(--purple);outline-offset:3px}
+.btn.ghost{background:transparent;color:var(--ink)}
+.risk{font-size:14px;color:var(--ink-3)}
+
+/* списки */
+.two{display:grid;gap:26px;margin-top:26px}
+@media(min-width:820px){.two{grid-template-columns:1fr 1fr;gap:40px}}
+ul.clean{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:10px}
+/* Не flex: при flex первое жирное слово становилось отдельной колонкой,
+   и текст в пункте разъезжался на две неровные части. */
+ul.clean li{position:relative;padding-left:20px;font-size:15.5px;
+  color:var(--ink-2);line-height:1.5}
+ul.clean li::before{content:"";position:absolute;left:0;top:9px;
+  width:8px;height:8px;border-radius:2px;background:var(--purple)}
+ul.clean.warn li::before{background:var(--orange)}
+ul.clean.ok li::before{background:var(--green)}
+ul.clean b{color:var(--ink)}
+
+.box{border:2px solid var(--ink);border-radius:20px;padding:22px;background:var(--soft)}
+.box.dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.box.dark h3{color:#fff}
+.box.dark p{color:rgba(255,253,244,.78)}
+.box.dark .eyebrow{color:var(--yellow)}
+
+table{width:100%;border-collapse:collapse;margin-top:20px;font-size:15px}
+th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3);
+  font-weight:800;border-bottom:2px solid var(--ink)}
+td b{font-weight:800}
+.scroll{overflow-x:auto}
+
+footer{padding:34px 0 64px;font-size:14px;color:var(--ink-3);border-top:2px solid var(--ink)}
+</style>
+
+<header>
+  <div class="wrap">
+    <span class="tag">Макеты · 3 сентября 2026</span>
+    <h1 style="margin-top:18px">Четыре посадочные под трафик из РСЯ</h1>
+    <p class="lead" style="margin-top:16px;max-width:64ch">Одна и та же услуга,
+      четыре разных способа её продать холодному человеку, который ещё только
+      выбирает, как отметить день рождения. Выбирать нужно не «какая красивее»,
+      а <b>какой аргумент</b> мы проверяем первым.</p>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Что общего у всех четырёх</div>
+      <h2 style="margin-top:10px">Одинаковая правда, разная подача</h2>
+    </div>
+    <div class="two">
+      <ul class="clean ok">
+        <li><b>Настоящие цены</b> из базы: студия 2 800 ₽ с человека в Москве,
+          2 500 ₽ в Петербурге и Туле, выезд от 35 000 ₽.</li>
+        <li><b>Настоящие цифры:</b> 5 643 праздника с июня 2019 года,
+          2 833 из них — дни рождения, средний стол 17 человек.</li>
+        <li><b>Фирменный стиль:</b> Unbounded и Manrope, пурпур, жёлтый
+          и оранжевый — те же, что в логотипе и в системе.</li>
+      </ul>
+      <ul class="clean warn">
+        <li><b>Ни одного стокового фото.</b> Вместо них размеченные места
+          с описанием нужного кадра — какой именно снимок туда встанет.</li>
+        <li><b>Не сказано ни слова про КВИЗ и КВЕСТ.</b> Человек из РСЯ
+          этих слов не знает, а нынешний сайт объясняет формат через них.</li>
+        <li><b>Главное действие — не «забронировать».</b> Для холодного
+          посетителя это слишком рано: зовём посмотреть, подобрать, посчитать.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Варианты</div>
+      <h2 style="margin-top:10px">Четыре аргумента</h2>
+      <p class="lead">Открываются в новой вкладке. На телефоне тоже работают —
+        стоит посмотреть именно с телефона, оттуда придёт большая часть трафика.</p>
+    </div>
+
+    <div class="cards">
+      <article class="v v1">
+        <div class="v-top">
+          <div><div class="eyebrow">Аргумент</div><h3>Вечер по часам</h3></div>
+          <div class="v-no">01</div>
+        </div>
+        <div class="v-body">
+          <p>«Вы заранее видите весь вечер». Хронология от 18:40 до 23:00:
+            гости приходят, ведущие забирают вечер себе, восемь конкурсов,
+            награждение, караоке. Шкала времени заполняется по мере прокрутки.</p>
+          <div class="kv">
+            <div><b>Кому</b><span>тем, кто боится неизвестности и хочет представить вечер целиком</span></div>
+            <div><b>Риск</b><span>длинная — нужно, чтобы дочитали до цены</span></div>
+          </div>
+          <div class="v-go">
+            <a class="btn" href="vecher.html" target="_blank" rel="noopener">Открыть</a>
+            <span class="risk">самая объясняющая</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="v v2">
+        <div class="v-top">
+          <div><div class="eyebrow">Аргумент</div><h3>А нам подойдёт?</h3></div>
+          <div class="v-no">02</div>
+        </div>
+        <div class="v-body">
+          <p>«Скажите, кого зовёте — подберём вечер». Три вопроса, и страница
+            собирает персональный ответ: как пройдёт именно ваш праздник
+            и сколько он будет стоить. Дальше — шесть прямых ответов на страхи.</p>
+          <div class="kv">
+            <div><b>Кому</b><span>тем, кто сомневается «а нам точно зайдёт»</span></div>
+            <div><b>Риск</b><span>требует действия сразу — часть уйдёт, не нажав</span></div>
+          </div>
+          <div class="v-go">
+            <a class="btn" href="podoydet.html" target="_blank" rel="noopener">Открыть</a>
+            <span class="risk">самая вовлекающая</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="v v3">
+        <div class="v-top">
+          <div><div class="eyebrow">Аргумент</div><h3>Восемь конкурсов</h3></div>
+          <div class="v-no">03</div>
+        </div>
+        <div class="v-body">
+          <p>«Вот что конкретно будут делать ваши гости». Программа как афиша:
+            восемь карточек, каждая раскрывается — тип задания, кто в нём
+            обычно выигрывает, что делать тем, кто не хочет к микрофону.</p>
+          <div class="kv">
+            <div><b>Кому</b><span>тем, кто не понимает, что такое шоу-игра</span></div>
+            <div><b>Риск</b><span>нужны настоящие названия конкурсов — сейчас там типы</span></div>
+          </div>
+          <div class="v-go">
+            <a class="btn" href="konkursy.html" target="_blank" rel="noopener">Открыть</a>
+            <span class="risk">самая доказательная</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="v v4">
+        <div class="v-top">
+          <div><div class="eyebrow">Аргумент</div><h3>Считалка праздника</h3></div>
+          <div class="v-no">04</div>
+        </div>
+        <div class="v-body">
+          <p>«Сколько это стоит на вашу компанию». Калькулятор на первом экране:
+            город, формат, длительность, ползунок гостей, допы. Сумма
+            пересчитывается на лету, именинник считается бесплатно от девяти гостей.</p>
+          <div class="kv">
+            <div><b>Кому</b><span>тем, кто выбирает по цене и сравнивает варианты</span></div>
+            <div><b>Риск</b><span>цена в лоб — часть отсеется, зато останутся готовые</span></div>
+          </div>
+          <div class="v-go">
+            <a class="btn" href="schitalka.html" target="_blank" rel="noopener">Открыть</a>
+            <span class="risk">самая отсеивающая</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Чего не хватает</div>
+      <h2 style="margin-top:10px">Что нужно от команды, чтобы это стало сайтом</h2>
+      <p class="lead">Пока это макеты. Ни один из них нельзя запускать
+        в таком виде — вот честный список.</p>
+    </div>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>Что нужно</th><th>Зачем</th><th>С кого</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><b>Видео 15–25 секунд с мероприятия</b></td>
+            <td>Формат объясняется одним роликом быстрее, чем страницей текста.
+              Самый важный недостающий элемент из всех.</td><td>Женя</td></tr>
+          <tr><td><b>8–12 живых фотографий</b></td>
+            <td>Лица гостей, ведущие, реквизит, караоке. Постановочные не подойдут —
+              видно, что постановка, и доверие падает.</td><td>Женя</td></tr>
+          <tr><td><b>Названия и описания восьми конкурсов</b></td>
+            <td>В третьем варианте сейчас стоят типы заданий, а не программа.</td><td>Женя, Анастасия</td></tr>
+          <tr><td><b>Форма заявки и согласие на обработку данных</b></td>
+            <td>Сейчас кнопки ведут на якорь. Форма должна отдавать заявку
+              в нашу систему, а не на почту.</td><td>Матвей</td></tr>
+          <tr><td><b>Счётчик Метрики в шаблоне страницы</b></td>
+            <td>Не внутри чужого скрипта — иначе повторим историю
+              с виджетом бронирования, когда трафик был, а измерения не было.</td><td>Матвей</td></tr>
+          <tr><td><b>Домен или раздел под посадочные</b></td>
+            <td>Отдельные адреса, чтобы Директ вёл на конкретный вариант
+              и было видно, какой из них работает.</td><td>Матвей, директолог</td></tr>
+          <tr><td><b>Юридические страницы</b></td>
+            <td>Политика обработки данных и реквизиты — без них рекламу
+              не пропустят на модерации.</td><td>Женя</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="two">
+      <div class="box">
+        <div class="eyebrow">Как выбирать</div>
+        <h3 style="margin-top:8px;font-family:var(--serif)">Не по вкусу, а по гипотезе</h3>
+        <p style="margin-top:10px">Каждый вариант проверяет своё предположение
+          о том, что мешает человеку оставить заявку.</p>
+        <ul class="clean">
+          <li><b>Первый</b> — мешает непонимание, как пройдёт вечер.</li>
+          <li><b>Второй</b> — мешает страх «нам не подойдёт».</li>
+          <li><b>Третий</b> — мешает непонимание самого формата.</li>
+          <li><b>Четвёртый</b> — мешает неясность цены.</li>
+        </ul>
+        <p style="margin-top:14px">Выбрать стоит два, а не один: запускать
+          в паре и сравнивать. Один вариант не с чем сравнивать, четыре —
+          трафика не хватит, чтобы различить.</p>
+      </div>
+
+      <div class="box dark">
+        <div class="eyebrow">Что предлагаю</div>
+        <h3 style="margin-top:8px;font-family:var(--serif)">Начать с первого и четвёртого</h3>
+        <p style="margin-top:10px">Они противоположны по подходу: один долго
+          объясняет и греет, второй сразу показывает деньги. Разница между ними
+          будет видна быстрее всего и на меньшем трафике.</p>
+        <p>Второй и третий сильнее, но им нужны фото и настоящая программа —
+          без них они проиграют не потому, что идея хуже.</p>
+        <p style="margin-bottom:0">Заявки с обеих страниц пойдут в систему
+          с разными метками, поэтому сравнивать будем не клики,
+          а предоплаты — то есть деньги.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    ХА-ХА ШОУ · макеты посадочных страниц под трафик из РСЯ.
+    Цены и статистика — из рабочей базы на 3 сентября 2026 года.
+    Фотографии и видео на страницах ещё не расставлены: вместо них размечены места.
+  </div>
+</footer>
+</body>
+</html>

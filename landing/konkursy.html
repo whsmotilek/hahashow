@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Восемь конкурсов</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;700;800&display=swap">
+
+<style>
+:root{
+  --ink:#151208; --ink-2:#4E4732; --ink-3:#8A8168;
+  --paper:#FFF8E7; --card:#FFFFFF; --line:#1512081F;
+  --orange:#F35417; --orange-d:#C63C08; --purple:#6209ED; --yellow:#EFDD05;
+  --serif:'Unbounded',"Arial Black",system-ui,sans-serif;
+  --sans:'Manrope',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 24px}
+.narrow{max-width:640px}
+
+h1,h2,h3{font-family:var(--serif);font-weight:900;letter-spacing:-.03em;margin:0;text-wrap:balance}
+h1{font-size:clamp(42px,9vw,120px);line-height:.86;text-transform:uppercase}
+h2{font-size:clamp(28px,4.4vw,52px);line-height:1;margin-bottom:16px;text-transform:uppercase}
+h3{font-size:20px;font-weight:700;letter-spacing:-.01em;line-height:1.2}
+p{margin:0 0 16px;max-width:60ch}
+.lead{font-size:clamp(17px,2vw,21px);color:var(--ink-2);line-height:1.5}
+.eyebrow{font-weight:800;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+
+.top{position:sticky;top:0;z-index:60;background:var(--ink);color:var(--paper)}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  height:58px;max-width:1140px;margin:0 auto;padding:0 24px}
+.mark{font-family:var(--serif);font-weight:900;font-size:15px;letter-spacing:.02em}
+.top small{color:rgba(255,248,231,.55);font-size:13px;font-weight:700;display:none}
+@media(min-width:800px){.top small{display:block}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--sans);font-weight:800;font-size:16px;padding:15px 28px;
+  border-radius:4px;border:0;background:var(--orange);color:#fff;
+  text-decoration:none;cursor:pointer;transition:background .16s,transform .16s}
+.btn:hover{background:var(--orange-d);transform:translateY(-2px)}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.btn.small{padding:9px 18px;font-size:14px}
+.btn.dark{background:var(--ink)}
+.btn.dark:hover{background:#000}
+
+/* Шапка на телефоне: без переносов. Логотип и кнопка вставали в две
+   строки и разъезжали высоту — на 375 px это первое, что видит человек. */
+.mark{white-space:nowrap;font-size:13px}
+.top .btn.small{padding:9px 14px;font-size:13px;white-space:nowrap}
+@media(min-width:520px){
+  .mark{font-size:15px}
+  .top .btn.small{padding:11px 20px;font-size:15px}
+}
+
+/* ── афиша ── */
+.poster{background:var(--orange);color:#fff;padding:52px 0 0;overflow:hidden;position:relative}
+.poster h1{color:#fff}
+.poster h1 em{font-style:normal;-webkit-text-stroke:2px #fff;color:transparent;
+  paint-order:stroke fill}
+.poster .lead{color:rgba(255,255,255,.9);max-width:52ch}
+.poster-meta{display:flex;flex-wrap:wrap;gap:0;margin-top:34px;
+  border-top:2px solid rgba(255,255,255,.35)}
+.pm{padding:16px 26px 16px 0;margin-right:26px;border-right:2px solid rgba(255,255,255,.35)}
+.pm:last-child{border-right:0}
+.pm b{display:block;font-family:var(--serif);font-weight:900;font-size:clamp(22px,3vw,30px);
+  line-height:1;font-variant-numeric:tabular-nums}
+.pm span{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:rgba(255,255,255,.72)}
+.poster-cta{display:flex;flex-wrap:wrap;gap:12px;margin:30px 0 46px}
+.poster .btn{background:var(--ink)}
+.poster .btn:hover{background:#000}
+.poster .btn.line{background:transparent;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)}
+.poster .btn.line:hover{background:rgba(255,255,255,.12)}
+
+.strip{background:var(--ink);color:var(--paper);overflow:hidden;border-top:3px solid var(--ink)}
+.strip-in{display:flex;width:max-content;animation:run 30s linear infinite}
+.strip b{font-family:var(--serif);font-weight:900;font-size:14px;letter-spacing:.06em;
+  text-transform:uppercase;padding:11px 0;white-space:nowrap}
+.strip b::after{content:"◆";padding:0 20px;color:var(--orange);font-size:11px}
+@keyframes run{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.strip-in{animation:none}}
+
+/* ── программа ── */
+.program{padding:72px 0}
+.p-head{display:grid;gap:20px;margin-bottom:38px}
+@media(min-width:900px){.p-head{grid-template-columns:1.2fr .8fr;align-items:end;gap:48px}}
+.counter{border:3px solid var(--ink);border-radius:6px;padding:20px;background:var(--card)}
+.counter b{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7vw,72px);
+  line-height:.9;display:block;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.counter span{font-size:13px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-3);display:block;margin-top:8px}
+
+.grid{display:grid;gap:14px}
+@media(min-width:700px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1000px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+.item{border:3px solid var(--ink);border-radius:6px;background:var(--card);
+  padding:0;overflow:hidden;display:flex;flex-direction:column}
+.item-btn{all:unset;cursor:pointer;display:block;padding:18px 18px 16px;
+  transition:background .16s}
+.item-btn:hover{background:#FFF3D6}
+.item-btn:focus-visible{outline:3px solid var(--purple);outline-offset:-3px}
+.no{font-family:var(--serif);font-weight:900;font-size:13px;letter-spacing:.05em;
+  color:var(--orange);font-variant-numeric:tabular-nums}
+.item h3{margin:8px 0 10px}
+.kind{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;padding:4px 9px;border-radius:3px;background:var(--ink);color:var(--paper)}
+.kind.um{background:var(--purple)}
+.kind.ruk{background:var(--orange)}
+.kind.igr{background:#1F7A4C}
+.kind.ud{background:#B58900;color:#151208}
+.item p{margin:12px 0 0;font-size:15px;color:var(--ink-2)}
+.more{margin-top:12px;font-size:13px;font-weight:800;color:var(--ink-3);
+  display:flex;align-items:center;gap:6px}
+.more::after{content:"↓";transition:transform .2s}
+.item.open .more::after{transform:rotate(180deg)}
+.item.open .more{color:var(--orange)}
+.det{max-height:0;overflow:hidden;transition:max-height .32s ease;
+  border-top:0 solid var(--line)}
+.item.open .det{max-height:340px;border-top-width:2px}
+.det-in{padding:16px 18px 20px;font-size:15px;color:var(--ink-2)}
+.det-in b{color:var(--ink)}
+@media(prefers-reduced-motion:reduce){.det{transition:none}}
+
+.note{margin-top:22px;border:3px dashed var(--ink);border-radius:6px;padding:20px;
+  background:#FFF3D6}
+.note .eyebrow{color:var(--orange);margin-bottom:8px}
+.note p{margin:0;font-size:15.5px;color:var(--ink-2)}
+
+/* ── кино ── */
+.film{background:var(--ink);color:var(--paper);padding:72px 0}
+.film h2{color:#fff}
+.film .lead{color:rgba(255,248,231,.7)}
+.shots{display:grid;gap:14px;margin-top:34px}
+@media(min-width:760px){.shots{grid-template-columns:1.4fr 1fr}}
+.shot{border:2px dashed rgba(255,248,231,.3);border-radius:6px;
+  display:grid;place-items:center;text-align:center;padding:26px;min-height:230px}
+.shot div{max-width:34ch}
+.shot .eyebrow{color:var(--yellow);margin-bottom:8px}
+.shot span{font-size:14px;color:rgba(255,248,231,.72);line-height:1.45;display:block}
+.shot.two{display:grid;gap:14px;border:0;padding:0;min-height:0}
+.shot.two > .shot{min-height:108px}
+
+/* ── деньги ── */
+.money{padding:72px 0}
+.m-grid{display:grid;gap:14px;margin-top:32px}
+@media(min-width:820px){.m-grid{grid-template-columns:repeat(3,1fr)}}
+.m{border:3px solid var(--ink);border-radius:6px;padding:22px;background:var(--card)}
+.m.hot{background:var(--yellow)}
+.m b{display:block;font-family:var(--serif);font-weight:900;
+  font-size:clamp(26px,3.4vw,36px);letter-spacing:-.03em;line-height:1;
+  font-variant-numeric:tabular-nums;margin:10px 0 6px}
+.m span{font-size:14px;color:var(--ink-2);font-weight:600}
+.m .eyebrow{color:var(--ink-3)}
+.m.hot .eyebrow,.m.hot span{color:#4E4732}
+
+.end{background:var(--orange);color:#fff;padding:78px 0;text-align:center}
+.end h2{color:#fff}
+.end p{color:rgba(255,255,255,.88);margin-left:auto;margin-right:auto}
+.end .btn{background:var(--ink)}
+.end .alt{display:block;margin-top:16px;font-size:15px;color:rgba(255,255,255,.75)}
+.foot{padding:30px 0 56px;font-size:14px;color:var(--ink-3)}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="mark">ХА-ХА ШОУ</div>
+    <small>Москва · Санкт-Петербург · Тула</small>
+    <a class="btn small" href="#dengi">Сколько стоит</a>
+  </div>
+</header>
+
+<section class="poster">
+  <div class="wrap">
+    <div class="eyebrow" style="color:rgba(255,255,255,.75)">Программа на день рождения</div>
+    <h1 style="margin-top:16px">Восемь<br><em>конкурсов</em><br>за два часа</h1>
+    <p class="lead" style="margin-top:24px">Ваши гости не смотрят шоу — они в нём
+      участвуют. Ведущие делят компанию на две команды, и дальше два часа
+      люди соревнуются с реквизитом, которого раньше в руках не держали.</p>
+    <div class="poster-cta">
+      <a class="btn" href="#programma">Что именно они будут делать</a>
+      <a class="btn line" href="#dengi">Сколько это стоит</a>
+    </div>
+    <div class="poster-meta">
+      <div class="pm"><b>8</b><span>конкурсов</span></div>
+      <div class="pm"><b>2</b><span>команды</span></div>
+      <div class="pm"><b>120</b><span>минут игры</span></div>
+      <div class="pm"><b>6+</b><span>человек</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="strip" aria-hidden="true">
+  <div class="strip-in">
+    <b>смекалка</b><b>ловкость</b><b>актёрство</b><b>чистая удача</b><b>крупный реквизит</b><b>две команды</b><b>караоке после</b>
+    <b>смекалка</b><b>ловкость</b><b>актёрство</b><b>чистая удача</b><b>крупный реквизит</b><b>две команды</b><b>караоке после</b>
+  </div>
+</div>
+
+<section class="program" id="programma">
+  <div class="wrap">
+    <div class="p-head">
+      <div>
+        <div class="eyebrow">Программа целиком</div>
+        <h2 style="margin-top:12px">Что будет делать ваша компания</h2>
+        <p class="lead">Задания идут вперемешку: за подвижным — сидячее,
+          за головоломкой — что-то на удачу. Так по очереди блистает каждый,
+          и никто не выпадает из вечера.</p>
+      </div>
+      <div class="counter">
+        <b id="cnt">0</b>
+        <span>конкурсов вы уже посмотрели</span>
+      </div>
+    </div>
+
+    <div class="grid" id="grid">
+      <article class="item">
+        <button class="item-btn" type="button">
+          <div class="no">01</div>
+          <h3>Знакомство командами</h3>
+          <span class="kind igr">разогрев</span>
+          <p>Компания делится на две команды и за пять минут придумывает,
+            как себя назвать и чем себя показать.</p>
+          <div class="more">Подробнее</div>
+        </button>
+        <div class="det"><div class="det-in">
+          <b>Зачем он первый.</b> Люди, которые только что здоровались через стол,
+          впервые что-то делают вместе. После этого конкурса стеснение проходит
+          у всей компании сразу — дальше играть уже легко.</div></div>
+      </article>
+
+      <article class="item">
+        <button class="item-btn" type="button">
+          <div class="no">02</div>
+          <h3>На смекалку</h3>
+          <span class="kind um">голова</span>
+          <p>Задача, которую нельзя решить в одиночку: команда спорит,
+            перебирает варианты и в какой-то момент догадывается.</p>
+          <div class="more">Подробнее</div>
+        </button>
+        <div class="det"><div class="det-in">
+          <b>Кто здесь выигрывает.</b> Обычно самый тихий за столом. Знать
+          что-то заранее не нужно — ответ выводится на месте.</div></div>
+      </article>
+
+      <article class="item">
+        <button class="item-btn" type="button">
+          <div class="no">03</div>
+          <h3>На ловкость</h3>
+          <span class="kind ruk">руки</span>
+          <p>Подвижное задание с крупным реквизитом. Бегать по кругу
+            не придётся — важна точность, а не выносливость.</p>
+          <div class="more">Подробнее</div>
+        </button>
+        <div class="det"><div class="det-in">
+          <b>Про одежду.</b> Играют в том, в чём пришли на праздник.
+          Переодеваться и разуваться не нужно.</div></div>
+      </article>
+
+      <article class="item">
+        <button class="item-btn" type="button">
+          <div class="no">04</div>
+          <h3>Актёрский</h3>
+          <span class="kind um">артистизм</span>
+          <p>Единственный конкурс, где нужно что-то изобразить.
+            Играет команда целиком, а не один человек перед всеми.</p>
+          <div class="more">Подробнее</div>
+        </button>
+        <div class="det"><div class="det-in">
+          <b>Если не хочется.</b> Можно остаться тем, кто подсказывает и болеет —
+          ведущие видят, кого не надо вытаскивать в центр.</div></div>
+      </article>
+
+      <article class="item">
+        <button class="item-btn" type="button">
+          <div class="no">05</div>
+          <h3>На удачу</h3>
+          <span class="kind ud">случай</span>
+          <p>Конкурс, где не помогают ни ум, ни ловкость. Нужен именно он:
+            он уравнивает команды и держит интригу до конца.</p>
+          <div class="more">Подробнее</div>
+        </button>
+        <div class="det"><div class="det-in">
+          <b>Зачем в середине.</b> К этому моменту одна команда обычно уходит
+          вперёд. После конкурса на удачу счёт снова близкий,
+          и играть интересно всем.</div></div>
+      </article>
+
+      <article class="item">
+        <button class="item-btn" type="button">
+          <div class="no">06</div>
+          <h3>Командный на скорость</h3>
+          <span class="kind ruk">руки</span>
+          <p>Все восемь-двенадцать человек делают одно дело одновременно.
+            Самый шумный момент вечера.</p>
+          <div class="more">Подробнее</div>
+        </button>
+        <div class="det"><div class="det-in">
+          <b>Что снимать.</b> Именно отсюда обычно берут кадр,
+          который потом расходится по чатам.</div></div>
+      </article>
+
+      <article class="item">
+        <button class="item-btn" type="button">
+          <div class="no">07</div>
+          <h3>Про именинника</h3>
+          <span class="kind igr">персональный</span>
+          <p>Единственное задание, привязанное к поводу: команды соревнуются,
+            кто лучше знает виновника торжества.</p>
+          <div class="more">Подробнее</div>
+        </button>
+        <div class="det"><div class="det-in">
+          <b>Готовиться не нужно.</b> Достаточно, если при бронировании
+          вы расскажете о человеке пару фактов — остальное сделают ведущие.</div></div>
+      </article>
+
+      <article class="item">
+        <button class="item-btn" type="button">
+          <div class="no">08</div>
+          <h3>Финал и награждение</h3>
+          <span class="kind igr">финал</span>
+          <p>Решающее задание с двойными очками, объявление победителей
+            и общая фотография всей компании.</p>
+          <div class="more">Подробнее</div>
+        </button>
+        <div class="det"><div class="det-in">
+          <b>Что дальше.</b> Игра закончилась, а лофт остался ваш:
+          караоке, стол, разговоры — сколько захотите.</div></div>
+      </article>
+    </div>
+
+    <div class="note">
+      <div class="eyebrow">Для команды ХА-ХА ШОУ</div>
+      <p>Здесь стоят типы конкурсов, а не настоящая программа: названия
+        и описания восьми заданий нужно подставить свои. Структура рассчитана
+        именно на восемь карточек и на чередование «голова — руки — удача» —
+        порядок можно менять, количество лучше оставить.</p>
+    </div>
+  </div>
+</section>
+
+<section class="film">
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow" style="color:var(--yellow)">Как это выглядит со стороны</div>
+      <h2 style="margin-top:12px">Одно видео объясняет формат быстрее страницы текста</h2>
+      <p class="lead">Холодному посетителю нужно увидеть лица и реакции.
+        Постановочные кадры здесь не работают — видно, что постановка.</p>
+    </div>
+    <div class="shots">
+      <div class="shot">
+        <div>
+          <div class="eyebrow">Нужно видео 15–25 секунд</div>
+          <span>Один конкурс целиком: команда получает задание, делает,
+            радуется. Со звуком — смех важнее музыки. Это главный
+            элемент страницы, всё остальное его поддерживает.</span>
+        </div>
+      </div>
+      <div class="shot two">
+        <div class="shot">
+          <div><div class="eyebrow">Фото</div>
+            <span>Крупный реквизит в руках, видны лица</span></div>
+        </div>
+        <div class="shot">
+          <div><div class="eyebrow">Фото</div>
+            <span>Общий кадр всей компании после награждения</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="money" id="dengi">
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Цены на сентябрь 2026</div>
+      <h2 style="margin-top:12px">Сколько стоит вечер</h2>
+      <p class="lead">В студии считаем за человека, на выезде — фиксированно
+        за мероприятие. Именинник не платит, если гостей больше восьми.</p>
+    </div>
+    <div class="m-grid">
+      <div class="m hot">
+        <div class="eyebrow">Студия, Москва</div>
+        <b>2 800 ₽</b>
+        <span>с человека за 2 часа. Компания из 15 человек — около 39 200 ₽</span>
+      </div>
+      <div class="m">
+        <div class="eyebrow">Студия, Петербург и Тула</div>
+        <b>2 500 ₽</b>
+        <span>с человека за 2 часа. Компания из 15 человек — около 35 000 ₽</span>
+      </div>
+      <div class="m">
+        <div class="eyebrow">Выезд на вашу площадку</div>
+        <b>от 35 000 ₽</b>
+        <span>за мероприятие: Тула 35 000, Петербург 45 000, Москва 55 000</span>
+      </div>
+    </div>
+    <p style="margin-top:22px;font-size:14px;color:var(--ink-3)">
+      Отдельно можно добавить фотографа от 5 000 ₽, аренду зала от 5 000 ₽ в час,
+      ролик для соцсетей 7 000 ₽ и адаптацию сценария под ваш повод 10 000 ₽.</p>
+  </div>
+</section>
+
+<section class="end">
+  <div class="wrap narrow">
+    <div class="eyebrow" style="color:rgba(255,255,255,.75)">Москва · Санкт-Петербург · Тула</div>
+    <h2 style="margin-top:14px">Покажем программу целиком</h2>
+    <p class="lead">Назовите дату и сколько вас будет — пришлём подробную
+      программу и расчёт на вашу компанию.</p>
+    <a class="btn" href="#programma">Запросить программу</a>
+    <span class="alt">Или напишите в Telegram, MAX, ВКонтакте, WhatsApp</span>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">ХА-ХА ШОУ — интерактивные шоу-игры для компаний от 6 человек.
+    Макет посадочной страницы под трафик из РСЯ.</div>
+</footer>
+
+<script>
+(function(){
+  var открыто = 0;
+  var счётчик = document.getElementById('cnt');
+  var видели = new Set();
+
+  document.querySelectorAll('.item').forEach(function(item, i){
+    var кнопка = item.querySelector('.item-btn');
+    var подпись = item.querySelector('.more');
+    кнопка.setAttribute('aria-expanded','false');
+    кнопка.addEventListener('click', function(){
+      var было = item.classList.toggle('open');
+      кнопка.setAttribute('aria-expanded', было ? 'true' : 'false');
+      подпись.firstChild.nodeValue = было ? 'Свернуть' : 'Подробнее';
+      if (было && !видели.has(i)){
+        видели.add(i);
+        анимироватьДо(видели.size);
+      }
+    });
+  });
+
+  function анимироватьДо(цель){
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce){ счётчик.textContent = цель; открыто = цель; return; }
+    var старт = открыто, шагов = 12, i = 0;
+    var t = setInterval(function(){
+      i++;
+      счётчик.textContent = Math.round(старт + (цель - старт) * (i / шагов));
+      if (i >= шагов){ clearInterval(t); открыто = цель; счётчик.textContent = цель; }
+    }, 26);
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>А нам подойдёт?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@400;500;700;800&display=swap">
+
+<style>
+:root{
+  --deep:#25055C; --deep-2:#320A76; --purple:#6209ED; --purple-lit:#8A45F5;
+  --yellow:#EFDD05; --orange:#F35417;
+  --paper:#FFFDF4; --mute:rgba(255,253,244,.66); --mute-2:rgba(255,253,244,.42);
+  --edge:rgba(255,253,244,.18);
+  --serif:'Unbounded',"Arial Black",system-ui,sans-serif;
+  --sans:'Manrope',system-ui,-apple-system,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--deep);color:var(--paper);
+  font-family:var(--sans);font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.narrow{max-width:640px}
+
+h1,h2,h3{font-family:var(--serif);font-weight:900;letter-spacing:-.025em;text-wrap:balance;margin:0}
+h1{font-size:clamp(36px,6.6vw,76px);line-height:.98}
+h2{font-size:clamp(26px,3.8vw,42px);line-height:1.06;margin-bottom:16px}
+h3{font-size:19px;font-weight:700;line-height:1.25;margin-bottom:8px}
+p{margin:0 0 16px;max-width:60ch}
+.lead{font-size:clamp(17px,1.9vw,21px);color:var(--mute);line-height:1.5}
+.eyebrow{font-weight:800;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute-2)}
+
+.top{position:sticky;top:0;z-index:60;background:rgba(37,5,92,.9);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--edge)}
+.top-in{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  height:62px;max-width:1060px;margin:0 auto;padding:0 24px}
+.mark{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:900;font-size:15px}
+.mark i{width:29px;height:29px;border-radius:9px;background:var(--yellow);color:var(--deep);
+  display:grid;place-items:center;font-style:normal;font-size:12px}
+.top small{color:var(--mute-2);font-size:13px;font-weight:700;display:none}
+@media(min-width:780px){.top small{display:block}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--sans);font-weight:800;font-size:16px;padding:15px 26px;
+  border-radius:999px;border:2px solid var(--yellow);background:var(--yellow);
+  color:var(--deep);text-decoration:none;cursor:pointer;
+  transition:transform .16s ease,box-shadow .16s ease,background .16s ease}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(239,221,5,.22)}
+.btn:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+.btn.line{background:transparent;color:var(--paper);border-color:var(--edge)}
+.btn.line:hover{border-color:var(--paper);box-shadow:none}
+.btn.small{padding:10px 18px;font-size:14px}
+
+/* Шапка на телефоне: без переносов. Логотип и кнопка вставали в две
+   строки и разъезжали высоту — на 375 px это первое, что видит человек. */
+.mark{white-space:nowrap;font-size:13px}
+.top .btn.small{padding:9px 14px;font-size:13px;white-space:nowrap}
+@media(min-width:520px){
+  .mark{font-size:15px}
+  .top .btn.small{padding:11px 20px;font-size:15px}
+}
+
+/* ── первый экран: вопрос ── */
+.ask{padding:60px 0 20px;position:relative;overflow:hidden}
+.glow{position:absolute;width:620px;height:620px;border-radius:50%;
+  background:radial-gradient(circle,rgba(138,69,245,.5),transparent 68%);
+  top:-260px;right:-180px;pointer-events:none;filter:blur(10px)}
+.ask .wrap{position:relative;z-index:2}
+.ask h1 em{font-style:normal;color:var(--yellow)}
+
+.qbox{margin-top:34px;border:2px solid var(--edge);border-radius:26px;
+  background:rgba(255,253,244,.05);padding:26px}
+.qhead{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.steps{display:flex;gap:6px;align-items:center}
+.dot{width:26px;height:4px;border-radius:2px;background:var(--edge);transition:background .3s}
+.dot.on{background:var(--yellow)}
+.qtitle{font-family:var(--serif);font-weight:700;font-size:clamp(19px,2.4vw,26px);
+  line-height:1.2;margin:16px 0 20px}
+.opts{display:grid;gap:10px}
+@media(min-width:640px){.opts{grid-template-columns:repeat(2,1fr)}}
+.opt{
+  text-align:left;font-family:var(--sans);font-size:16px;font-weight:700;color:var(--paper);
+  background:rgba(255,253,244,.06);border:2px solid var(--edge);border-radius:16px;
+  padding:16px 18px;cursor:pointer;transition:border-color .18s,background .18s,transform .18s;
+  display:flex;flex-direction:column;gap:3px;
+}
+.opt span{font-weight:600;font-size:14px;color:var(--mute-2)}
+.opt:hover{border-color:var(--purple-lit);background:rgba(138,69,245,.14);transform:translateY(-2px)}
+.opt:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.opt[aria-pressed="true"]{border-color:var(--yellow);background:rgba(239,221,5,.12)}
+.qfoot{margin-top:18px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.qfoot .again{background:none;border:0;color:var(--mute-2);font:inherit;font-size:14px;
+  font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:6px}
+.qfoot .again:hover{color:var(--paper)}
+
+/* ── ответ ── */
+.answer{margin-top:16px;border:2px solid var(--yellow);border-radius:26px;
+  background:rgba(239,221,5,.08);padding:26px;
+  animation:pop .45s cubic-bezier(.2,.8,.3,1)}
+@keyframes pop{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.answer{animation:none}}
+.answer .eyebrow{color:var(--yellow)}
+.ans-h{font-family:var(--serif);font-weight:900;font-size:clamp(22px,3vw,32px);
+  line-height:1.1;margin:10px 0 14px;letter-spacing:-.02em}
+.ans-grid{display:grid;gap:18px;margin-top:18px}
+@media(min-width:720px){.ans-grid{grid-template-columns:1.1fr .9fr;gap:26px}}
+.ans-rows{display:grid}
+.ans-row{display:flex;justify-content:space-between;gap:14px;padding:11px 0;
+  border-top:1px solid var(--edge);font-size:15px}
+.ans-row:first-child{border-top:0}
+.ans-row b{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ans-row span{color:var(--mute)}
+.sum{font-family:var(--serif);font-weight:900;letter-spacing:-.03em;
+  font-size:clamp(30px,5vw,46px);line-height:1;font-variant-numeric:tabular-nums;color:var(--yellow)}
+.sum small{display:block;font-family:var(--sans);font-size:14px;font-weight:700;
+  color:var(--mute);letter-spacing:0;margin-top:8px}
+
+/* ── доказательства ── */
+.proof{padding:74px 0}
+.pgrid{display:grid;gap:16px;margin-top:34px}
+@media(min-width:760px){.pgrid{grid-template-columns:repeat(3,1fr)}}
+.pcard{border:2px solid var(--edge);border-radius:20px;padding:22px;
+  background:rgba(255,253,244,.04)}
+.pcard b{display:block;font-family:var(--serif);font-weight:900;font-size:34px;
+  letter-spacing:-.03em;color:var(--yellow);line-height:1;font-variant-numeric:tabular-nums}
+.pcard p{margin:12px 0 0;font-size:15px;color:var(--mute)}
+
+.shot{margin-top:20px;border:2px dashed var(--edge);border-radius:20px;
+  background:rgba(255,253,244,.03);aspect-ratio:16/9;display:grid;place-items:center;
+  text-align:center;padding:24px}
+.shot div{max-width:38ch}
+.shot .eyebrow{color:var(--yellow);margin-bottom:8px}
+.shot span{font-size:14px;color:var(--mute);line-height:1.45;display:block}
+
+/* ── возражения ── */
+.objections{background:var(--paper);color:#17140C;padding:74px 0}
+.objections .eyebrow{color:#8C846A}
+.objections .lead{color:#57503B}
+.olist{display:grid;gap:12px;margin-top:32px}
+@media(min-width:820px){.olist{grid-template-columns:1fr 1fr}}
+.o{border:2px solid #17140C;border-radius:20px;padding:22px;background:#fff}
+.o q{display:block;font-family:var(--serif);font-weight:700;font-size:17px;line-height:1.3;
+  color:var(--purple);margin-bottom:10px;quotes:"«" "»"}
+.o p{margin:0;font-size:15.5px;color:#57503B}
+
+/* ── финал ── */
+.end{padding:80px 0;text-align:center;
+  background:linear-gradient(180deg,var(--deep) 0%,var(--deep-2) 100%)}
+.end p{margin-left:auto;margin-right:auto}
+.end .alt{display:block;margin-top:18px;font-size:15px;color:var(--mute-2)}
+.foot{padding:30px 0 56px;font-size:14px;color:var(--mute-2);border-top:1px solid var(--edge)}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <div class="mark"><i>ХХ</i> ХА-ХА ШОУ</div>
+    <small>Москва · Санкт-Петербург · Тула</small>
+    <a class="btn small" href="#podbor">Подобрать программу</a>
+  </div>
+</header>
+
+<section class="ask" id="podbor">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">День рождения на компанию от 6 человек</div>
+      <h1 style="margin-top:14px">Скажите, кого зовёте — <em>подберём вечер</em></h1>
+      <p class="lead" style="margin-top:20px">Три вопроса, и вы увидите, как пройдёт
+        именно ваш праздник и сколько он будет стоить. Без звонка и без заявки.</p>
+    </div>
+
+    <div class="qbox">
+      <div class="qhead">
+        <div class="eyebrow" id="qlabel">Вопрос 1 из 3</div>
+        <div class="steps" aria-hidden="true">
+          <span class="dot on"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </div>
+      <div class="qtitle" id="qtitle">Кто будет за столом?</div>
+      <div class="opts" id="opts"></div>
+      <div class="qfoot">
+        <button class="again" id="again" type="button" hidden>Начать заново</button>
+      </div>
+    </div>
+
+    <div id="answer"></div>
+  </div>
+</section>
+
+<section class="proof">
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Почему мы уверены, что подойдёт</div>
+      <h2 style="margin-top:12px">Семь лет мы делаем один и тот же вечер для очень разных компаний</h2>
+      <p class="lead">И почти всегда это компания, которая до этого не знала,
+        что такое шоу-игра.</p>
+    </div>
+    <div class="pgrid">
+      <div class="pcard"><b>5 643</b><p>праздника провели с июня 2019 года
+        в Москве, Петербурге и Туле.</p></div>
+      <div class="pcard"><b>2 833</b><p>из них — дни рождения. Это наш главный
+        повод, программа отточена именно под него.</p></div>
+      <div class="pcard"><b>17</b><p>человек за столом в среднем. Обычно это
+        три поколения сразу — и всем находится место в игре.</p></div>
+    </div>
+    <div class="shot">
+      <div>
+        <div class="eyebrow">Нужно видео 15–20 секунд</div>
+        <span>Нарезка из трёх-четырёх разных праздников: разные компании,
+          разный возраст, один и тот же азарт. Это главное доказательство
+          на странице — оно должно стоять здесь, а не в конце.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="objections">
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Вопросы, которые задают перед тем, как решиться</div>
+      <h2 style="margin-top:12px">Отвечаем прямо</h2>
+      <p class="lead">Если после этого останутся сомнения — напишите,
+        разберём вашу ситуацию отдельно.</p>
+    </div>
+    <div class="olist">
+      <div class="o"><q>Мы совсем не артистичные</q>
+        <p>И не нужно. Из восьми конкурсов актёрских — один-два, остальные
+          на смекалку, ловкость и удачу. Побеждает не самый яркий,
+          а тот, кому повезло с заданием.</p></div>
+      <div class="o"><q>Будут гости 55+ и подростки одновременно</q>
+        <p>Обычная история. Играют командами, и внутри команды каждый делает
+          то, что может: кто-то бежит, кто-то думает, кто-то подсказывает.</p></div>
+      <div class="o"><q>Не хочу, чтобы меня вытаскивали к микрофону</q>
+        <p>Не вытащат. Ведущие работают с командой, а не с отдельным человеком,
+          и видят, кого лучше не трогать.</p></div>
+      <div class="o"><q>Мы хотим просто посидеть и поесть</q>
+        <p>Так и получится: игра занимает два часа из вечера, а дальше лофт
+          ваш — стол, караоке, разговоры. Никто не выгоняет.</p></div>
+      <div class="o"><q>Это не будет пошло?</q>
+        <p>Нет. Формат взрослый, но такой, что не стыдно позвать родителей.
+          Шуток ниже пояса в программе нет.</p></div>
+      <div class="o"><q>А если гостей станет больше или меньше?</q>
+        <p>Скажете за пару дней — пересчитаем. В студии считаем по людям,
+          так что итог меняется вместе с составом.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="end">
+  <div class="wrap narrow">
+    <div class="eyebrow">Москва · Санкт-Петербург · Тула</div>
+    <h2 style="margin-top:14px">Посмотрим, свободен ли ваш вечер</h2>
+    <p class="lead">Назовите дату и примерное число гостей — ответим,
+      что можно устроить и во сколько обойдётся.</p>
+    <a class="btn" href="#podbor">Проверить дату</a>
+    <span class="alt">Или напишите в Telegram, MAX, ВКонтакте, WhatsApp</span>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap">ХА-ХА ШОУ — интерактивные шоу-игры для компаний от 6 человек.
+    Макет посадочной страницы под трафик из РСЯ.</div>
+</footer>
+
+<script>
+(function(){
+  var ЦЕНА = { msk:{name:'Москва', guest:2800, outside:55000},
+               spb:{name:'Санкт-Петербург', guest:2500, outside:45000},
+               tula:{name:'Тула', guest:2500, outside:35000} };
+
+  var вопросы = [
+    { key:'kto', label:'Кто будет за столом?', opts:[
+        {v:'mix',    t:'Смешанная компания',  s:'друзья, родители, дети — все вместе'},
+        {v:'druzya', t:'Только свои',          s:'друзья примерно одного возраста'},
+        {v:'rodnye', t:'Семья',                s:'родственники, три поколения'},
+        {v:'kollegi',t:'Коллеги',              s:'отмечаем с работой'} ]},
+    { key:'skolko', label:'Сколько вас примерно?', opts:[
+        {v:10, t:'До 10 человек',   s:'камерно'},
+        {v:15, t:'12–17 человек',   s:'наш самый частый размер'},
+        {v:22, t:'18–25 человек',   s:'большая компания'},
+        {v:32, t:'Больше 25',       s:'считаем отдельно'} ]},
+    { key:'gde', label:'Где хотите отмечать?', opts:[
+        {v:'msk',  t:'В студии в Москве',      s:'лофт целиком ваш'},
+        {v:'spb',  t:'В студии в Петербурге',  s:'лофт целиком ваш'},
+        {v:'tula', t:'В студии в Туле',        s:'лофт целиком ваш'},
+        {v:'vyezd',t:'На своей площадке',      s:'приедем со всем реквизитом'} ]}
+  ];
+
+  var выбор = {}, шаг = 0;
+  var elOpts   = document.getElementById('opts'),
+      elTitle  = document.getElementById('qtitle'),
+      elLabel  = document.getElementById('qlabel'),
+      elAns    = document.getElementById('answer'),
+      elAgain  = document.getElementById('again'),
+      точки    = document.querySelectorAll('.dot');
+
+  function нарисоватьВопрос(){
+    var в = вопросы[шаг];
+    elTitle.textContent = в.label;
+    elLabel.textContent = 'Вопрос ' + (шаг + 1) + ' из ' + вопросы.length;
+    точки.forEach(function(d,i){ d.classList.toggle('on', i <= шаг); });
+    elOpts.innerHTML = '';
+    в.opts.forEach(function(o){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'opt'; b.setAttribute('aria-pressed','false');
+      b.innerHTML = o.t + '<span>' + o.s + '</span>';
+      b.addEventListener('click', function(){
+        выбор[в.key] = o.v;
+        b.setAttribute('aria-pressed','true');
+        if (шаг < вопросы.length - 1){ шаг++; setTimeout(нарисоватьВопрос, 160); }
+        else { нарисоватьОтвет(); }
+      });
+      elOpts.appendChild(b);
+    });
+    elAgain.hidden = (шаг === 0 && !выбор.kto);
+  }
+
+  function деньги(n){ return n.toLocaleString('ru-RU').replace(/,/g,' ') + ' ₽'; }
+
+  var подходит = {
+    mix:    'Смешанная компания — наш обычный случай: конкурсы устроены так, что в каждом отличается кто-то другой, поэтому за вечер успевают проявиться все.',
+    druzya: 'С компанией друзей вечер идёт быстрее всего: меньше объяснений, больше азарта. Ведущие обычно поднимают темп и добавляют соревновательности.',
+    rodnye: 'Для родственников важно, чтобы никому не было неловко. Играют командами, подвижных заданий немного, и всегда можно остаться тем, кто подсказывает.',
+    kollegi:'С коллегами хорошо работает то, что команды перемешивают отделы. Люди, которые год переписывались в чате, впервые что-то делают вместе.'
+  };
+
+  function нарисоватьОтвет(){
+    var г = выбор.skolko || 15;
+    var где = выбор.gde || 'msk';
+    var выезд = (где === 'vyezd');
+    var город = выезд ? 'msk' : где;
+    var ц = ЦЕНА[город];
+
+    var строки = [], итог;
+    if (выезд){
+      итог = ЦЕНА.msk.outside;
+      строки.push(['Программа 2 часа, 8 конкурсов', 'фиксированно']);
+      строки.push(['Москва', деньги(ЦЕНА.msk.outside)]);
+      строки.push(['Санкт-Петербург', деньги(ЦЕНА.spb.outside)]);
+      строки.push(['Тула', деньги(ЦЕНА.tula.outside)]);
+    } else {
+      var платных = г > 8 ? г - 1 : г;
+      итог = платных * ц.guest;
+      строки.push(['Игра 2 часа, 8 конкурсов', деньги(ц.guest) + ' с человека']);
+      строки.push(['Гостей', г + ' человек']);
+      if (г > 8) строки.push(['Именинник', 'бесплатно']);
+      строки.push(['Считаем', платных + ' × ' + деньги(ц.guest)]);
+    }
+
+    elAns.innerHTML =
+      '<div class="answer">' +
+        '<div class="eyebrow">Ваш вечер</div>' +
+        '<div class="ans-h">' +
+          (выезд ? 'Приедем к вам со всем реквизитом'
+                 : 'Лофт в городе ' + ц.name + ' на ' + г + ' человек') +
+        '</div>' +
+        '<p style="color:var(--mute);margin:0">' + (подходит[выбор.kto] || '') + '</p>' +
+        '<div class="ans-grid">' +
+          '<div class="ans-rows">' +
+            строки.map(function(r){
+              return '<div class="ans-row"><span>' + r[0] + '</span><b>' + r[1] + '</b></div>';
+            }).join('') +
+          '</div>' +
+          '<div>' +
+            '<div class="sum">' + (выезд ? 'от ' : '') + деньги(итог) +
+              '<small>' + (выезд ? 'за мероприятие, зависит от города'
+                                 : 'за вечер на всю компанию') + '</small></div>' +
+            '<a class="btn" style="margin-top:18px" href="#final">Узнать свободные даты</a>' +
+          '</div>' +
+        '</div>' +
+        '<p style="font-size:14px;color:var(--mute-2);margin:18px 0 0">' +
+          'Расчёт предварительный: фотограф, аренда зала и выезд за город считаются отдельно. ' +
+          'Цены на сентябрь 2026 года.</p>' +
+      '</div>';
+    elAgain.hidden = false;
+    elAns.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
+
+  elAgain.addEventListener('click', function(){
+    выбор = {}; шаг = 0; elAns.innerHTML = ''; нарисоватьВопрос();
+  });
+
+  нарисоватьВопрос();
+})();
+</script>
+</body>
+</html>
