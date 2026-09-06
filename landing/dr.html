@@ -260,6 +260,15 @@ p{margin:0 0 16px;max-width:62ch}
 .foot b{color:var(--ink-2)}
 
 .stats{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px}
+/* На телефоне три цифры ложились как «одна сверху, две снизу»: подпись
+   у первой длинная и занимала всю строку. Столбиком ровнее, и подписи
+   не переносятся. */
+@media(max-width:560px){
+  .stats{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;align-items:baseline}
+  .stat{display:contents}
+  .stat b{text-align:right;min-width:74px}
+  .stat span{align-self:baseline}
+}
 .stat b{display:block;font-family:var(--serif);font-weight:900;
   font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .stat span{font-size:13px;color:var(--ink-3);font-weight:700}
