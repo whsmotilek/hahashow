@@ -196,9 +196,18 @@ p{margin:0 0 16px;max-width:62ch}
   letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
 .big small{font-size:15px;font-family:var(--sans);font-weight:700;color:var(--ink-2);
   letter-spacing:0}
+/* На узком экране приписка рвалась посреди фразы: «с человека за 2»,
+   а «часа» падало на новую строку крупным шрифтом и читалось как ошибка. */
+@media(max-width:560px){.big small{display:block;margin-top:6px;line-height:1.35}}
 .rows{margin-top:18px;display:grid;gap:0}
 .row{display:flex;justify-content:space-between;gap:14px;padding:10px 0;
   border-top:1px solid var(--line);font-size:15px}
+/* Длинная подпись выжимала цену в узкую колонку и ломалась на три строки.
+   На телефоне кладём цену под подпись — читается спокойнее. */
+@media(max-width:560px){
+  .row{display:grid;gap:2px}
+  .row b{justify-self:start}
+}
 .row b{font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
 .row span{color:var(--ink-2)}
 .fineprint{font-size:14px;color:var(--ink-3);margin-top:20px}
