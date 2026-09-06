@@ -61,7 +61,10 @@ p{margin:0 0 16px;max-width:62ch}
   bottom:calc(16px + env(safe-area-inset-bottom,0px))}
 .float a{display:flex;align-items:center;gap:9px;text-decoration:none;
   padding:12px 18px 12px 14px;border-radius:999px;
-  background:var(--ink);color:var(--paper);border:2px solid var(--ink);
+  background:var(--ink);color:var(--paper);
+  /* Кант светлый, а не в цвет заливки: на тёмном блоке «Опасения»
+     кнопка иначе сливается с фоном и остаётся одна надпись. */
+  border:2px solid var(--paper);
   font-family:var(--serif);font-weight:800;font-size:14px;letter-spacing:-.01em;
   box-shadow:0 8px 24px rgba(0,0,0,.22);white-space:nowrap}
 .float a:hover{transform:translateY(-2px)}
