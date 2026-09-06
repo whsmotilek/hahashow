@@ -137,6 +137,9 @@ p{margin:0 0 16px;max-width:60ch}
 .film{background:var(--ink);color:var(--paper);padding:72px 0}
 .film h2{color:#fff}
 .film .lead{color:rgba(255,248,231,.7)}
+.pic{border-radius:6px;overflow:hidden;border:2px solid rgba(255,248,231,.28);
+  background:#000;line-height:0}
+.pic img{width:100%;height:100%;object-fit:cover;display:block}
 .shots{display:grid;gap:14px;margin-top:34px}
 @media(min-width:760px){.shots{grid-template-columns:1.4fr 1fr}}
 .shot{border:2px dashed rgba(255,248,231,.3);border-radius:6px;
@@ -333,28 +336,24 @@ p{margin:0 0 16px;max-width:60ch}
   <div class="wrap">
     <div class="narrow">
       <div class="eyebrow" style="color:var(--yellow)">Как это выглядит со стороны</div>
-      <h2 style="margin-top:12px">Одно видео объясняет формат быстрее страницы текста</h2>
-      <p class="lead">Холодному посетителю нужно увидеть лица и реакции.
-        Постановочные кадры здесь не работают — видно, что постановка.</p>
+      <h2 style="margin-top:12px">Как это выглядит на самом деле</h2>
+      <p class="lead">Кадры с настоящих мероприятий: лица, реакции, реквизит.
+        Ничего постановочного — постановку видно сразу.</p>
     </div>
     <div class="shots">
-      <div class="shot">
-        <div>
-          <div class="eyebrow">Нужно видео 15–25 секунд</div>
-          <span>Один конкурс целиком: команда получает задание, делает,
-            радуется. Со звуком — смех важнее музыки. Это главный
-            элемент страницы, всё остальное его поддерживает.</span>
-        </div>
-      </div>
+      <figure class="pic">
+        <img src="img/vedushchie.jpg" width="1400" height="933" loading="lazy"
+             alt="Ведущий у экрана, гости смеются, летит конфетти">
+      </figure>
       <div class="shot two">
-        <div class="shot">
-          <div><div class="eyebrow">Фото</div>
-            <span>Крупный реквизит в руках, видны лица</span></div>
-        </div>
-        <div class="shot">
-          <div><div class="eyebrow">Фото</div>
-            <span>Общий кадр всей компании после награждения</span></div>
-        </div>
+        <figure class="pic">
+          <img src="img/rekvizit.jpg" width="1400" height="933" loading="lazy"
+               alt="Крупный реквизит в руках участников">
+        </figure>
+        <figure class="pic">
+          <img src="img/finalnoe.jpg" width="1400" height="933" loading="lazy"
+               alt="Общая фотография компании у вывески после награждения">
+        </figure>
       </div>
     </div>
   </div>

@@ -150,6 +150,16 @@ p{margin:0 0 16px;max-width:62ch}
 @media(prefers-reduced-motion:reduce){
   .js .reveal{opacity:1;transform:none;transition:none}}
 
+/* фотографии с мероприятий */
+.pic{margin-top:18px;border-radius:18px;overflow:hidden;border:2px solid var(--line);
+  background:#fff;line-height:0}
+.pic img{width:100%;height:auto;display:block}
+.pic figcaption{line-height:1.4;padding:10px 14px;font-size:13px;color:var(--ink-3);
+  background:#fff;border-top:1px solid var(--line)}
+.pics{display:grid;gap:12px;margin-top:18px}
+@media(min-width:720px){.pics{grid-template-columns:1.35fr 1fr;align-items:start}}
+.pics .pic{margin-top:0}
+
 /* слот под фото */
 .shot{
   margin-top:18px;border:2px dashed var(--line);border-radius:18px;background:#fff;
@@ -286,14 +296,10 @@ p{margin:0 0 16px;max-width:62ch}
           <p>Отдельное помещение только для вашей компании: столы, диваны, музыка
             фоном. Еду и напитки приносите свои или заказываете доставку —
             никакого счёта за коркаж и косых взглядов официанта.</p>
-          <div class="shot">
-            <div>
-              <div class="eyebrow">Нужно фото</div>
-              <span>Горизонтальный кадр: гости раскладывают еду на столе,
-                кто-то смеётся, на фоне видно зал и свет. Естественный,
-                не постановочный — важно показать «обычные люди, обычный вечер».</span>
-            </div>
-          </div>
+          <figure class="pic">
+            <img src="img/sbor.jpg" width="1400" height="933" loading="lazy"
+                 alt="Гости на диване в лофте смеются и аплодируют">
+          </figure>
         </div>
       </article>
 
@@ -305,6 +311,10 @@ p{margin:0 0 16px;max-width:62ch}
             организатору больше не нужно придумывать, чем занять людей. Двое
             ведущих делят компанию на команды — и с этой секунды за настроение
             отвечают профессионалы. Восемь конкурсов за два часа.</p>
+          <figure class="pic">
+            <img src="img/vedushchie.jpg" width="1400" height="933" loading="lazy"
+                 alt="Ведущий с микрофоном у экрана, гости смеются, летит конфетти">
+          </figure>
         </div>
       </article>
 
@@ -315,6 +325,10 @@ p{margin:0 0 16px;max-width:62ch}
           <p>Самое время перевести дух, обсудить командную стратегию на
             оставшуюся половину и перекусить за столом: еду и напитки можно
             приносить с собой — пробкового сбора у нас нет.</p>
+          <figure class="pic">
+            <img src="img/zastolie.jpg" width="1400" height="933" loading="lazy"
+                 alt="Компания за длинным столом чокается бокалами">
+          </figure>
         </div>
       </article>
 
@@ -325,13 +339,15 @@ p{margin:0 0 16px;max-width:62ch}
           <p>Смекалка, ловкость, актёрство, чистая удача — каждый найдёт конкурс,
             где будет блистать. Ни один не требует готовиться заранее, досконально
             знать поп-культуру или уметь танцевать.</p>
-          <div class="shot">
-            <div>
-              <div class="eyebrow">Нужно фото или видео 6–10 секунд</div>
-              <span>Момент конкурса с крупным реквизитом: видны лица,
-                азарт, несколько человек одновременно. Лучше короткое видео —
-                оно объясняет формат быстрее любого текста.</span>
-            </div>
+          <div class="pics">
+            <figure class="pic">
+              <img src="img/rekvizit.jpg" width="1400" height="933" loading="lazy"
+                   alt="Гости с крупным реквизитом в руках во время конкурса">
+            </figure>
+            <figure class="pic">
+              <img src="img/ekran.jpg" width="933" height="1400" loading="lazy"
+                   alt="Участница у экрана с заданием конкурса">
+            </figure>
           </div>
         </div>
       </article>
@@ -354,13 +370,10 @@ p{margin:0 0 16px;max-width:62ch}
             продолжаются разговоры. Это и есть главное отличие от квеста или
             боулинга — не нужно срываться с места и искать, где бы ещё посидеть.
             Вечер течёт плавно, от игры к фуршету.</p>
-          <div class="shot tall" style="max-width:420px">
-            <div>
-              <div class="eyebrow">Нужно фото</div>
-              <span>Вертикальный кадр: караоке, микрофон, двое поют,
-                остальные подпевают за столом. Тёплый свет, поздний вечер.</span>
-            </div>
-          </div>
+          <figure class="pic">
+            <img src="img/tancy.jpg" width="1400" height="930" loading="lazy"
+                 alt="Гости танцуют в лофте после игры">
+          </figure>
         </div>
       </article>
     </div>
