@@ -152,6 +152,17 @@ p{margin:0 0 16px;max-width:62ch}
 
 .logo{height:26px;width:auto;display:block}
 @media(min-width:520px){.logo{height:32px}}
+/* ── экран «заявка отправлена» ── */
+.zdone{display:none;text-align:center;padding:30px 22px;border-radius:20px;
+  border:2px solid var(--line,#E4D9B8);background:var(--soft,#FCF7DA)}
+.zdone.on{display:block}
+.zdone .tick{width:56px;height:56px;border-radius:50%;margin:0 auto 16px;
+  display:grid;place-items:center;background:#1B7A4B;color:#fff;
+  font-size:26px;font-weight:800;line-height:1}
+.zdone h3{font-family:var(--serif);font-weight:900;font-size:clamp(21px,3vw,28px);
+  line-height:1.15;margin:0 0 10px}
+.zdone p{margin:0 auto;max-width:44ch;font-size:16px;line-height:1.5}
+
 /* ── форма заявки ── */
 .lead-form{padding:72px 0}
 .zform{display:grid;gap:14px;margin-top:26px}
@@ -259,6 +270,11 @@ p{margin:0 0 16px;max-width:62ch}
 .end .alt{display:block;margin-top:18px;font-size:15px;color:rgba(255,255,255,.72)}
 
 .foot{padding:34px 0 60px;font-size:14px;color:var(--ink-3)}
+.contacts{display:grid;gap:14px;margin-bottom:18px;font-size:15px;color:var(--ink-2)}
+@media(min-width:640px){.contacts{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+.contacts b{color:var(--ink)}
+.docs{display:flex;flex-wrap:wrap;gap:6px 20px;margin-bottom:18px;font-size:14px}
+.docs a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .foot b{color:var(--ink-2)}
 
 .stats{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px}
@@ -271,7 +287,7 @@ p{margin:0 0 16px;max-width:62ch}
   .stat b{text-align:right;min-width:74px}
   .stat span{align-self:baseline}
 }
-.stat b{display:block;font-family:var(--serif);font-weight:900;
+.stat b{display:block;white-space:nowrap;font-family:var(--serif);font-weight:900;
   font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .stat span{font-size:13px;color:var(--ink-3);font-weight:700}
 </style>
@@ -282,7 +298,7 @@ p{margin:0 0 16px;max-width:62ch}
   <div class="top-in">
     <a class="mark" href="#" aria-label="ХА-ХА ШОУ"><img src="img/logo.svg" alt="ХА-ХА ШОУ" class="logo"></a>
     <div class="cities">Москва</div>
-    <a class="btn small pop" href="#raschet">Рассчитать вечер</a>
+    <a class="btn small pop" href="https://mrqz.me/650ade3e7c22e80025c70ff7" target="_blank" rel="noopener">Рассчитать вечер</a>
   </div>
 </header>
 
@@ -539,7 +555,7 @@ p{margin:0 0 16px;max-width:62ch}
         <p style="color:rgba(255,253,244,.78);font-size:16px">Мы посмотрим,
           свободен ли вечер, и пришлём расчёт на вашу компанию — без звонка,
           если вам так удобнее.</p>
-        <a class="btn pop" href="#final" style="margin-top:6px">Узнать свободные даты</a>
+        <a class="btn pop" href="#zayavka" style="margin-top:6px">Узнать свободные даты</a>
       </div>
     </div>
 
@@ -569,10 +585,19 @@ p{margin:0 0 16px;max-width:62ch}
       </div>
       <label class="zagree">
         <input type="checkbox" name="agree" required>
-        <span>Согласен на обработку персональных данных</span></label>
+        <span>Согласен на <a href="/privacy/" target="_blank" rel="noopener">обработку персональных данных</a></span></label>
       <button class="btn" type="submit" id="zbtn">Отправить</button>
       <div class="zmsg" id="zmsg" role="status"></div>
     </form>
+
+      <div class="zdone" id="zdone" role="status" aria-live="polite">
+        <div class="tick">✓</div>
+        <h3>Заявка принята</h3>
+        <p>Свяжемся с вами в ближайшее время — в рабочие часы обычно
+          в течение часа. Посмотрим свободные даты и пришлём расчёт
+          на вашу компанию.</p>
+      </div>
+
   </div>
 </section>
 
@@ -582,13 +607,22 @@ p{margin:0 0 16px;max-width:62ch}
     <h2 style="margin-top:14px">Посмотрим, свободен ли ваш вечер</h2>
     <p class="lead" style="color:rgba(255,255,255,.82)">Напишите дату и примерное
       количество гостей — ответим, что можно устроить и во сколько это обойдётся.</p>
-    <a class="btn" href="#final">Проверить дату</a>
+    <a class="btn" href="#zayavka">Проверить дату</a>
     <span class="alt">Или напишите в Telegram, MAX, ВКонтакте или WhatsApp — как удобнее</span>
   </div>
 </section>
 
 <footer class="foot">
   <div class="wrap">
+    <div class="contacts">
+      <div><b>Студия в Москве</b><br>Бауманская ул., 58 стр. 4</div>
+      <div><b>Телефон</b><br><a href="tel:+79602835563">+7 (960) 283-55-63</a></div>
+    </div>
+    <div class="docs">
+      <a href="/privacy/">Политика о конфиденциальных данных</a>
+      <a href="/offer/">Договор оферты</a>
+      <a href="/cookie/">Политика куки</a>
+    </div>
     <b>ХА-ХА ШОУ</b> — интерактивные шоу-игры для компаний от 6 человек.
     Москва. Макет посадочной страницы под трафик из РСЯ.
   </div>
@@ -656,8 +690,16 @@ p{margin:0 0 16px;max-width:62ch}
   }
 
   window.звук = function(){
-    if (v.paused){ v.muted = false; v.play().then(подписать).catch(подписать); return; }
+    var включаем = v.muted;
     v.muted = !v.muted;
+    // На телефоне снять «без звука» мало: браузер продолжает считать
+    // воспроизведение автоматическим и глушит его обратно. Поэтому
+    // после нажатия всегда просим воспроизведение заново — нажатие
+    // и есть то действие пользователя, которого ему не хватало.
+    if (включаем || v.paused){
+      var p = v.play();
+      if (p && p.then) p.then(подписать).catch(function(){ v.muted = true; подписать(); });
+    }
     подписать();
   };
 
@@ -719,9 +761,13 @@ p{margin:0 0 16px;max-width:62ch}
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
       .then(function(r){
         if (!r.ok) throw new Error(r.j.detail || 'не отправилось');
-        msg.className = 'zmsg ok';
-        msg.textContent = 'Готово. Напишем вам в ближайшее время.';
         f.reset();
+        f.style.display = 'none';
+        var готово = document.getElementById('zdone');
+        if (готово){
+          готово.classList.add('on');
+          готово.scrollIntoView({block:'center', behavior:'smooth'});
+        }
       })
       .catch(function(err){
         msg.className = 'zmsg bad';

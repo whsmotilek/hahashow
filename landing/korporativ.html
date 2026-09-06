@@ -91,6 +91,9 @@ p{margin:0 0 16px;max-width:60ch}
 .p-head{display:grid;gap:20px;margin-bottom:38px}
 @media(min-width:900px){.p-head{grid-template-columns:1.2fr .8fr;align-items:end;gap:48px}}
 .counter{border:3px solid var(--ink);border-radius:6px;padding:20px;background:var(--card)}
+/* На телефоне счётчик «сколько вы уже посмотрели» занимает экран
+   и ничего не объясняет: он полезен на широком, где виден рядом с сеткой. */
+@media(max-width:899px){.counter{display:none}}
 .counter b{font-family:var(--serif);font-weight:900;font-size:clamp(44px,7vw,72px);
   line-height:.9;display:block;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
 .counter span{font-size:13px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
@@ -135,6 +138,17 @@ p{margin:0 0 16px;max-width:60ch}
 
 .logo{height:26px;width:auto;display:block}
 @media(min-width:520px){.logo{height:32px}}
+/* ── экран «заявка отправлена» ── */
+.zdone{display:none;text-align:center;padding:30px 22px;border-radius:20px;
+  border:2px solid var(--line,#E4D9B8);background:var(--soft,#FCF7DA)}
+.zdone.on{display:block}
+.zdone .tick{width:56px;height:56px;border-radius:50%;margin:0 auto 16px;
+  display:grid;place-items:center;background:#1B7A4B;color:#fff;
+  font-size:26px;font-weight:800;line-height:1}
+.zdone h3{font-family:var(--serif);font-weight:900;font-size:clamp(21px,3vw,28px);
+  line-height:1.15;margin:0 0 10px}
+.zdone p{margin:0 auto;max-width:44ch;font-size:16px;line-height:1.5}
+
 /* ── форма заявки ── */
 .lead-form{padding:72px 0}
 .zform{display:grid;gap:14px;margin-top:26px}
@@ -209,13 +223,18 @@ p{margin:0 0 16px;max-width:60ch}
 .end .btn{background:var(--ink)}
 .end .alt{display:block;margin-top:16px;font-size:15px;color:rgba(255,255,255,.75)}
 .foot{padding:30px 0 56px;font-size:14px;color:var(--ink-3)}
+.contacts{display:grid;gap:14px;margin-bottom:18px;font-size:15px;color:var(--ink-2)}
+@media(min-width:640px){.contacts{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
+.contacts b{color:var(--ink-2)}
+.docs{display:flex;flex-wrap:wrap;gap:6px 20px;margin-bottom:18px;font-size:14px}
+.docs a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 </style>
 
 <header class="top">
   <div class="top-in">
     <a class="mark" href="#" aria-label="ХА-ХА ШОУ"><img src="img/logo.svg" alt="ХА-ХА ШОУ" class="logo"></a>
     <small>Москва</small>
-    <a class="btn small" href="#dengi">Сколько стоит</a>
+    <a class="btn small" href="https://mrqz.me/650ade3e7c22e80025c70ff7" target="_blank" rel="noopener">Рассчитать вечер</a>
   </div>
 </header>
 
@@ -466,10 +485,19 @@ p{margin:0 0 16px;max-width:60ch}
       </div>
       <label class="zagree">
         <input type="checkbox" name="agree" required>
-        <span>Согласен на обработку персональных данных</span></label>
+        <span>Согласен на <a href="/privacy/" target="_blank" rel="noopener">обработку персональных данных</a></span></label>
       <button class="btn" type="submit" id="zbtn">Отправить</button>
       <div class="zmsg" id="zmsg" role="status"></div>
     </form>
+
+      <div class="zdone" id="zdone" role="status" aria-live="polite">
+        <div class="tick">✓</div>
+        <h3>Заявка принята</h3>
+        <p>Свяжемся с вами в ближайшее время — в рабочие часы обычно
+          в течение часа. Посмотрим свободные даты и пришлём расчёт
+          на вашу компанию.</p>
+      </div>
+
   </div>
 </section>
 
@@ -479,13 +507,23 @@ p{margin:0 0 16px;max-width:60ch}
     <h2 style="margin-top:14px">Покажем программу целиком</h2>
     <p class="lead">Назовите дату и сколько вас будет — пришлём подробную
       программу и расчёт на вашу команду.</p>
-    <a class="btn" href="#programma">Запросить программу</a>
+    <a class="btn" href="#zayavka">Запросить программу</a>
     <span class="alt">Или напишите в Telegram, MAX, ВКонтакте, WhatsApp</span>
   </div>
 </section>
 
 <footer class="foot">
-  <div class="wrap">ХА-ХА ШОУ — интерактивные шоу-игры для компаний от 6 человек.
+  <div class="wrap">
+    <div class="contacts">
+      <div><b>Студия в Москве</b><br>Бауманская ул., 58 стр. 4</div>
+      <div><b>Телефон</b><br><a href="tel:+79602835563">+7 (960) 283-55-63</a></div>
+    </div>
+    <div class="docs">
+      <a href="/privacy/">Политика о конфиденциальных данных</a>
+      <a href="/offer/">Договор оферты</a>
+      <a href="/cookie/">Политика куки</a>
+    </div>
+    <b>ХА-ХА ШОУ</b> — интерактивные шоу-игры для компаний от 6 человек.
     Макет посадочной страницы под трафик из РСЯ.</div>
 </footer>
 
@@ -542,8 +580,16 @@ p{margin:0 0 16px;max-width:60ch}
   }
 
   window.звук = function(){
-    if (v.paused){ v.muted = false; v.play().then(подписать).catch(подписать); return; }
+    var включаем = v.muted;
     v.muted = !v.muted;
+    // На телефоне снять «без звука» мало: браузер продолжает считать
+    // воспроизведение автоматическим и глушит его обратно. Поэтому
+    // после нажатия всегда просим воспроизведение заново — нажатие
+    // и есть то действие пользователя, которого ему не хватало.
+    if (включаем || v.paused){
+      var p = v.play();
+      if (p && p.then) p.then(подписать).catch(function(){ v.muted = true; подписать(); });
+    }
     подписать();
   };
 
@@ -605,9 +651,13 @@ p{margin:0 0 16px;max-width:60ch}
       .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
       .then(function(r){
         if (!r.ok) throw new Error(r.j.detail || 'не отправилось');
-        msg.className = 'zmsg ok';
-        msg.textContent = 'Готово. Напишем вам в ближайшее время.';
         f.reset();
+        f.style.display = 'none';
+        var готово = document.getElementById('zdone');
+        if (готово){
+          готово.classList.add('on');
+          готово.scrollIntoView({block:'center', behavior:'smooth'});
+        }
       })
       .catch(function(err){
         msg.className = 'zmsg bad';
