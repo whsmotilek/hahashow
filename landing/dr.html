@@ -82,6 +82,9 @@ p{margin:0 0 16px;max-width:62ch}
    строки и разъезжали высоту — на 375 px это первое, что видит человек. */
 .mark{white-space:nowrap;font-size:13px}
 .top .btn.small{padding:9px 14px;font-size:13px;white-space:nowrap}
+.hdr-tel{display:none;font-family:var(--serif);font-weight:900;font-size:17px;
+  letter-spacing:-.02em;text-decoration:none;white-space:nowrap}
+@media(min-width:1080px){.hdr-tel{display:block}}
 @media(min-width:520px){
   .mark{font-size:15px}
   .top .btn.small{padding:11px 20px;font-size:15px}
@@ -327,6 +330,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
   <div class="top-in">
     <a class="mark" href="#" aria-label="ХА-ХА ШОУ"><img src="img/logo.svg" alt="ХА-ХА ШОУ" class="logo"></a>
     <div class="cities">Москва</div>
+    <a class="hdr-tel" href="tel:+79602835563">+7 (960) 283-55-63</a>
     <a class="btn small pop" href="https://mrqz.me/650ade3e7c22e80025c70ff7" target="_blank" rel="noopener">Рассчитать вечер</a>
   </div>
 </header>
@@ -560,7 +564,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
 
       <div class="card">
         <div class="eyebrow">С выездом на вашу площадку</div>
-        <div class="big">55 000 ₽ <small>за мероприятие, Москва</small></div>
+        <div class="big">от 44 000 ₽ <small>за мероприятие, Москва</small></div>
         <div class="rows">
           <div class="row"><span>Программа 2 часа</span><b>8 конкурсов</b></div>
           <div class="row"><span>Программа 1 час</span><b>6 конкурсов</b></div>
