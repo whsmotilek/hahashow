@@ -213,6 +213,30 @@ p:empty{display:none}
 .film .wrap{position:relative;z-index:1}
 .film h2{color:#fff}
 .film .lead{color:rgba(255,248,231,.7)}
+/* Лента фотографий листается сама. Ставим родную прокрутку со
+   snap-точками, а не переносим слайды скриптом: так на телефоне
+   работает обычный свайп, а если скрипт почему-то не выполнится,
+   блок останется листаемым руками. */
+.gal{position:relative;margin-top:34px}
+.gal-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+  border-radius:6px;border:2px solid rgba(255,248,231,.28);background:#111;
+  -ms-overflow-style:none;scrollbar-width:none}
+.gal-track::-webkit-scrollbar{display:none}
+.gal-track:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+.gal-i{margin:0;flex:0 0 100%;scroll-snap-align:center;aspect-ratio:3/2;min-height:200px}
+.gal-i img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-nav{position:absolute;top:calc(50% - 22px);width:44px;height:44px;border-radius:50%;
+  border:2px solid rgba(255,248,231,.45);background:rgba(17,17,17,.55);color:#fff;
+  font-size:24px;line-height:1;cursor:pointer;display:none;align-items:center;
+  justify-content:center;padding:0 0 3px}
+.gal-nav:hover{background:rgba(17,17,17,.9)}
+.gal-nav.prev{left:12px}
+.gal-nav.next{right:12px}
+@media(min-width:760px){.gal-nav{display:flex}}
+.gal-dots{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.gal-dot{width:9px;height:9px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  background:rgba(255,248,231,.3);transition:background .2s,transform .2s}
+.gal-dot.on{background:var(--yellow);transform:scale(1.4)}
 .pic{margin:0;border-radius:6px;overflow:hidden;border:2px solid rgba(255,248,231,.28);
   background:#000;line-height:0}
 .pic img{width:100%;height:100%;object-fit:cover;display:block}
@@ -452,21 +476,28 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
       <p class="lead">Кадры с настоящих мероприятий: лица, реакции, реквизит.
         Скажем нет постановочным кадрам — только живые эмоции.</p>
     </div>
-    <div class="shots">
-      <figure class="pic">
-        <img src="img/vedushchie.jpg" width="1400" height="933" loading="lazy"
-             alt="Ведущий у экрана, гости смеются, летит конфетти">
-      </figure>
-      <div class="shot two">
-        <figure class="pic">
-          <img src="img/rekvizit.jpg" width="1400" height="933" loading="lazy"
-               alt="Крупный реквизит в руках участников">
-        </figure>
-        <figure class="pic">
-          <img src="img/finalnoe.jpg" width="1400" height="933" loading="lazy"
-               alt="Общая фотография компании у вывески после награждения">
-        </figure>
+    <div class="gal">
+      <div class="gal-track" id="galtrack" tabindex="0" aria-label="Фотографии с мероприятий">
+        <figure class="gal-i"><img src="img/vedushchie.jpg" width="1400" height="933" 
+             alt="Ведущий с микрофоном у экрана, гости смеются, летит конфетти"></figure>
+        <figure class="gal-i"><img src="img/tancy.jpg" width="1400" height="933" loading="lazy"
+             alt="Гости танцуют в лофте после игры"></figure>
+        <figure class="gal-i"><img src="img/rekvizit.jpg" width="1400" height="933" loading="lazy"
+             alt="Гости с крупным реквизитом в руках во время конкурса"></figure>
+        <figure class="gal-i"><img src="img/zastolie.jpg" width="1400" height="933" loading="lazy"
+             alt="Компания за длинным столом чокается бокалами"></figure>
+        <figure class="gal-i"><img src="img/ekran.jpg" width="1400" height="933" loading="lazy"
+             alt="Участница у экрана с заданием конкурса"></figure>
+        <figure class="gal-i"><img src="img/sbor.jpg" width="1400" height="933" loading="lazy"
+             alt="Гости на диване в лофте смеются и аплодируют"></figure>
+        <figure class="gal-i"><img src="img/vyveska.jpg" width="1400" height="933" loading="lazy"
+             alt="Команда у неоновой вывески ХА-ХА ШОУ"></figure>
+        <figure class="gal-i"><img src="img/finalnoe.jpg" width="1400" height="933" loading="lazy"
+             alt="Общая фотография компании после награждения"></figure>
       </div>
+      <button class="gal-nav prev" id="galprev" type="button" aria-label="Предыдущее фото">‹</button>
+      <button class="gal-nav next" id="galnext" type="button" aria-label="Следующее фото">›</button>
+      <div class="gal-dots" id="galdots"></div>
     </div>
   </div>
 </section>
@@ -735,6 +766,71 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
   // позже и только при наличии идентификатора, а эта видна сразу.
   var f = document.getElementById('zform');
   if (f) f.addEventListener('hh-sent', function(){ цель('lp_lead'); });
+})();
+</script>
+<script>
+(function(){
+  var лента = document.getElementById('galtrack');
+  if (!лента) return;
+  var слайды = [].slice.call(лента.children);
+  var точки  = document.getElementById('galdots');
+  var сейчас = 0, таймер = null, ждать = null;
+  var спокойно = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  слайды.forEach(function(_, н){
+    var т = document.createElement('button');
+    т.type = 'button'; т.className = 'gal-dot' + (н ? '' : ' on');
+    т.setAttribute('aria-label', 'Фото ' + (н + 1) + ' из ' + слайды.length);
+    т.addEventListener('click', function(){ идти(н); отложить(); });
+    точки.appendChild(т);
+  });
+
+  function отметить(){
+    for (var i = 0; i < точки.children.length; i++)
+      точки.children[i].classList.toggle('on', i === сейчас);
+  }
+  function идти(н){
+    сейчас = (н + слайды.length) % слайды.length;
+    var л = слайды[сейчас].offsetLeft - слайды[0].offsetLeft;
+    if (лента.scrollTo) лента.scrollTo({left: л, behavior: спокойно ? 'auto' : 'smooth'});
+    else лента.scrollLeft = л;
+    отметить();
+  }
+  // Сам скролл — источник правды: гость может листнуть пальцем,
+  // и подсветка точек должна следовать за ним, а не за нашим счётчиком.
+  var сон;
+  лента.addEventListener('scroll', function(){
+    clearTimeout(сон);
+    сон = setTimeout(function(){
+      var ш = лента.clientWidth || 1;
+      var н = Math.round(лента.scrollLeft / ш);
+      if (н !== сейчас && н >= 0 && н < слайды.length){ сейчас = н; отметить(); }
+    }, 90);
+  }, {passive: true});
+
+  function пуск(){ if (!спокойно && !таймер) таймер = setInterval(function(){ идти(сейчас + 1); }, 4500); }
+  function стоп(){ clearInterval(таймер); таймер = null; }
+  function отложить(){ стоп(); clearTimeout(ждать); ждать = setTimeout(пуск, 9000); }
+
+  document.getElementById('galprev').addEventListener('click', function(){ идти(сейчас - 1); отложить(); });
+  document.getElementById('galnext').addEventListener('click', function(){ идти(сейчас + 1); отложить(); });
+  лента.addEventListener('pointerdown', отложить);
+  лента.addEventListener('mouseenter', стоп);
+  лента.addEventListener('mouseleave', пуск);
+  лента.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight'){ e.preventDefault(); идти(сейчас + 1); отложить(); }
+    if (e.key === 'ArrowLeft'){  e.preventDefault(); идти(сейчас - 1); отложить(); }
+  });
+  // Во вкладке, на которую не смотрят, крутить нечего.
+  document.addEventListener('visibilitychange', function(){ document.hidden ? стоп() : пуск(); });
+
+  // Пока лента не показалась на экране, она не листается: иначе гость
+  // долистает до неё, а первые кадры уже проехали мимо.
+  if (window.IntersectionObserver){
+    new IntersectionObserver(function(зап){
+      зап.forEach(function(з){ з.isIntersecting ? пуск() : стоп(); });
+    }, {threshold: .35}).observe(лента);
+  } else пуск();
 })();
 </script>
 </body>
