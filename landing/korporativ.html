@@ -536,15 +536,29 @@ p{margin:0 0 16px;max-width:60ch}
   var v = document.getElementById('showvid');
   var b = document.getElementById('vsoundtxt');
   if (!v || !b) return;
+
+  // Одна кнопка на два случая. Если автозапуск прошёл — она про звук.
+  // Если браузер его отклонил (так бывает при экономии трафика или
+  // строгих настройках) — она включает само видео, и тогда сразу
+  // со звуком: нажатие и есть то самое действие человека, которого
+  // браузеру не хватало.
+  function подписать(){
+    b.textContent = v.paused ? 'Включить видео'
+                             : (v.muted ? 'Включить звук' : 'Выключить звук');
+  }
+
   window.звук = function(){
+    if (v.paused){ v.muted = false; v.play().then(подписать).catch(подписать); return; }
     v.muted = !v.muted;
-    b.textContent = v.muted ? 'Включить звук' : 'Выключить звук';
-    if (!v.muted && v.paused) v.play();
+    подписать();
   };
-  // Если автозапуск всё-таки отклонён (экономия трафика, настройки),
-  // показываем постер и не притворяемся, что видео играет.
+
+  v.addEventListener('play', подписать);
+  v.addEventListener('pause', подписать);
+
   var p = v.play();
-  if (p && p.catch) p.catch(function(){ v.controls = true; });
+  if (p && p.catch) p.catch(подписать);
+  подписать();
 })();
 </script>
 <script>
