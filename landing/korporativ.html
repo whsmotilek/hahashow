@@ -36,8 +36,12 @@ p{margin:0 0 16px;max-width:60ch}
 .top-in{display:flex;align-items:center;justify-content:space-between;gap:16px;
   height:58px;max-width:1140px;margin:0 auto;padding:0 24px}
 .mark{font-family:var(--serif);font-weight:900;font-size:15px;letter-spacing:.02em}
-.top small{color:rgba(255,248,231,.55);font-size:13px;font-weight:700;display:none}
-@media(min-width:800px){.top small{display:block}}
+.top small{color:var(--paper);font-size:16px;font-weight:800;display:none}
+@media(min-width:800px){
+  .top small{display:block;position:absolute;left:50%;transform:translateX(-50%)}
+  .top-in{position:relative}
+}
+
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;
   font-family:var(--sans);font-weight:800;font-size:16px;padding:15px 28px;
@@ -171,6 +175,10 @@ p{margin:0 0 16px;max-width:60ch}
 .zmsg{font-size:15px;font-weight:700;min-height:22px}
 .zmsg.ok{color:#1B7A4B}
 .zmsg.bad{color:#B23A22}
+/* Кнопке нужен воздух: она вплотную прилипала к строке согласия
+   и читалась как её продолжение. */
+.zform .btn{margin-top:8px;justify-self:start}
+@media(min-width:640px){.zform .btn{padding:16px 34px}}
 
 /* ── видео ── */
 .video{padding:70px 0}
@@ -227,6 +235,15 @@ p{margin:0 0 16px;max-width:60ch}
 .end .btn{background:var(--ink)}
 .end .alt{display:block;margin-top:16px;font-size:15px;color:rgba(255,255,255,.75)}
 .foot{padding:30px 0 56px;font-size:14px;color:var(--ink-3)}
+/* Липкая шапка перекрывала заголовок раздела, когда переходишь по
+   кнопке: браузер подводит блок к самому верху. Отводим место. */
+section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
+[id="programma"], [id="dengi"], [id="video"]{scroll-margin-top:78px}
+
+/* Телефон в подвале — крупный и нажимаемый: с него звонят. */
+.contacts .tel{font-family:var(--serif);font-weight:900;font-size:22px;
+  letter-spacing:-.02em;text-decoration:none;display:inline-block;margin-top:2px}
+
 .contacts{display:grid;gap:14px;margin-bottom:18px;font-size:15px;color:var(--ink-2)}
 @media(min-width:640px){.contacts{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}}
 .contacts b{color:var(--ink-2)}
@@ -265,8 +282,8 @@ p{margin:0 0 16px;max-width:60ch}
 
 <div class="strip" aria-hidden="true">
   <div class="strip-in">
-    <b>смекалка</b><b>ловкость</b><b>актёрство</b><b>чистая удача</b><b>крупный реквизит</b><b>две команды</b><b>караоке после</b>
-    <b>смекалка</b><b>ловкость</b><b>актёрство</b><b>чистая удача</b><b>крупный реквизит</b><b>две команды</b><b>караоке после</b>
+    <b>смекалка</b><b>ловкость</b><b>актёрство</b><b>чистая удача</b><b>уникальный реквизит</b><b>две команды</b><b>караоке после</b>
+    <b>смекалка</b><b>ловкость</b><b>актёрство</b><b>чистая удача</b><b>уникальный реквизит</b><b>две команды</b><b>караоке после</b>
   </div>
 </div>
 
@@ -520,7 +537,7 @@ p{margin:0 0 16px;max-width:60ch}
   <div class="wrap">
     <div class="contacts">
       <div><b>Студия в Москве</b><br>Бауманская ул., 58 стр. 4</div>
-      <div><b>Телефон</b><br><a href="tel:+79602835563">+7 (960) 283-55-63</a></div>
+      <div><b>Телефон</b><br><a class="tel" href="tel:+79602835563">+7 (960) 283-55-63</a></div>
     </div>
     <div class="docs">
       <a href="/privacy/">Политика о конфиденциальных данных</a>
@@ -657,6 +674,7 @@ p{margin:0 0 16px;max-width:60ch}
         if (!r.ok) throw new Error(r.j.detail || 'не отправилось');
         f.reset();
         f.style.display = 'none';
+        f.dispatchEvent(new Event('hh-sent'));
         var готово = document.getElementById('zdone');
         if (готово){
           готово.classList.add('on');
@@ -670,6 +688,42 @@ p{margin:0 0 16px;max-width:60ch}
       })
       .finally(function(){ btn.disabled = false; btn.textContent = 'Отправить'; });
   });
+})();
+</script>
+<script>
+// Переходы наружу — тоже целевые действия, и их надо считать.
+// Метрика сама ловит клики по мессенджерам, а телефон и квиз — нет,
+// поэтому отправляем именованные цели. Идентификаторы говорящие:
+// в отчёте по ним видно, что именно нажали.
+(function(){
+  var СЧЁТЧИК = 94991046;
+  function цель(имя, детали){
+    if (typeof window.ym !== 'function') return;
+    try { ym(СЧЁТЧИК, 'reachGoal', имя, детали || {}); } catch (e) {}
+  }
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a');
+    if (!a) return;
+    var h = a.getAttribute('href') || '';
+    if (h.indexOf('tel:') === 0)            цель('lp_phone',    {место: место(a)});
+    else if (/mrqz\.me|marquiz/.test(h))    цель('lp_quiz',     {место: место(a)});
+    else if (/t\.me|telegram/.test(h))      цель('lp_telegram', {место: место(a)});
+    else if (/wa\.me|whatsapp/.test(h))     цель('lp_whatsapp', {место: место(a)});
+    else if (/max\.ru/.test(h))             цель('lp_max',      {место: место(a)});
+    else if (/vk\.com/.test(h))             цель('lp_vk',       {место: место(a)});
+  }, true);
+
+  function место(a){
+    if (a.closest('.top')) return 'шапка';
+    if (a.closest('.foot')) return 'подвал';
+    if (a.closest('.float')) return 'плавающая кнопка';
+    return 'страница';
+  }
+
+  // Отправленная заявка — отдельной целью: серверная конверсия придёт
+  // позже и только при наличии идентификатора, а эта видна сразу.
+  var f = document.getElementById('zform');
+  if (f) f.addEventListener('hh-sent', function(){ цель('lp_lead'); });
 })();
 </script>
 </body>
