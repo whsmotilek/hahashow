@@ -189,7 +189,9 @@ p{margin:0 0 16px;max-width:60ch}
 /* ── деньги ── */
 .money{padding:72px 0}
 .m-grid{display:grid;gap:14px;margin-top:32px}
-@media(min-width:820px){.m-grid{grid-template-columns:repeat(3,1fr)}}
+/* Карточек может быть две или три — колонки подстраиваются, иначе
+   при двух остаётся пустая треть. */
+@media(min-width:700px){.m-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}}
 .m{border:3px solid var(--ink);border-radius:6px;padding:22px;background:var(--card)}
 .m.hot{background:var(--yellow)}
 .m b{display:block;font-family:var(--serif);font-weight:900;
@@ -210,7 +212,7 @@ p{margin:0 0 16px;max-width:60ch}
 <header class="top">
   <div class="top-in">
     <a class="mark" href="#" aria-label="ХА-ХА ШОУ"><img src="img/logo.svg" alt="ХА-ХА ШОУ" class="logo"></a>
-    <small>Москва · Санкт-Петербург · Тула</small>
+    <small>Москва</small>
     <a class="btn small" href="#dengi">Сколько стоит</a>
   </div>
 </header>
@@ -430,20 +432,14 @@ p{margin:0 0 16px;max-width:60ch}
         <span>с человека за 2 часа. Компания из 10 человек — около 28 000 ₽</span>
       </div>
       <div class="m">
-        <div class="eyebrow">Студия, Петербург и Тула</div>
-        <b>2 500 ₽</b>
-        <span>с человека за 2 часа. Компания из 10 человек — около 25 000 ₽</span>
-      </div>
-      <div class="m">
         <div class="eyebrow">Выезд на вашу площадку</div>
         <b>от 35 000 ₽</b>
-        <span>за мероприятие: Тула 35 000, Петербург 45 000, Москва 55 000</span>
+        <span>за мероприятие, Москва</span>
       </div>
     </div>
     <p style="margin-top:22px;font-size:14px;color:var(--ink-3)">
       Отдельно можно добавить фотографа — 7 000 ₽, аренду зала — 6 000 ₽ в час,
-      ролик для соцсетей — 7 000 ₽ и адаптацию сценария под ваш повод — 10 000 ₽.
-      Цены московские, в Петербурге и Туле фотограф и зал по 5 000 ₽.</p>
+      ролик для соцсетей — 7 000 ₽ и адаптацию сценария под ваш повод — 10 000 ₽.</p>
   </div>
 </section>
 
@@ -463,12 +459,6 @@ p{margin:0 0 16px;max-width:60ch}
                  required></label>
       </div>
       <div class="zrow">
-        <label>Город
-          <select name="city">
-            <option value="msk">Москва</option>
-            <option value="spb">Санкт-Петербург</option>
-            <option value="tula">Тула</option>
-          </select></label>
         <label>Когда и сколько вас
           <input name="when" placeholder="14 декабря, человек 15"></label>
       </div>
@@ -483,7 +473,7 @@ p{margin:0 0 16px;max-width:60ch}
 
 <section class="end">
   <div class="wrap narrow">
-    <div class="eyebrow" style="color:rgba(255,255,255,.75)">Москва · Санкт-Петербург · Тула</div>
+    <div class="eyebrow" style="color:rgba(255,255,255,.75)">Москва</div>
     <h2 style="margin-top:14px">Покажем программу целиком</h2>
     <p class="lead">Назовите дату и сколько вас будет — пришлём подробную
       программу и расчёт на вашу команду.</p>
