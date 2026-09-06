@@ -791,9 +791,22 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
     for (var i = 0; i < точки.children.length; i++)
       точки.children[i].classList.toggle('on', i === сейчас);
   }
+  var довод;
   function идти(н){
     сейчас = (н + слайды.length) % слайды.length;
-    лента.scrollLeft = слайды[сейчас].offsetLeft - слайды[0].offsetLeft;
+    var л = слайды[сейчас].offsetLeft - слайды[0].offsetLeft;
+    лента.scrollLeft = л;                     // плавность задана стилем
+    // Плавная прокрутка идёт по кадрам отрисовки, и там, где их нет
+    // (свёрнутая вкладка, экономия батареи), она просто не доезжает —
+    // лента замирает на первом фото. Проверяем и доводим жёстко.
+    clearTimeout(довод);
+    довод = setTimeout(function(){
+      if (Math.abs(лента.scrollLeft - л) > 8){
+        лента.style.scrollBehavior = 'auto';
+        лента.scrollLeft = л;
+        лента.style.scrollBehavior = '';
+      }
+    }, 700);
     отметить();
   }
   // Сам скролл — источник правды: гость может листнуть пальцем,
