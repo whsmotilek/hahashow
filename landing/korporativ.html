@@ -234,7 +234,13 @@ p:empty{display:none}
 .gal-nav:hover{background:rgba(17,17,17,.9)}
 .gal-nav.prev{left:12px}
 .gal-nav.next{right:12px}
-@media(min-width:760px){.gal-nav{display:flex}}
+/* На телефоне лента во всю ширину — так и надо. На компе она
+   растягивалась на всю колонку и занимала весь экран: фотография
+   переставала быть иллюстрацией и становилась страницей. Ограничиваем. */
+@media(min-width:760px){
+  .gal-nav{display:flex}
+  .gal{max-width:640px;margin-left:auto;margin-right:auto}
+}
 .gal-dots{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
 .gal-dot{width:9px;height:9px;border-radius:50%;border:0;padding:0;cursor:pointer;
   background:rgba(255,248,231,.3);transition:background .2s,transform .2s}
