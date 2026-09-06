@@ -917,14 +917,25 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
 
    Тот же квиз и с тем же идентификатором стоит на основном сайте, так
    что заявки идут в одну воронку. */
-(function(w, d, s, o){
-  var j = d.createElement(s); j.async = true; j.src = '//script.marquiz.ru/v2.js';
-  j.onload = function(){
+(function(w, d, o){
+  function завести(){
     if (d.readyState !== 'loading') Marquiz.init(o);
     else d.addEventListener('DOMContentLoaded', function(){ Marquiz.init(o); });
-  };
+  }
+  // Скрипт квиза тема подключает на весь сайт. Своей копией мы грузили
+  // его вторым — лишний запрос на каждой загрузке страницы. Проверяем:
+  // если он уже есть, дожидаемся и настраиваем, а не тянем ещё раз.
+  if (d.querySelector('script[src*="script.marquiz.ru"]')){
+    var ждём = setInterval(function(){
+      if (w.Marquiz){ clearInterval(ждём); завести(); }
+    }, 100);
+    setTimeout(function(){ clearInterval(ждём); }, 10000);
+    return;
+  }
+  var j = d.createElement('script'); j.async = true; j.src = '//script.marquiz.ru/v2.js';
+  j.onload = завести;
   d.head.insertBefore(j, d.head.firstElementChild);
-})(window, document, 'script', {
+})(window, document, {
   host: '//quiz.marquiz.ru',
   region: 'eu',
   id: '650ade3e7c22e80025c70ff7',
