@@ -362,7 +362,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
   <div class="top-in">
     <div class="top-brand"><a class="mark" href="#" aria-label="ХА-ХА ШОУ"><img src="img/logo.svg" alt="ХА-ХА ШОУ" class="logo"></a></div>
     <div class="cities">Москва</div>
-    <div class="top-cta"><a class="hdr-tel" href="tel:+79602835563">+7 (960) 283-55-63</a><a class="btn small pop" href="https://mrqz.me/650ade3e7c22e80025c70ff7" target="_blank" rel="noopener">Рассчитать вечер</a></div>
+    <div class="top-cta"><a class="hdr-tel" href="tel:+79602835563">+7 (960) 283-55-63</a><a class="btn small pop" href="https://mrqz.me/650ade3e7c22e80025c70ff7" data-quiz target="_blank" rel="noopener">Рассчитать вечер</a></div>
   </div>
 </header>
 
@@ -824,10 +824,26 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
     ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','yclid']
       .forEach(function(k){ var v = u.searchParams.get(k); if (v) тело[k] = v; });
     тело.landing_url = location.href;
-    if (window.ym && typeof ym === 'function'){
-      try { ym(94991046, 'getClientID', function(id){ тело.ym_client_id = id; }); } catch(e){}
+    // ClientID Метрика отдаёт через обратный вызов, а не сразу. Раньше
+    // тело уходило, не дождавшись ответа, и заявка отправлялась без
+    // идентификатора: в базе таких набралось девять из двадцати трёх.
+    // Без ClientID конверсию не привязать к визиту, и Директ о ней
+    // не узнает. Ждём — но не дольше секунды: заявка важнее метки.
+    function сИдентификатором(готово){
+      if (!(window.ym && typeof ym === 'function')) return готово();
+      var ушло = false;
+      var срок = setTimeout(function(){ if (!ушло){ ушло = true; готово(); } }, 1000);
+      try {
+        ym(94991046, 'getClientID', function(id){
+          if (id) тело.ym_client_id = id;
+          if (!ушло){ ушло = true; clearTimeout(срок); готово(); }
+        });
+      } catch(e){ if (!ушло){ ушло = true; clearTimeout(срок); готово(); } }
     }
 
+    сИдентификатором(function(){ отправить(); });
+
+    function отправить(){
     fetch(ЯДРО, {method:'POST',
       headers:{'Content-Type':'application/json','X-Site-Key':КЛЮЧ},
       body: JSON.stringify(тело)})
@@ -849,6 +865,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
           '. Напишите нам в Telegram — так точно дойдёт.';
       })
       .finally(function(){ btn.disabled = false; btn.textContent = 'Отправить'; });
+    }
   });
 })();
 </script>
@@ -887,6 +904,49 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
   var f = document.getElementById('zform');
   if (f) f.addEventListener('hh-sent', function(){ цель('lp_lead'); });
 })();
+</script>
+
+<script>
+/* Квиз Marquiz прямо на странице, а не по ссылке на mrqz.me.
+
+   Разница не косметическая. ClientID Метрики лежит в куке нашего домена,
+   и Marquiz кладёт его в заявку, только если квиз открыт у нас. Уводя
+   человека на mrqz.me, мы эту куку теряем: заявка приходит, но привязать
+   её к визиту и отдать в Директ уже нечем. В базе это видно прямо —
+   у двадцати заявок из квиза за месяц ClientID нет.
+
+   Тот же квиз и с тем же идентификатором стоит на основном сайте, так
+   что заявки идут в одну воронку. */
+(function(w, d, s, o){
+  var j = d.createElement(s); j.async = true; j.src = '//script.marquiz.ru/v2.js';
+  j.onload = function(){
+    if (d.readyState !== 'loading') Marquiz.init(o);
+    else d.addEventListener('DOMContentLoaded', function(){ Marquiz.init(o); });
+  };
+  d.head.insertBefore(j, d.head.firstElementChild);
+})(window, document, 'script', {
+  host: '//quiz.marquiz.ru',
+  region: 'eu',
+  id: '650ade3e7c22e80025c70ff7',
+  autoOpen: false,
+  autoOpenFreq: 'once',
+  openOnExit: false,
+  disableOnMobile: false
+});
+
+/* Если скрипт не загрузился — блокировщик, обрыв связи, что угодно —
+   кнопка не должна становиться мёртвой. Тогда открываем квиз по старой
+   ссылке: потерянный ClientID хуже, чем ничего, но кнопка без действия
+   хуже вдвойне. */
+document.addEventListener('click', function(e){
+  var a = e.target.closest && e.target.closest('a[data-quiz]');
+  if (!a) return;
+  if (window.Marquiz && typeof Marquiz.showModal === 'function'){
+    e.preventDefault();
+    Marquiz.showModal('650ade3e7c22e80025c70ff7');
+  }
+  // иначе ссылка отработает сама и уведёт на mrqz.me
+}, false);
 </script>
 </body>
 </html>
