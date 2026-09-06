@@ -133,6 +133,40 @@ p{margin:0 0 16px;max-width:60ch}
 .note .eyebrow{color:var(--orange);margin-bottom:8px}
 .note p{margin:0;font-size:15.5px;color:var(--ink-2)}
 
+.logo{height:26px;width:auto;display:block}
+@media(min-width:520px){.logo{height:32px}}
+/* ── форма заявки ── */
+.lead-form{padding:72px 0}
+.zform{display:grid;gap:14px;margin-top:26px}
+.zrow{display:grid;gap:14px}
+@media(min-width:640px){.zrow{grid-template-columns:1fr 1fr}}
+.zform label{display:grid;gap:6px;font-size:13px;font-weight:800;
+  letter-spacing:.02em;color:var(--ink-3)}
+.zform input,.zform select{
+  font-family:inherit;font-size:16px;font-weight:600;color:var(--ink);
+  padding:13px 15px;border-radius:12px;border:2px solid var(--line);
+  background:var(--card,#fff);width:100%}
+.zform input:focus,.zform select:focus{outline:0;border-color:var(--purple,#6209ED)}
+.zagree{display:flex!important;flex-direction:row;align-items:flex-start;gap:10px;
+  font-weight:600;font-size:14px;color:var(--ink-2);letter-spacing:0}
+.zagree input{width:20px;height:20px;flex:none;margin-top:1px;padding:0}
+.zmsg{font-size:15px;font-weight:700;min-height:22px}
+.zmsg.ok{color:#1B7A4B}
+.zmsg.bad{color:#B23A22}
+
+/* ── видео ── */
+.video{padding:70px 0}
+.vwrap{position:relative;margin-top:30px;border-radius:18px;overflow:hidden;
+  background:#000;line-height:0}
+.vwrap video{width:100%;height:auto;display:block}
+.vsound{position:absolute;right:14px;bottom:14px;z-index:2;
+  font-family:inherit;font-weight:800;font-size:14px;line-height:1;
+  padding:11px 16px;border-radius:999px;border:0;cursor:pointer;
+  background:rgba(23,20,12,.72);color:#fff;backdrop-filter:blur(6px);
+  transition:background .16s}
+.vsound:hover{background:rgba(23,20,12,.9)}
+.vsound:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+
 /* ── кино ── */
 .film{background:var(--ink);color:var(--paper);padding:72px 0}
 .film h2{color:#fff}
@@ -173,7 +207,7 @@ p{margin:0 0 16px;max-width:60ch}
 
 <header class="top">
   <div class="top-in">
-    <div class="mark">ХА-ХА ШОУ</div>
+    <a class="mark" href="#" aria-label="ХА-ХА ШОУ"><img src="img/logo.svg" alt="ХА-ХА ШОУ" class="logo"></a>
     <small>Москва · Санкт-Петербург · Тула</small>
     <a class="btn small" href="#dengi">Сколько стоит</a>
   </div>
@@ -332,6 +366,26 @@ p{margin:0 0 16px;max-width:60ch}
   </div>
 </section>
 
+<section class="video" id="video">
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Как это выглядит</div>
+      <h2 style="margin-top:12px">Сорок пять секунд из настоящего вечера</h2>
+      <p class="lead">Без звука — включите, если хотите услышать, как это звучит.</p>
+    </div>
+    <div class="vwrap">
+      <video id="showvid" playsinline muted loop autoplay preload="metadata"
+             poster="img/video-poster.jpg">
+        <source src="img/show.mp4" type="video/mp4">
+      </video>
+      <button class="vsound" id="vsound" type="button"
+              onclick="звук()" aria-label="Включить звук">
+        <span id="vsoundtxt">Включить звук</span>
+      </button>
+    </div>
+  </div>
+</section>
+
 <section class="film">
   <div class="wrap">
     <div class="narrow">
@@ -391,6 +445,40 @@ p{margin:0 0 16px;max-width:60ch}
   </div>
 </section>
 
+<section class="lead-form" id="zayavka">
+  <div class="wrap narrow">
+    <div class="eyebrow">Оставьте заявку</div>
+    <h2 style="margin-top:12px">Напишите дату — пришлём расчёт</h2>
+    <p class="lead">Ответим в течение рабочего дня. Звонить не будем,
+      если сами не попросите.</p>
+
+    <form id="zform" class="zform" novalidate>
+      <div class="zrow">
+        <label>Как вас зовут
+          <input name="name" autocomplete="name" placeholder="Мария" required></label>
+        <label>Телефон или мессенджер
+          <input name="contact" autocomplete="tel" placeholder="+7 900 123-45-67"
+                 required></label>
+      </div>
+      <div class="zrow">
+        <label>Город
+          <select name="city">
+            <option value="msk">Москва</option>
+            <option value="spb">Санкт-Петербург</option>
+            <option value="tula">Тула</option>
+          </select></label>
+        <label>Когда и сколько вас
+          <input name="when" placeholder="14 декабря, человек 15"></label>
+      </div>
+      <label class="zagree">
+        <input type="checkbox" name="agree" required>
+        <span>Согласен на обработку персональных данных</span></label>
+      <button class="btn" type="submit" id="zbtn">Отправить</button>
+      <div class="zmsg" id="zmsg" role="status"></div>
+    </form>
+  </div>
+</section>
+
 <section class="end">
   <div class="wrap narrow">
     <div class="eyebrow" style="color:rgba(255,255,255,.75)">Москва · Санкт-Петербург · Тула</div>
@@ -438,6 +526,88 @@ p{margin:0 0 16px;max-width:60ch}
       if (i >= шагов){ clearInterval(t); открыто = цель; счётчик.textContent = цель; }
     }, 26);
   }
+})();
+</script>
+<script>
+// Видео крутится без звука: с ним браузер просто не запустит
+// автовоспроизведение, и человек увидит чёрный прямоугольник.
+// Звук — по желанию, одной кнопкой.
+(function(){
+  var v = document.getElementById('showvid');
+  var b = document.getElementById('vsoundtxt');
+  if (!v || !b) return;
+  window.звук = function(){
+    v.muted = !v.muted;
+    b.textContent = v.muted ? 'Включить звук' : 'Выключить звук';
+    if (!v.muted && v.paused) v.play();
+  };
+  // Если автозапуск всё-таки отклонён (экономия трафика, настройки),
+  // показываем постер и не притворяемся, что видео играет.
+  var p = v.play();
+  if (p && p.catch) p.catch(function(){ v.controls = true; });
+})();
+</script>
+<script>
+// Заявка уходит прямо отсюда: чем меньше шагов между «интересно»
+// и «оставил контакт», тем меньше людей теряется по дороге.
+(function(){
+  var f = document.getElementById('zform');
+  if (!f) return;
+  var msg = document.getElementById('zmsg');
+  var btn = document.getElementById('zbtn');
+  var ЯДРО = 'https://hahacore.217-26-25-5.sslip.io/api/intake';
+  var КЛЮЧ = 'hh_pub_Ukif6hX3Ajgr5Iq1VvQ1G59l';
+
+  function телефон(v){
+    var d = (v || '').replace(/\D+/g, '');
+    return d.length >= 10 ? v : null;
+  }
+
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    msg.className = 'zmsg'; msg.textContent = '';
+    var d = new FormData(f);
+    var имя = (d.get('name') || '').trim();
+    var контакт = (d.get('contact') || '').trim();
+    if (!имя){ msg.className = 'zmsg bad'; msg.textContent = 'Напишите, как к вам обращаться'; return; }
+    if (!контакт){ msg.className = 'zmsg bad'; msg.textContent = 'Оставьте телефон или ник — иначе не сможем ответить'; return; }
+    if (!d.get('agree')){ msg.className = 'zmsg bad'; msg.textContent = 'Нужно согласие на обработку данных'; return; }
+
+    btn.disabled = true; btn.textContent = 'Отправляю…';
+    var тело = {
+      name: имя,
+      city: d.get('city') || 'msk',
+      channel: 'site_form',
+      comment: (d.get('when') || '').trim() || null,
+      source_raw: 'Посадочная РСЯ'
+    };
+    if (телефон(контакт)) тело.phone = контакт; else тело.messenger = контакт;
+
+    var u = new URL(location.href);
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','yclid']
+      .forEach(function(k){ var v = u.searchParams.get(k); if (v) тело[k] = v; });
+    тело.landing_url = location.href;
+    if (window.ym && typeof ym === 'function'){
+      try { ym(94991046, 'getClientID', function(id){ тело.ym_client_id = id; }); } catch(e){}
+    }
+
+    fetch(ЯДРО, {method:'POST',
+      headers:{'Content-Type':'application/json','X-Site-Key':КЛЮЧ},
+      body: JSON.stringify(тело)})
+      .then(function(r){ return r.json().then(function(j){ return {ok:r.ok, j:j}; }); })
+      .then(function(r){
+        if (!r.ok) throw new Error(r.j.detail || 'не отправилось');
+        msg.className = 'zmsg ok';
+        msg.textContent = 'Готово. Напишем вам в ближайшее время.';
+        f.reset();
+      })
+      .catch(function(err){
+        msg.className = 'zmsg bad';
+        msg.textContent = 'Не отправилось: ' + err.message +
+          '. Напишите нам в Telegram — так точно дойдёт.';
+      })
+      .finally(function(){ btn.disabled = false; btn.textContent = 'Отправить'; });
+  });
 })();
 </script>
 </body>
