@@ -141,7 +141,9 @@ p{margin:0 0 16px;max-width:60ch}
 .zrow{display:grid;gap:14px}
 @media(min-width:640px){.zrow{grid-template-columns:1fr 1fr}}
 .zform label{display:grid;gap:6px;font-size:13px;font-weight:800;
-  letter-spacing:.02em;color:var(--ink-3)}
+  /* Интерлиньяж задаём явно: тема ставит его равным кеглю, и подпись
+     согласия слипалась в две строки, налезая на кнопку. */
+  line-height:1.35;letter-spacing:.02em;color:var(--ink-3)}
 .zform input,.zform select{
   /* Интерлиньяж задаём явно: на сайте тема ставит свой, и поля
      оказывались на пару пикселей выше, чем в макете. */
@@ -150,7 +152,7 @@ p{margin:0 0 16px;max-width:60ch}
   background:var(--card,#fff);width:100%}
 .zform input:focus,.zform select:focus{outline:0;border-color:var(--purple,#6209ED)}
 .zagree{display:flex!important;flex-direction:row;align-items:flex-start;gap:10px;
-  font-weight:600;font-size:14px;color:var(--ink-2);letter-spacing:0}
+  font-weight:600;font-size:14px;line-height:1.4;color:var(--ink-2);letter-spacing:0}
 .zagree input{width:20px;height:20px;flex:none;margin-top:1px;padding:0}
 .zmsg{font-size:15px;font-weight:700;min-height:22px}
 .zmsg.ok{color:#1B7A4B}
