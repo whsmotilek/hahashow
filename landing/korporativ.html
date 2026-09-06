@@ -44,9 +44,9 @@ p:empty{display:none}
 .top-in{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:nowrap;
   height:58px;max-width:1140px;margin:0 auto;padding:0 24px}
 .mark{font-family:var(--serif);font-weight:900;font-size:15px;letter-spacing:.02em}
-.top small{color:var(--paper);font-size:16px;font-weight:800;display:none}
+.top .cities{color:var(--paper);font-size:16px;font-weight:800;display:none}
 @media(min-width:800px){
-  .top small{display:block;position:absolute;left:50%;transform:translateX(-50%)}
+  .top .cities{display:block;position:absolute;left:50%;transform:translateX(-50%)}
   .top-in{position:relative}
 }
 
@@ -292,7 +292,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
 <header class="top">
   <div class="top-in">
     <div class="top-brand"><a class="mark" href="#" aria-label="ХА-ХА ШОУ"><img src="img/logo.svg" alt="ХА-ХА ШОУ" class="logo"></a></div>
-    <small>Москва</small>
+    <div class="cities">Москва</div>
     <div class="top-cta"><a class="hdr-tel" href="tel:+79602835563">+7 (960) 283-55-63</a><a class="btn small" href="https://mrqz.me/650ade3e7c22e80025c70ff7" target="_blank" rel="noopener">Рассчитать вечер</a></div>
   </div>
 </header>
