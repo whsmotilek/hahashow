@@ -223,8 +223,14 @@ p{margin:0 0 16px;max-width:62ch}
 .shot.tall{aspect-ratio:4/5}
 
 /* ─── страхи ─── */
-.fears{background:var(--ink) url(img/monogram.svg) repeat;background-size:300px;
-  color:var(--paper);padding:76px 0}
+.fears{position:relative;background:var(--ink);color:var(--paper);padding:76px 0;
+  overflow:hidden}
+/* Монограмма с основного сайта — подложкой, а не фоном. В полную силу
+   она перекрывает текст: рисунок яркий и крупный. Здесь она едва
+   различима и просто связывает страницу с сайтом. */
+.fears::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:url(img/monogram.svg) repeat;background-size:190px;opacity:.07}
+.fears .wrap{position:relative;z-index:1}
 .fears h2{color:var(--paper)}
 .fears .lead{color:rgba(255,253,244,.72)}
 .fear-list{display:grid;gap:2px;margin-top:38px;border:2px solid rgba(255,253,244,.16);
