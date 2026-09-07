@@ -141,6 +141,12 @@ p:empty{display:none}
 .hero h1{text-wrap:normal}
 .hero h1 .hl{color:var(--purple)}
 .hero-note{margin-top:22px}
+/* Разделитель рисуем стилем, а не пишем в текст: так он не попадёт
+   в поиск и не прочитается вслух, а перенос строки браузер сделает
+   по границе куска, а не посреди фразы. */
+.steps span{display:inline}
+.steps span:not(.last)::after{content:" / ";color:var(--purple);
+  font-weight:800;white-space:nowrap}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
 
 .clock{
@@ -254,6 +260,20 @@ p:empty{display:none}
   padding:11px 15px;border-radius:999px;border:0;cursor:pointer;
   background:rgba(23,20,12,.72);color:#fff;backdrop-filter:blur(6px);
   transition:background .16s}
+/* Вторая кнопка на ролике — «Развернуть». Слева, чтобы не столкнуться
+   со звуком: на телефоне обе надписи в одну сторону не помещаются. */
+.vzoom{right:auto;left:12px}
+/* Родной полноэкранный режим. */
+.vwrap:fullscreen,.vwrap:-webkit-full-screen{display:flex;align-items:center;
+  justify-content:center;background:#000;border-radius:0}
+.vwrap:fullscreen video,.vwrap:-webkit-full-screen video{width:auto;height:100%;
+  max-width:100%}
+/* Свой вариант — когда родной недоступен. Элемент остаётся тем же,
+   меняется только положение, поэтому ролик не прерывается. */
+.vwrap.vbig{position:fixed;inset:0;z-index:200;border-radius:0;background:#000;
+  display:flex;align-items:center;justify-content:center}
+.vwrap.vbig video{width:auto;height:auto;max-width:100%;max-height:100%}
+body.vbig-on{overflow:hidden}
 .vsound:hover{background:rgba(23,20,12,.9)}
 .vsound:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
 
@@ -408,7 +428,10 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
    и последняя висела бы отдельно; сеткой они ложатся ровно. */
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:22px 26px;margin-top:30px}
-@media(min-width:1000px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* Четыре в ряд не ставим: плитки живут в левой колонке первого
+   экрана шириной около 570 пикселей, и на четыре колонки выходило
+   по 123 — «2 800 ₽» почти упиралось в соседнее слово. Два на два
+   даёт вдвое больше места и читается спокойно. */
 /* На телефоне плитки ложатся парами: цифра, под ней подпись.
    Раньше цифра и подпись стояли в строку, а колонки держались на
    `display:contents` у самой плитки. В Chrome это работало, в Safari на
@@ -446,11 +469,16 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
         <div class="eyebrow">Праздник на компанию от 6 человек</div>
         <h1 style="margin-top:14px">День рождения, где
           <span class="hl">никто не сидит</span> весь вечер за столом</h1>
-        <p class="lead hero-note">
-          Вы приходите в лофт, ведущие делят компанию на две команды — и дальше
-          два часа веселья: искренний смех, азартные споры и реквизит, который
-          никогда раньше в руках не держали. После жаркого финала — застолье
-          и караоке. Готовый праздник под ключ.
+        <!-- Сплошной абзац на первом экране читали по диагонали и теряли
+             мысль. Разбиваем на короткие куски: глаз цепляется за каждый,
+             а порядок остаётся тем же, что и на вечере. -->
+        <p class="lead hero-note steps">
+          <span>Приходите в лофт</span>
+          <span>ведущие делят компанию на две команды</span>
+          <span>два часа игры: смех, азартные споры и реквизит,
+            которого раньше в руках не держали</span>
+          <span>после финала — застолье и караоке</span>
+          <span class="last">готовый праздник под ключ</span>
         </p>
         <div class="hero-cta">
           <a class="btn" href="#vecher">Посмотреть, как проходит вечер</a>
@@ -493,6 +521,10 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
         <button class="vsound" id="vsound" type="button"
                 onclick="звук()" aria-label="Включить звук">
           <span id="vsoundtxt">Включить звук</span>
+        </button>
+        <button class="vsound vzoom" id="vzoom" type="button"
+                onclick="развернуть()" aria-label="Показать видео на весь экран">
+          <span id="vzoomtxt">Развернуть</span>
         </button>
       </div>
       <div class="vcap">45 секунд из настоящего вечера</div>
@@ -1115,6 +1147,78 @@ document.addEventListener('click', function(e){
   }
   // иначе ссылка отработает сама и уведёт на mrqz.me
 }, false);
+</script>
+
+<script>
+// Кнопка «Развернуть» — рядом со звуком, ровно тем же способом.
+// Автовоспроизведению это ничем не мешает: атрибуты muted, autoplay и
+// playsinline мы не трогаем, элемент не переносим и видео не
+// перезагружаем — оно продолжает крутиться с того же места.
+//
+// Сначала просим родной полноэкранный режим: на телефоне он даёт весь
+// экран и поворот. Но он доступен не везде — в рамке, во встроенном
+// браузере или при строгих настройках браузер отвечает отказом. Тогда
+// разворачиваем сами, поверх страницы. Кнопка обязана срабатывать
+// всегда: кнопка, которая иногда ничего не делает, хуже её отсутствия.
+(function(){
+  var о = document.getElementById('video');
+  var v = document.getElementById('showvid');
+  var b = document.getElementById('vzoomtxt');
+  var к = document.getElementById('vzoom');
+  if (!о || !v || !b || !к) return;
+
+  function родной(){
+    return !!(document.fullscreenElement || document.webkitFullscreenElement
+              || v.webkitDisplayingFullscreen);
+  }
+  function свой(){ return о.classList.contains('vbig'); }
+  function открыт(){ return родной() || свой(); }
+  function подписать(){ b.textContent = открыт() ? 'Свернуть' : 'Развернуть'; }
+
+  function наложить(){
+    о.classList.add('vbig');
+    document.body.classList.add('vbig-on');
+    подписать();
+  }
+  function снять(){
+    о.classList.remove('vbig');
+    document.body.classList.remove('vbig-on');
+    подписать();
+  }
+
+  window.развернуть = function(){
+    if (свой()) return снять();
+    if (родной()){
+      try {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        else if (v.webkitExitFullscreen) v.webkitExitFullscreen();
+      } catch (e) { снять(); }
+      return;
+    }
+    var обещание = null;
+    try {
+      if (о.requestFullscreen) обещание = о.requestFullscreen();
+      else if (о.webkitRequestFullscreen) о.webkitRequestFullscreen();
+      else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen();
+      else наложить();
+    } catch (e) { наложить(); return; }
+
+    if (обещание && обещание.then) обещание.then(подписать).catch(наложить);
+    else setTimeout(function(){ if (!родной()) наложить(); else подписать(); }, 150);
+  };
+
+  // Esc закрывает и наш вариант тоже — так же, как родной.
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && свой()) снять();
+  });
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(function(с){
+    document.addEventListener(с, подписать);
+  });
+  v.addEventListener('webkitbeginfullscreen', подписать);
+  v.addEventListener('webkitendfullscreen', подписать);
+  подписать();
+})();
 </script>
 </body>
 </html>
