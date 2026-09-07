@@ -409,14 +409,20 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
   gap:22px 26px;margin-top:30px}
 @media(min-width:1000px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
-/* На телефоне три цифры ложились как «одна сверху, две снизу»: подпись
-   у первой длинная и занимала всю строку. Столбиком ровнее, и подписи
-   не переносятся. */
+/* На телефоне плитки ложатся парами: цифра, под ней подпись.
+   Раньше цифра и подпись стояли в строку, а колонки держались на
+   `display:contents` у самой плитки. В Chrome это работало, в Safari на
+   айфоне — нет: подписи разъезжались, каждая начиналась в своём месте,
+   а у «можно» налезала на само слово. Сетку строим из самих плиток,
+   без `display:contents` — тогда и выравнивать нечего. */
 @media(max-width:560px){
-  .stats{display:grid;grid-template-columns:auto 1fr;gap:10px 16px;align-items:baseline}
-  .stat{display:contents}
-  .stat b{text-align:right;min-width:74px}
-  .stat span{align-self:baseline}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 18px}
+  .stat b{font-size:23px;line-height:1.1}
+  .stat span{display:block;margin-top:4px;font-size:12.5px;line-height:1.3}
+}
+/* Совсем узкие экраны: в две колонки подписи рвутся на четыре строки. */
+@media(max-width:359px){
+  .stats{grid-template-columns:1fr;gap:14px}
 }
 .stat b{display:block;white-space:nowrap;font-family:var(--serif);font-weight:900;
   font-size:clamp(24px,3vw,34px);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
