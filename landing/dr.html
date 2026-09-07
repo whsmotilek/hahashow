@@ -30,7 +30,9 @@ a{color:inherit}
 .narrow{max-width:660px}
 
 h1,h2,h3,.u{font-family:var(--serif);font-weight:900;letter-spacing:-.02em;text-wrap:balance}
-h1{font-size:clamp(38px,6.4vw,84px);line-height:.98;margin:0}
+/* Заголовок уменьшен: на компьютере он занимал пол-экрана, и
+   плитки с выгодами уезжали под сгиб. */
+h1{font-size:clamp(34px,5.2vw,66px);line-height:1;margin:0}
 h2{font-size:clamp(28px,4vw,46px);line-height:1.04;margin:0 0 18px}
 h3{font-size:20px;line-height:1.2;margin:0 0 8px;font-weight:700}
 p{margin:0 0 16px;max-width:62ch}
@@ -341,7 +343,52 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
 .docs a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 .foot b{color:var(--ink-2)}
 
-.stats{display:flex;flex-wrap:wrap;gap:26px;margin-top:30px}
+/* Кто мы такие. Директолог просил этот блок ради доверия и просил
+   поставить его внизу: сверху он мешает — человек ещё не знает, чем мы
+   можем быть ему полезны, и биография ему не интересна. */
+.about{padding:76px 0;background:var(--soft)}
+.about-grid{display:grid;gap:34px;margin-top:34px}
+@media(min-width:940px){.about-grid{grid-template-columns:1fr 420px;gap:44px}}
+.about-nums{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px 26px;margin-top:28px}
+.about-nums b{display:block;font-family:var(--serif);font-weight:900;
+  font-size:clamp(26px,3.4vw,38px);line-height:1.05;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+.about-nums span{font-size:13px;color:var(--ink-3);font-weight:700}
+.about-where{margin-top:26px;padding-top:22px;border-top:2px solid var(--line);
+  font-size:16px;line-height:1.55;color:var(--ink-2)}
+.about-where b{color:var(--ink)}
+/* Отзывы приходят виджетом с Яндекс.Карт. Оценку дублируем текстом:
+   виджет — сторонний кадр, его может не пустить блокировщик, и тогда
+   на месте доверия осталась бы пустая рамка. */
+.reviews{border:2px solid var(--ink);border-radius:18px;overflow:hidden;
+  background:#fff}
+.reviews-h{display:flex;align-items:baseline;gap:10px;padding:16px 18px;
+  border-bottom:2px solid var(--line);flex-wrap:wrap}
+.reviews-h b{font-family:var(--serif);font-weight:900;font-size:30px;
+  letter-spacing:-.03em;line-height:1}
+.reviews-h span{font-size:14px;color:var(--ink-3);font-weight:700}
+.reviews-h .stars{color:#F5A623;letter-spacing:2px;font-size:15px}
+.reviews iframe{display:block;width:100%;height:520px;border:0}
+.reviews-a{display:block;padding:14px 18px;font-size:14px;font-weight:700;
+  border-top:2px solid var(--line);text-decoration:none}
+/* Блок узнавания. Человек должен встретить здесь свою ситуацию
+   слово в слово — до того, как мы начнём рассказывать про себя.
+   Поэтому это список условий, а не список преимуществ. */
+.fit{padding:72px 0;background:var(--soft)}
+.fit-list{display:grid;gap:14px;margin-top:32px;max-width:820px}
+.fit-i{display:grid;grid-template-columns:28px 1fr;gap:14px;align-items:start;
+  font-size:clamp(17px,1.7vw,20px);line-height:1.45;color:var(--ink)}
+.fit-i svg{width:26px;height:26px;margin-top:1px;flex:0 0 26px}
+.fit-out{margin-top:34px;font-family:var(--serif);font-weight:900;
+  font-size:clamp(22px,3vw,34px);line-height:1.1;letter-spacing:-.02em}
+.fit-out .hl{color:var(--purple)}
+.fit .btn{margin-top:26px}
+/* Плиток стало четыре. Свободный поток разложил бы их «три и один»,
+   и последняя висела бы отдельно; сеткой они ложатся ровно. */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px 26px;margin-top:30px}
+@media(min-width:1000px){.stats{grid-template-columns:repeat(4,minmax(0,1fr))}}
 /* На телефоне три цифры ложились как «одна сверху, две снизу»: подпись
    у первой длинная и занимала всю строку. Столбиком ровнее, и подписи
    не переносятся. */
@@ -370,11 +417,11 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
   <div class="wrap">
     <div class="hero-grid">
       <div>
-        <div class="eyebrow">День рождения на компанию от 6 человек</div>
+        <div class="eyebrow">Праздник на компанию от 6 человек</div>
         <h1 style="margin-top:14px">
-          <span>Праздник, где</span>
+          <span>День рождения, где</span>
           <span class="hl">никто не сидит</span>
-          <span>за столом весь вечер</span>
+          <span>весь вечер за столом</span>
         </h1>
         <p class="lead hero-note">
           Вы приходите в лофт, ведущие делят компанию на две команды — и дальше
@@ -386,10 +433,14 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
           <a class="btn" href="#vecher">Посмотреть, как проходит вечер</a>
           <a class="btn ghost" href="#raschet">Сколько это стоит</a>
         </div>
+        <!-- На первом экране только то, что человек получит. Число
+             проведённых праздников переехало вниз, в блок о компании:
+             это доверие, а не выгода, и на выбор оно влияет позже. -->
         <div class="stats">
-          <div class="stat"><b>5 643</b><span>праздника с 2019 года</span></div>
-          <div class="stat"><b>17</b><span>человек за столом в среднем</span></div>
-          <div class="stat"><b>2 800 ₽</b><span>с человека за два часа</span></div>
+          <div class="stat"><b>2 часа</b><span>активная программа</span></div>
+          <div class="stat"><b>2 800 ₽</b><span>с человека</span></div>
+          <div class="stat"><b>лофт</b><span>чтобы остаться после игры</span></div>
+          <div class="stat"><b>можно</b><span>со своей едой и напитками</span></div>
         </div>
       </div>
 
@@ -415,13 +466,39 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
   </div>
 </div>
 
+<section class="fit" id="podhodit">
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Узнаёте себя?</div>
+      <h2 style="margin-top:12px">Вам подходит формат, если…</h2>
+    </div>
+    <div class="fit-list">
+      <div class="fit-i"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="var(--purple)"/><path d="M7 12.4l3.2 3.2L17 8.8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Скоро день рождения — и его надо отметить нескучно и без лишних хлопот</span></div>
+      <div class="fit-i"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="var(--purple)"/><path d="M7 12.4l3.2 3.2L17 8.8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Есть компания от 6 до 30 человек</span></div>
+      <div class="fit-i"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="var(--purple)"/><path d="M7 12.4l3.2 3.2L17 8.8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>За столом сидеть весь вечер не хочется, а удивить гостей — очень даже</span></div>
+      <div class="fit-i"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="var(--purple)"/><path d="M7 12.4l3.2 3.2L17 8.8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Хочется уложиться в бюджет и сэкономить нервы в свой же праздник</span></div>
+      <div class="fit-i"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="11" fill="var(--purple)"/><path d="M7 12.4l3.2 3.2L17 8.8" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Чтобы остались фотографии и видео, а гости расходились со словами
+          «так мы ещё не отмечали»</span></div>
+    </div>
+    <div class="fit-out">Значит, вам <span class="hl">на ХА-ХА ШОУ</span></div>
+    <a class="btn" href="#vecher">Посмотреть, как проходит вечер</a>
+  </div>
+</section>
+
 <section class="timeline" id="vecher">
   <div class="wrap">
     <div class="tl-head narrow">
       <div class="eyebrow">Весь вечер целиком</div>
       <h2 style="margin-top:12px">Что именно будет происходить, час за часом</h2>
-      <p class="lead">Не программа в общих словах, а то, что увидит человек,
-        который пришёл к вам на день рождения и ещё не понимает, куда попал.</p>
+      <p class="lead">ХА-ХА ШОУ — восемь небанальных конкурсов с реквизитом,
+        которого раньше в руках не держали. Программа собрана и отрепетирована,
+        ведущие привозят всё своё — готовить не нужно ничего.
+        Вот что ждёт человека на вашем дне рождения.</p>
     </div>
 
     <div class="tl" id="tl">
@@ -443,10 +520,11 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
         <div class="scene-t">19:00<small>старт</small></div>
         <div class="scene-body">
           <h3>Ведущие забирают вечер себе</h3>
-          <p>Именно тот момент, которого так ждали, когда оформляли заявку:
-            организатору больше не нужно придумывать, чем занять людей. Двое
-            ведущих делят компанию на команды — и с этой секунды за настроение
-            отвечают профессионалы. Восемь конкурсов за два часа.</p>
+          <p>Именно тот момент, которого ждал именинник, когда оформлял
+            заявку: не надо думать, чем занять гостей. Самое время самому
+            отдохнуть на своём празднике. Двое ведущих делят компанию на
+            команды — и с этой секунды за настроение отвечают профессионалы.
+            Восемь конкурсов за два часа.</p>
           <figure class="pic">
             <img src="img/vedushchie.jpg" width="1400" height="933" loading="lazy"
                  alt="Ведущий с микрофоном у экрана, гости смеются, летит конфетти">
@@ -501,11 +579,12 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
       <article class="scene reveal">
         <div class="scene-t">21:00<small>после</small></div>
         <div class="scene-body">
-          <h3>Никто никуда не едет</h3>
-          <p>Лофт остаётся вашим: включается караоке, опустошаются бокалы,
-            продолжаются разговоры. Это и есть главное отличие от квеста или
-            боулинга — не нужно срываться с места и искать, где бы ещё посидеть.
-            Вечер течёт плавно, от игры к фуршету.</p>
+          <h3>Праздник продолжается</h3>
+          <p>Программа закончилась, а лофт остаётся вашим: включается караоке,
+            опустошаются бокалы, продолжаются разговоры. Никто никуда не едет —
+            это и есть главное отличие от квеста или боулинга: не нужно
+            срываться с места и искать, где бы ещё посидеть. Вечер течёт
+            плавно, от игры к фуршету.</p>
           <figure class="pic">
             <img src="img/tancy.jpg" width="1400" height="930" loading="lazy"
                  alt="Гости танцуют в лофте после игры">
@@ -662,6 +741,48 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
           на вашу компанию.</p>
       </div>
 
+  </div>
+</section>
+
+<section class="about" id="onas">
+  <div class="wrap">
+    <div class="narrow">
+      <div class="eyebrow">Про нас</div>
+      <h2 style="margin-top:12px">Мы ХА-ХА ШОУ</h2>
+      <p class="lead">Интерактивные шоу-игры для компаний. Придумываем и ведём
+        программы сами: сценарии, реквизит, ведущие и площадка — всё своё.</p>
+    </div>
+
+    <div class="about-grid">
+      <div>
+        <div class="about-nums">
+          <div><b>с 2019</b><span>года проводим праздники</span></div>
+          <div><b>5 643</b><span>праздника провели</span></div>
+          <div><b>50 000+</b><span>гостей у нас побывало</span></div>
+          <div><b>8</b><span>конкурсов в программе</span></div>
+        </div>
+        <div class="about-where">
+          <b>Своя студия в Москве</b><br>
+          Бауманская ул., 58 стр. 4 — лофт на вашу компанию целиком:
+          столы, диваны, караоке, экран и весь реквизит на месте.
+          Со своей едой и напитками, без пробкового сбора.<br><br>
+          <b>Телефон</b> <a href="tel:+79602835563">+7 (960) 283-55-63</a>
+        </div>
+      </div>
+
+      <div class="reviews">
+        <div class="reviews-h">
+          <b>5,0</b>
+          <span class="stars" aria-hidden="true">★★★★★</span>
+          <span>229 отзывов на Яндекс&nbsp;Картах</span>
+        </div>
+        <iframe src="https://yandex.ru/maps-reviews-widget/130742722293?comments"
+                loading="lazy" title="Отзывы о ХА-ХА ШОУ на Яндекс Картах"></iframe>
+        <a class="reviews-a" target="_blank" rel="noopener"
+           href="https://yandex.ru/maps/org/show_today/130742722293/">
+          Читать все отзывы на Яндекс Картах →</a>
+      </div>
+    </div>
   </div>
 </section>
 
