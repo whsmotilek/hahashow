@@ -32,7 +32,7 @@ a{color:inherit}
 h1,h2,h3,.u{font-family:var(--serif);font-weight:900;letter-spacing:-.02em;text-wrap:balance}
 /* Заголовок уменьшен: на компьютере он занимал пол-экрана, и
    плитки с выгодами уезжали под сгиб. */
-h1{font-size:clamp(34px,5.2vw,66px);line-height:1;margin:0}
+h1{font-size:clamp(32px,4.4vw,56px);line-height:1.02;margin:0}
 h2{font-size:clamp(28px,4vw,46px);line-height:1.04;margin:0 0 18px}
 h3{font-size:20px;line-height:1.2;margin:0 0 8px;font-weight:700}
 p{margin:0 0 16px;max-width:62ch}
@@ -130,7 +130,11 @@ p:empty{display:none}
 .hero-grid{display:grid;gap:34px}
 @media(min-width:900px){.hero-grid{grid-template-columns:1.12fr .88fr;align-items:start;gap:52px}}
 @media(min-width:900px){.hero{padding-top:64px}.clock{margin-top:34px}}
-.hero h1 span{display:block}
+/* Строки заголовка не режем руками. Раньше каждый кусок был отдельным
+   блоком, и на узкой колонке «День рождения, где» разваливалось на
+   «День рождения,» и одинокое «где». Пусть переносит браузер, а balance
+   выровняет строки по длине. */
+.hero h1{text-wrap:balance}
 .hero h1 .hl{color:var(--purple)}
 .hero-note{margin-top:22px}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
@@ -418,11 +422,8 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
     <div class="hero-grid">
       <div>
         <div class="eyebrow">Праздник на компанию от 6 человек</div>
-        <h1 style="margin-top:14px">
-          <span>День рождения, где</span>
-          <span class="hl">никто не сидит</span>
-          <span>весь вечер за столом</span>
-        </h1>
+        <h1 style="margin-top:14px">День рождения, где
+          <span class="hl">никто не сидит</span> весь вечер за столом</h1>
         <p class="lead hero-note">
           Вы приходите в лофт, ведущие делят компанию на две команды — и дальше
           два часа веселья: искренний смех, азартные споры и реквизит, который
