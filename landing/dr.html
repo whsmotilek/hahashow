@@ -32,7 +32,10 @@ a{color:inherit}
 h1,h2,h3,.u{font-family:var(--serif);font-weight:900;letter-spacing:-.02em;text-wrap:balance}
 /* Заголовок уменьшен: на компьютере он занимал пол-экрана, и
    плитки с выгодами уезжали под сгиб. */
-h1{font-size:clamp(32px,4.4vw,56px);line-height:1.02;margin:0}
+/* Размер подобран по ширине колонки, а не на глаз: при 56 пикселях
+   «День рождения,» не помещалось в 571 пиксель, и первой строкой
+   висело одинокое «День». При 46 строки ложатся как задумано. */
+h1{font-size:clamp(30px,3.6vw,46px);line-height:1.05;margin:0}
 h2{font-size:clamp(28px,4vw,46px);line-height:1.04;margin:0 0 18px}
 h3{font-size:20px;line-height:1.2;margin:0 0 8px;font-weight:700}
 p{margin:0 0 16px;max-width:62ch}
