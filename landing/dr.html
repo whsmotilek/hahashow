@@ -386,7 +386,12 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
   font-size:clamp(22px,2.6vw,30px);line-height:1.1}
 /* Правая колонка первого экрана: расписание и ролик под ним. */
 .hero-right{display:grid;gap:16px;align-content:start}
-.vcap{font-size:13px;font-weight:700;color:var(--ink-3);margin-top:-4px}
+.hero-vid{display:grid;gap:8px}
+.vcap{font-size:13px;font-weight:700;color:var(--ink-3)}
+/* На телефоне колонки складываются в столбик, и ролик оказывался под
+   восемью строками расписания — то есть снова далеко. Меняем их
+   местами: сначала живой кадр, потом распорядок. */
+@media(max-width:899px){.hero-vid{order:-1}}
 /* Блок узнавания. Человек должен встретить здесь свою ситуацию
    слово в слово — до того, как мы начнём рассказывать про себя.
    Поэтому это список условий, а не список преимуществ. */
@@ -473,6 +478,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
            живого кадра человек долистывал два экрана текста. Здесь он
            заодно закрывает пустоту справа: колонка была на 170 пикселей
            короче соседней. -->
+      <div class="hero-vid">
       <div class="vwrap" id="video">
         <video id="showvid" playsinline muted loop autoplay preload="metadata"
                poster="img/video-poster.jpg">
@@ -484,6 +490,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
         </button>
       </div>
       <div class="vcap">45 секунд из настоящего вечера</div>
+      </div>
       </div>
     </div>
   </div>
