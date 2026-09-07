@@ -246,12 +246,12 @@ p:empty{display:none}
 
 /* ── видео ── */
 .video{padding:70px 0}
-.vwrap{position:relative;margin-top:30px;border-radius:18px;overflow:hidden;
+.vwrap{position:relative;border-radius:18px;overflow:hidden;
   background:#000;line-height:0}
 .vwrap video{width:100%;height:auto;display:block}
-.vsound{position:absolute;right:14px;bottom:14px;z-index:2;
-  font-family:inherit;font-weight:800;font-size:14px;line-height:1;
-  padding:13px 18px;border-radius:999px;border:0;cursor:pointer;
+.vsound{position:absolute;right:12px;bottom:12px;z-index:2;
+  font-family:inherit;font-weight:800;font-size:13px;line-height:1;
+  padding:11px 15px;border-radius:999px;border:0;cursor:pointer;
   background:rgba(23,20,12,.72);color:#fff;backdrop-filter:blur(6px);
   transition:background .16s}
 .vsound:hover{background:rgba(23,20,12,.9)}
@@ -378,6 +378,15 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
 .reviews iframe{display:block;width:100%;height:520px;border:0}
 .reviews-a{display:block;padding:14px 18px;font-size:14px;font-weight:700;
   border-top:2px solid var(--line);text-decoration:none}
+/* Призыв в конце разбора вечера: человек только что досмотрел вечер
+   целиком, и это лучшая минута, чтобы предложить дату. */
+.tl-cta{margin-top:44px;padding-top:34px;border-top:2px solid var(--line);
+  display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.tl-cta-t{font-family:var(--serif);font-weight:900;letter-spacing:-.02em;
+  font-size:clamp(22px,2.6vw,30px);line-height:1.1}
+/* Правая колонка первого экрана: расписание и ролик под ним. */
+.hero-right{display:grid;gap:16px;align-content:start}
+.vcap{font-size:13px;font-weight:700;color:var(--ink-3);margin-top:-4px}
 /* Блок узнавания. Человек должен встретить здесь свою ситуацию
    слово в слово — до того, как мы начнём рассказывать про себя.
    Поэтому это список условий, а не список преимуществ. */
@@ -389,7 +398,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
 .fit-out{margin-top:34px;font-family:var(--serif);font-weight:900;
   font-size:clamp(22px,3vw,34px);line-height:1.1;letter-spacing:-.02em}
 .fit-out .hl{color:var(--purple)}
-.fit .btn{margin-top:26px}
+.fit-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
 /* Плиток стало четыре. Свободный поток разложил бы их «три и один»,
    и последняя висела бы отдельно; сеткой они ложатся ровно. */
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
@@ -447,6 +456,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
         </div>
       </div>
 
+      <div class="hero-right">
       <div class="clock" aria-label="Как устроен вечер по времени">
         <div class="eyebrow">Обычный вечер выглядит так</div>
         <div class="clock-row"><span class="clock-t">18:45</span><span class="clock-x">гости подтягиваются, накрывают стол</span></div>
@@ -457,6 +467,23 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
         <div class="clock-row"><span class="clock-t">20:45</span><span class="clock-x">награждение, общая фотография</span></div>
         <div class="clock-row"><span class="clock-t">21:00</span><span class="clock-x">лофт ваш: караоке, еда, разговоры</span></div>
         <div class="clock-row"><span class="clock-t">23:00</span><span class="clock-x">никто не хочет расходиться</span></div>
+      </div>
+
+      <!-- Ролик стоял отдельным блоком глубоко на странице, и до первого
+           живого кадра человек долистывал два экрана текста. Здесь он
+           заодно закрывает пустоту справа: колонка была на 170 пикселей
+           короче соседней. -->
+      <div class="vwrap" id="video">
+        <video id="showvid" playsinline muted loop autoplay preload="metadata"
+               poster="img/video-poster.jpg">
+          <source src="img/show.mp4" type="video/mp4">
+        </video>
+        <button class="vsound" id="vsound" type="button"
+                onclick="звук()" aria-label="Включить звук">
+          <span id="vsoundtxt">Включить звук</span>
+        </button>
+      </div>
+      <div class="vcap">45 секунд из настоящего вечера</div>
       </div>
     </div>
   </div>
@@ -489,7 +516,12 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
           «так мы ещё не отмечали»</span></div>
     </div>
     <div class="fit-out">Значит, вам <span class="hl">на ХА-ХА ШОУ</span></div>
-    <a class="btn" href="#vecher">Посмотреть, как проходит вечер</a>
+    <!-- Две дороги из одного места: кто ещё выбирает — идёт смотреть,
+         кто уже решил — бронирует, не долистывая до формы. -->
+    <div class="fit-cta">
+      <a class="btn" href="#vecher">Посмотреть, как проходит вечер</a>
+      <a class="btn ghost" href="#zayavka">Забронировать дату</a>
+    </div>
   </div>
 </section>
 
@@ -595,25 +627,13 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
         </div>
       </article>
     </div>
-  </div>
-</section>
 
-<section class="video" id="video">
-  <div class="wrap">
-    <div class="narrow">
-      <div class="eyebrow">Как это выглядит</div>
-      <h2 style="margin-top:12px">Сорок пять секунд из настоящего вечера</h2>
-      <p class="lead">Без звука — включите, если хотите услышать, как это звучит.</p>
-    </div>
-    <div class="vwrap">
-      <video id="showvid" playsinline muted loop autoplay preload="metadata"
-             poster="img/video-poster.jpg">
-        <source src="img/show.mp4" type="video/mp4">
-      </video>
-      <button class="vsound" id="vsound" type="button"
-              onclick="звук()" aria-label="Включить звук">
-        <span id="vsoundtxt">Включить звук</span>
-      </button>
+    <!-- Человек досмотрел вечер до конца — это лучшая минута, чтобы
+         предложить забронировать. Раньше здесь начинался следующий блок,
+         и решение приходилось откладывать до формы внизу. -->
+    <div class="tl-cta">
+      <div class="tl-cta-t">Хотите так же?</div>
+      <a class="btn" href="#zayavka">Забронировать свой вечер</a>
     </div>
   </div>
 </section>
