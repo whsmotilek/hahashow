@@ -132,9 +132,10 @@ p:empty{display:none}
 @media(min-width:900px){.hero{padding-top:64px}.clock{margin-top:34px}}
 /* Строки заголовка не режем руками. Раньше каждый кусок был отдельным
    блоком, и на узкой колонке «День рождения, где» разваливалось на
-   «День рождения,» и одинокое «где». Пусть переносит браузер, а balance
-   выровняет строки по длине. */
-.hero h1{text-wrap:balance}
+   «День рождения,» и одинокое «где». Переносит браузер.
+   Выравнивание строк по длине здесь выключаем: оно оставляло «День»
+   одно на первой строке. Пусть строки заполняются подряд. */
+.hero h1{text-wrap:normal}
 .hero h1 .hl{color:var(--purple)}
 .hero-note{margin-top:22px}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
