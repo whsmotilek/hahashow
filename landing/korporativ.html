@@ -263,10 +263,7 @@ p:empty{display:none}
 .vwrap:fullscreen .vsound:not(.vzoom){left:calc(50% + 7px);right:auto}
 .vwrap.vbig .vzoom,.vwrap:-webkit-full-screen .vzoom,
 .vwrap:fullscreen .vzoom{right:calc(50% + 7px);left:auto}
-body.vbig-on{overflow:hidden}
-/* Плавающую кнопку на время разворота убираем совсем: поверх видео она
-   лишняя, а спорить с ней слоями — лишний повод для ошибки. */
-body.vbig-on .float{display:none}
+
 .vsound:hover{background:rgba(23,20,12,.9)}
 .vsound:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
 
@@ -1064,15 +1061,23 @@ document.addEventListener('click', function(e){
     поднятые = [];
   }
 
+  // Прокрутку страницы и плавающую кнопку убираем из скрипта, а не
+  // стилем: на сайте вся наша CSS прижата к #lp, и правило про body
+  // туда не достаёт — страница продолжала прокручиваться под роликом.
+  var былаПрокрутка = '', плавающая = null;
   function наложить(){
     поднять();
+    былаПрокрутка = document.documentElement.style.overflow;
+    document.documentElement.style.overflow = 'hidden';
+    плавающая = document.querySelector('.float');
+    if (плавающая) плавающая.style.display = 'none';
     о.classList.add('vbig');
-    document.body.classList.add('vbig-on');
     подписать();
   }
   function снять(){
     о.classList.remove('vbig');
-    document.body.classList.remove('vbig-on');
+    document.documentElement.style.overflow = былаПрокрутка;
+    if (плавающая) плавающая.style.display = '';
     опустить();
     подписать();
   }
