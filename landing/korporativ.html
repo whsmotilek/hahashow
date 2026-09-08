@@ -264,6 +264,9 @@ p:empty{display:none}
 .vwrap.vbig .vzoom,.vwrap:-webkit-full-screen .vzoom,
 .vwrap:fullscreen .vzoom{right:calc(50% + 7px);left:auto}
 body.vbig-on{overflow:hidden}
+/* Плавающую кнопку на время разворота убираем совсем: поверх видео она
+   лишняя, а спорить с ней слоями — лишний повод для ошибки. */
+body.vbig-on .float{display:none}
 .vsound:hover{background:rgba(23,20,12,.9)}
 .vsound:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
 
@@ -1040,7 +1043,29 @@ document.addEventListener('click', function(e){
   function открыт(){ return родной() || свой(); }
   function подписать(){ b.textContent = открыт() ? 'Свернуть' : 'Развернуть'; }
 
+  // Ролик лежит внутри контейнера, у которого свой z-index, а значит и
+  // свой слой. Наложение с z-index 200 оказывалось заперто в этом слое
+  // и не накрывало ни шапку, ни плавающую кнопку — они рисуются выше.
+  // Поэтому на время разворота поднимаем все слои над роликом, а при
+  // закрытии возвращаем как было.
+  var поднятые = [];
+  function поднять(){
+    var э = о.parentElement;
+    while (э && э !== document.body){
+      if (getComputedStyle(э).zIndex !== 'auto'){
+        поднятые.push([э, э.style.zIndex]);
+        э.style.zIndex = '300';
+      }
+      э = э.parentElement;
+    }
+  }
+  function опустить(){
+    поднятые.forEach(function(п){ п[0].style.zIndex = п[1]; });
+    поднятые = [];
+  }
+
   function наложить(){
+    поднять();
     о.classList.add('vbig');
     document.body.classList.add('vbig-on');
     подписать();
@@ -1048,6 +1073,7 @@ document.addEventListener('click', function(e){
   function снять(){
     о.classList.remove('vbig');
     document.body.classList.remove('vbig-on');
+    опустить();
     подписать();
   }
 
