@@ -264,15 +264,26 @@ p:empty{display:none}
    со звуком: на телефоне обе надписи в одну сторону не помещаются. */
 .vzoom{right:auto;left:12px}
 /* Родной полноэкранный режим. */
+/* Развёрнутый ролик не упирается в края: вокруг остаётся поле, а сам
+   кадр со скруглением. Растянутое от края до края видео читается как
+   сбой полноэкранного режима, да и кнопки звука прижимались вплотную
+   к границе экрана. */
 .vwrap:fullscreen,.vwrap:-webkit-full-screen{display:flex;align-items:center;
-  justify-content:center;background:#000;border-radius:0}
-.vwrap:fullscreen video,.vwrap:-webkit-full-screen video{width:auto;height:100%;
-  max-width:100%}
+  justify-content:center;background:#0b0b0b;border-radius:0;
+  padding:5vh clamp(16px,5vw,80px)}
+.vwrap:fullscreen video,.vwrap:-webkit-full-screen video{width:auto;height:auto;
+  max-width:100%;max-height:100%;border-radius:14px}
 /* Свой вариант — когда родной недоступен. Элемент остаётся тем же,
    меняется только положение, поэтому ролик не прерывается. */
-.vwrap.vbig{position:fixed;inset:0;z-index:200;border-radius:0;background:#000;
-  display:flex;align-items:center;justify-content:center}
-.vwrap.vbig video{width:auto;height:auto;max-width:100%;max-height:100%}
+.vwrap.vbig{position:fixed;inset:0;z-index:200;border-radius:0;
+  background:rgba(8,8,8,.94);display:flex;align-items:center;
+  justify-content:center;padding:5vh clamp(16px,5vw,80px)}
+.vwrap.vbig video{width:auto;height:auto;max-width:100%;max-height:100%;
+  border-radius:14px}
+/* Кнопки прижимаются к самому кадру, а не к краю экрана. */
+.vwrap.vbig .vsound,.vwrap:fullscreen .vsound{bottom:calc(5vh + 14px)}
+.vwrap.vbig .vsound{right:calc(clamp(16px,5vw,80px) + 14px)}
+.vwrap.vbig .vzoom{right:auto;left:calc(clamp(16px,5vw,80px) + 14px)}
 body.vbig-on{overflow:hidden}
 .vsound:hover{background:rgba(23,20,12,.9)}
 .vsound:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
