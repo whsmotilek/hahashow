@@ -525,7 +525,7 @@ section[id], [id="zayavka"], [id="vecher"], [id="raschet"], [id="final"],
       <h2 style="margin-top:12px">Сорок пять секунд из настоящего вечера</h2>
       <p class="lead">Без звука — включите, если хотите услышать, как это звучит.</p>
     </div>
-    <div class="vwrap" id="video">
+    <div class="vwrap">
       <video id="showvid" playsinline muted loop autoplay preload="metadata"
              poster="img/video-poster.jpg">
         <source src="img/show.mp4" type="video/mp4">
@@ -1026,7 +1026,10 @@ document.addEventListener('click', function(e){
 // разворачиваем сами, поверх страницы. Кнопка обязана срабатывать
 // всегда: кнопка, которая иногда ничего не делает, хуже её отсутствия.
 (function(){
-  var о = document.getElementById('video');
+  // Обёртку ищем по классу. По id нельзя: на корпоративе «video» —
+  // это ещё и якорь секции, и getElementById возвращал секцию.
+  // Разворачивалась тогда не та коробка, и наложение не появлялось.
+  var о = document.querySelector('.vwrap');
   var v = document.getElementById('showvid');
   var b = document.getElementById('vzoomtxt');
   var к = document.getElementById('vzoom');

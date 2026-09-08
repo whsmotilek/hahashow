@@ -1179,7 +1179,10 @@ document.addEventListener('click', function(e){
 // разворачиваем сами, поверх страницы. Кнопка обязана срабатывать
 // всегда: кнопка, которая иногда ничего не делает, хуже её отсутствия.
 (function(){
-  var о = document.getElementById('video');
+  // Обёртку ищем по классу. По id нельзя: на корпоративе «video» —
+  // это ещё и якорь секции, и getElementById возвращал секцию.
+  // Разворачивалась тогда не та коробка, и наложение не появлялось.
+  var о = document.querySelector('.vwrap');
   var v = document.getElementById('showvid');
   var b = document.getElementById('vzoomtxt');
   var к = document.getElementById('vzoom');
