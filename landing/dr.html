@@ -280,10 +280,15 @@ p:empty{display:none}
   justify-content:center;padding:5vh clamp(16px,5vw,80px)}
 .vwrap.vbig video{width:auto;height:auto;max-width:100%;max-height:100%;
   border-radius:14px}
-/* Кнопки прижимаются к самому кадру, а не к краю экрана. */
-.vwrap.vbig .vsound,.vwrap:fullscreen .vsound{bottom:calc(5vh + 14px)}
-.vwrap.vbig .vsound{right:calc(clamp(16px,5vw,80px) + 14px)}
-.vwrap.vbig .vzoom{right:auto;left:calc(clamp(16px,5vw,80px) + 14px)}
+/* В развёрнутом виде кнопки собираем парой внизу по центру. По углам
+   их ставить не к чему: кадр вписывается по своей пропорции и до краёв
+   не достаёт, так что кнопки повисали далеко от картинки. */
+.vwrap.vbig .vsound,.vwrap:-webkit-full-screen .vsound,
+.vwrap:fullscreen .vsound{bottom:max(2.5vh,14px);left:50%;right:auto}
+.vwrap.vbig .vsound:not(.vzoom),.vwrap:-webkit-full-screen .vsound:not(.vzoom),
+.vwrap:fullscreen .vsound:not(.vzoom){transform:translateX(7px)}
+.vwrap.vbig .vzoom,.vwrap:-webkit-full-screen .vzoom,
+.vwrap:fullscreen .vzoom{transform:translateX(calc(-100% - 7px))}
 body.vbig-on{overflow:hidden}
 .vsound:hover{background:rgba(23,20,12,.9)}
 .vsound:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
