@@ -256,11 +256,13 @@ p:empty{display:none}
    их ставить не к чему: кадр вписывается по своей пропорции и до краёв
    не достаёт, так что кнопки повисали далеко от картинки. */
 .vwrap.vbig .vsound,.vwrap:-webkit-full-screen .vsound,
-.vwrap:fullscreen .vsound{bottom:max(2.5vh,14px);left:50%;right:auto}
+.vwrap:fullscreen .vsound{bottom:max(2.5vh,14px)}
+/* Центрируем не сами кнопки, а промежуток между ними: ширина у них
+   разная, и сдвиг на половину собственной ширины уводил пару вбок. */
 .vwrap.vbig .vsound:not(.vzoom),.vwrap:-webkit-full-screen .vsound:not(.vzoom),
-.vwrap:fullscreen .vsound:not(.vzoom){transform:translateX(7px)}
+.vwrap:fullscreen .vsound:not(.vzoom){left:calc(50% + 7px);right:auto}
 .vwrap.vbig .vzoom,.vwrap:-webkit-full-screen .vzoom,
-.vwrap:fullscreen .vzoom{transform:translateX(calc(-100% - 7px))}
+.vwrap:fullscreen .vzoom{right:calc(50% + 7px);left:auto}
 body.vbig-on{overflow:hidden}
 .vsound:hover{background:rgba(23,20,12,.9)}
 .vsound:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
